@@ -1,0 +1,13 @@
+{
+  // Change this to match your project
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.spec.ts", "src/**/*.test.ts"],
+  "compilerOptions": {
+    "declaration": true,
+    "outDir": "dist",
+    "declarationMap": true,
+    "target": "esNext",
+    "module": "es2020",
+    "moduleResolution": "node"
+  }
+}

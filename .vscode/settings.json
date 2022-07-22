@@ -1,0 +1,4 @@
+{
+  "vitest.enable": true,
+  "vitest.showFailMessages": true
+}
