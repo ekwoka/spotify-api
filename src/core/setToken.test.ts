@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { client, Token } from './client';
+import { spotifyApi, Token } from './spotifyApi';
 import { setToken } from './setToken';
 
 describe('Set Token', () => {
@@ -12,8 +12,8 @@ describe('Set Token', () => {
     expect(setter(token)).toBe(true);
     expect(token.current).toBe('updated');
   });
-  it('should update token in Client', () => {
-    const Spotify = client('initial');
+  it('should update token in spotifyApi', () => {
+    const Spotify = spotifyApi('initial');
     Spotify(setToken('updated'));
     expect(Spotify((token) => token.current)).toBe('updated');
   });

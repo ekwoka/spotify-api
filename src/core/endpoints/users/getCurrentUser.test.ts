@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { client } from '../../client';
+import { spotifyApi } from '../../spotifyApi';
 import { getCurrentUser } from './getCurrentUser';
 
 const token =
@@ -7,12 +7,12 @@ const token =
 
 describe('Get Current User', () => {
   it('should return Current User', async () => {
-    const spotify = client(token);
+    const spotify = spotifyApi(token);
     const user = await spotify(getCurrentUser());
     expect(user).toBeDefined();
   });
   it('should sache user and return it from cache', async () => {
-    const spotify = client(token);
+    const spotify = spotifyApi(token);
     const user = await spotify(getCurrentUser());
     expect(await spotify(getCurrentUser())).toBe(user);
   });

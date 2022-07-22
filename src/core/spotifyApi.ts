@@ -1,4 +1,4 @@
-export const client = (tkn?: string): ClientFunction => {
+export const spotifyApi = (tkn?: string): spotifyApiFunction => {
   const token: Token = {
     current: tkn ?? '',
   };
@@ -13,7 +13,7 @@ export type Token = {
   current: string;
 };
 
-type ClientFunction = <T>(fn: QueryFunction<T>) => T;
+type spotifyApiFunction = <T>(fn: QueryFunction<T>) => T;
 
 export type QueryFunction<T> = (token: Token) => T;
 

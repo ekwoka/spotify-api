@@ -1,18 +1,18 @@
 import { describe, expect, it } from 'vitest';
-import { client } from './client';
+import { spotifyApi } from './spotifyApi';
 
-describe('Client Constructor', () => {
+describe('spotifyApi Constructor', () => {
   it('should return a function', () => {
-    const spotify = client();
+    const spotify = spotifyApi();
     expect(spotify).toBeDefined();
     expect(typeof spotify).toBe('function');
   });
   it('should store the provided token', () => {
-    const spotify = client('token');
+    const spotify = spotifyApi('token');
     expect(spotify((token) => token.current)).toBe('token');
   });
   it('should throw an error if no token is provided', () => {
-    const spotify = client();
-    expect(client()).toThrow();
+    const spotify = spotifyApi();
+    expect(spotify).toThrow();
   });
 });

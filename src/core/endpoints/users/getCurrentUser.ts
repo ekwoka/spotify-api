@@ -1,6 +1,6 @@
 import { SPOTIFY_URL } from '../../../constants';
 import { deepFreeze } from '../../../utils';
-import { QueryConstructor } from '../../client';
+import { QueryConstructor } from '../../spotifyApi';
 
 let cachedUser: User | undefined;
 
