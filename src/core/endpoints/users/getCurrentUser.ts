@@ -5,6 +5,12 @@ import { QueryConstructor } from '../../spotifyApi';
 
 let cachedUser: User | undefined;
 
+/**
+ * Accesses the Spotify /me endpoint to get information regarding the current
+ * user. The User data is cached and put in deep freeze to prevent needing
+ * to refetch the data or having other functions modify the cached data
+ * @returns User
+ */
 export const getCurrentUser: QueryConstructor<Promise<User>> =
   () =>
   async ({ current: token }) => {
