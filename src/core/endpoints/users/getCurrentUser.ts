@@ -1,5 +1,6 @@
 import { SPOTIFY_URL } from '../../../constants';
 import { deepFreeze } from '../../../utils';
+import { spotifyFetch } from '../../../utils/spotifyFetch';
 import { QueryConstructor } from '../../spotifyApi';
 
 let cachedUser: User | undefined;
@@ -8,12 +9,8 @@ export const getCurrentUser: QueryConstructor<Promise<User>> =
   () =>
   async ({ current: token }) => {
     if (cachedUser) return cachedUser;
-    const endpoint = `${SPOTIFY_URL}/me`;
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-    const response = await fetch(endpoint, { headers });
-    const data = await response.json();
+    const endpoint = `me`;
+    const data = await spotifyFetch<User>(endpoint, token);
     deepFreeze(data);
     cachedUser = data;
     return data;
