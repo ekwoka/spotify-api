@@ -1,20 +1,17 @@
-export const spotifyApi = (tkn?: string): spotifyApiFunction => {
-  const token: Token = {
-    current: tkn ?? '',
+import {
+  PersistentApiProperties,
+  QueryableApi,
+  QueryFunction,
+} from './utils/types';
+
+export function spotifyApi(tkn: string): QueryableApi {
+  const props: PersistentApiProperties = {
+    token: tkn ?? '',
   };
 
   return <T>(fn: QueryFunction<T>): T => {
-    if (!token.current) throw new Error('Token has not yet been provided');
-    return fn(token);
+    if (!props.token) throw new Error('Current token is invalid');
+
+    return fn(props);
   };
-};
-
-export type Token = {
-  current: string;
-};
-
-type spotifyApiFunction = <T>(fn: QueryFunction<T>) => T;
-
-export type QueryFunction<T> = (token: Token) => T;
-
-export type QueryConstructor<T> = (...args: any) => QueryFunction<T>;
+}

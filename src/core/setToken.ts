@@ -1,6 +1,6 @@
-import { QueryConstructor } from './spotifyApi';
+import { PersistentApiProperties, Query } from './utils/types';
 
-export const setToken: QueryConstructor<boolean> = (token: string) => (tkn) => {
-  tkn.current = token;
-  return true;
-};
+export const setToken: Query =
+  (newToken: string) => (props: PersistentApiProperties) => {
+    props.token = newToken;
+  };
