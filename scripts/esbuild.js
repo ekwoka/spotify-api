@@ -14,7 +14,7 @@ build({
   platform: 'node',
   minify: false,
   plugins: [],
-}).then(async (res) => {
+}).then(() => {
   console.log('JS Build Complete');
   console.timeEnd('esbuild');
 });
