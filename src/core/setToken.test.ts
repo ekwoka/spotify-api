@@ -1,20 +1,19 @@
 import { describe, expect, it } from 'vitest';
-import { spotifyApi, Token } from './spotifyApi';
-import { setToken } from './setToken';
+import { PersistentApiProperties, setToken, spotifyApiClient } from './';
 
 describe('Set Token', () => {
   it('should return a function', () => {
     expect(typeof setToken('')).toBe('function');
   });
-  it('should return a function that mutates the token object', () => {
+  it('should return a function that mutates the token prop of passed object', () => {
     const setter = setToken('updated');
-    const token: Token = { current: 'initial' };
-    expect(setter(token)).toBe(true);
-    expect(token.current).toBe('updated');
+    const FakeClient: PersistentApiProperties = { token: 'initial' };
+    setter(FakeClient);
+    expect(FakeClient.token).toBe('updated');
   });
-  it('should update token in spotifyApi', () => {
-    const Spotify = spotifyApi('initial');
+  it('should update token in spotifyApiClient', () => {
+    const Spotify = spotifyApiClient('initial');
     Spotify(setToken('updated'));
-    expect(Spotify((token) => token.current)).toBe('updated');
+    expect(Spotify((props) => props.token)).toBe('updated');
   });
 });

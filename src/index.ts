@@ -1,6 +1,12 @@
 export { SPOTIFY_URL } from './constants';
-export { spotifyApi } from './core/spotifyApi';
 export { getCurrentUser } from './core/endpoints/users/getCurrentUser';
 export { setToken } from './core/setToken';
+export { spotifyApiClient } from './core/spotifyApiClient';
 export { deepFreeze } from './utils/deepFreeze';
-export type { Token, QueryFunction, QueryConstructor } from './core/spotifyApi';
+export { spotifyFetch } from './utils/spotifyFetch';
+export type {
+  PersistentApiProperties,
+  SpotifyApiClient,
+  QueryFunction,
+  QueryConstructor,
+} from './core/types';

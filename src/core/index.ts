@@ -1,3 +1,8 @@
 export { setToken } from './setToken';
-export { spotifyApi } from './spotifyApi';
-export type { Token, QueryFunction, QueryConstructor } from './spotifyApi';
+export { spotifyApiClient } from './spotifyApiClient';
+export type {
+  PersistentApiProperties,
+  SpotifyApiClient,
+  QueryFunction,
+  QueryConstructor,
+} from './types';
