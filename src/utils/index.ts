@@ -1,2 +1,2 @@
-export { deepFreeze } from "./deepFreeze";
-export { spotifyFetch } from "./spotifyFetch";
+export { deepFreeze } from './deepFreeze';
+export { spotifyFetch } from './spotifyFetch';
