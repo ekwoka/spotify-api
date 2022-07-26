@@ -1,18 +1,16 @@
-import {
-  PersistentApiProperties,
-  SpotifyApiClient,
-  QueryFunction,
-} from './types';
+import { PersistentApiProperties, SpotifyApiClient, QueryFunction } from './';
 
 export function spotifyApiClient(token: string): SpotifyApiClient {
   if (!token) throw 'Token is required at Spotify API Initialization';
-  const ApiClient: PersistentApiProperties = {
+
+  // properties is a better name? :o
+  const properties: PersistentApiProperties = {
     token,
   };
 
   return <T>(fn: QueryFunction<T>): T => {
-    if (!ApiClient.token) throw new Error('Current token is invalid');
+    if (!properties.token) throw new Error('Current token is invalid');
 
-    return fn(ApiClient);
+    return fn(properties);
   };
 }

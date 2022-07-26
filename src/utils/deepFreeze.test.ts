@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { deepFreeze } from './';
+import { deepFreeze } from '.';
 
 describe('Utils', () => {
   it('should deep freeze', () => {

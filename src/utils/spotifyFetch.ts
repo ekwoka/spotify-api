@@ -20,15 +20,13 @@ export const spotifyFetch = <T>(
 ): Promise<T> => {
   return new Promise(async (resolve, reject) => {
     try {
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
       const response = await fetch(`${SPOTIFY_URL}/${endpoint}`, {
-        headers,
+        headers: { Authorization: `Bearer ${token}` },
         ...data,
       });
-      if (!response.ok) throw new Error(response.statusText);
-      resolve(await response.json());
+
+      if (response.ok) return resolve(await response.json());
+      throw new Error(response.statusText);
     } catch (e) {
       /**
        * TODO: Decide on Error Handling Method
