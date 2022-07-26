@@ -1,19 +1,20 @@
-import { SPOTIFY_URL } from '../../../constants';
-import { deepFreeze } from '../../../utils';
-import { QueryConstructor } from '../../spotifyApi';
+import { QueryConstructor } from '../..';
+import { deepFreeze, spotifyFetch } from '../../../utils';
 
 let cachedUser: User | undefined;
 
+/**
+ * Accesses the Spotify /me endpoint to get information regarding the current
+ * user. The User data is cached and put in deep freeze to prevent needing
+ * to refetch the data or having other functions modify the cached data
+ * @returns User
+ */
 export const getCurrentUser: QueryConstructor<Promise<User>> =
   () =>
-  async ({ current: token }) => {
+  async ({ token }) => {
     if (cachedUser) return cachedUser;
-    const endpoint = `${SPOTIFY_URL}/me`;
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-    const response = await fetch(endpoint, { headers });
-    const data = await response.json();
+    const endpoint = `me`;
+    const data = await spotifyFetch<User>(endpoint, token);
     deepFreeze(data);
     cachedUser = data;
     return data;

@@ -1,6 +1,5 @@
-import { PersistentApiProperties, Query } from './utils/types';
+import { PersistentApiProperties, QueryConstructor } from './';
 
-export const setToken: Query =
-  (newToken: string) => (props: PersistentApiProperties) => {
-    props.token = newToken;
-  };
+export const setToken: QueryConstructor<string> =
+  (newToken: string) => (Client: PersistentApiProperties) =>
+    (Client.token = newToken);
