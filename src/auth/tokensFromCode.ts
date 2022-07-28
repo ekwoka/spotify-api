@@ -1,5 +1,12 @@
 import { toBase64 } from '../utils';
 
+/**
+ * This accepts a 'code' provided by the Spotify Auth Portal, trades it with
+ * Spotify for an 'access_token' and 'refresh_token'. This requires some
+ * ENV variables to be set up. Check the documentation for more info.
+ * @param code string
+ * @returns SpotifyTokens
+ */
 export const tokensFromCode = async (code: string): Promise<SpotifyTokens> => {
   try {
     const response = await fetch(

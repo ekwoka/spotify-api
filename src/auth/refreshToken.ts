@@ -1,5 +1,12 @@
 import { toBase64 } from '../utils';
 
+/**
+ * refreshToken accepts a 'refresh_token' issued by Spotify and returns a new
+ * 1hr 'access_token'. This requires specific ENV variables to be defined.
+ * Review Auth documentation to see what these variables should contain.
+ * @param refreshToken string
+ * @returns RefreshedToken
+ */
 export const refreshToken = async (
   refreshToken: string
 ): Promise<RefreshedToken> => {
