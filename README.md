@@ -52,6 +52,49 @@ client(setToken('my_new_token')); // updated token
 
 As you'll notice, this is not a method on the client object like many other libraries. This is a composable function. The goal is for all interactions with the client and APIs to be composable functions. This will enable very aggressive tree-shaking to keep minimal clients from shipping lots of unused code, as well as enable code-splitting for larger applications. This should be reflected in a much more modest bundle size for the majority of use cases.
 
+## Authentication
+
+Includes in this package are some additional helper functions for interacting with Spotify's authentication API. These should only be used on a server, as they require client secrets.
+
+These helpers are:
+
+- `getTokenFromCode`: Accepts a code from the Spotify authentication flow and returns a suite of tokens (access and refresh).
+- `refreshToken`: Accepts a refresh token and returns a new access token.
+
+These currently depend on you setting up and exposing certain environment variables for the functions to access:
+
+- `SPOTIFY_CLIENT`: Client id from Spotify Developer Dashboard.
+- `SPOTIFY_SECRET`: Client secret.
+
+If these are not defined, the function will throw.
+
+### Examples (Pseudo Express code)
+
+```js
+import { getTokenFromCode, refreshToken } from '@ekwoka/spotify-api';
+
+const codeHandler = async (req, res) => {
+  try {
+    const { code } = JSON.parse(req.body);
+    const { access_token, refresh_token } = await getTokenFromCode(code);
+    res.cookie('refresh_token', refresh_token);
+    res.status(200).json({ access_token });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+const refreshHandler = async (req, res) => {
+  try {
+    const { refresh_token } = req.cookies;
+    const { access_token } = await refreshToken(refresh_token);
+    res.status(200).json({ access_token });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+```
+
 ## Endpoints
 
 Endpoints are importable both from `@ekwoka/spotify-api` or `@ekwoka/spotify-api/endpoints` for convenience.

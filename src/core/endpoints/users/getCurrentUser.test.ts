@@ -1,10 +1,15 @@
-import { describe, expect, it } from 'vitest';
+import 'dotenv/config';
+import { beforeAll, describe, expect, it } from 'vitest';
+import { refreshToken } from '../../../auth';
 import { spotifyApiClient } from '../../spotifyApiClient';
 import { getCurrentUser } from './getCurrentUser';
 
-const token = 'bad_token'; // 1hr token just for testing, will replace with refresh token in .env in the future
-
 describe('Get Current User', () => {
+  let token: string;
+  beforeAll(async () => {
+    const refresh = process.env.REFRESH_TOKEN as string;
+    token = (await refreshToken(refresh)).access_token;
+  });
   it('should return Current User', async () => {
     const spotify = spotifyApiClient(token);
     const user = await spotify(getCurrentUser());
