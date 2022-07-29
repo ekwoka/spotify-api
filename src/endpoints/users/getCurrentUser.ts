@@ -1,7 +1,5 @@
 import { QueryConstructor } from '../..';
-import { deepFreeze, spotifyFetch } from '../../../utils';
-
-let cachedUser: User | undefined;
+import { deepFreeze, spotifyFetch } from '../../utils';
 
 /**
  * Accesses the Spotify /me endpoint to get information regarding the current
@@ -11,12 +9,12 @@ let cachedUser: User | undefined;
  */
 export const getCurrentUser: QueryConstructor<Promise<User>> =
   () =>
-  async ({ token }) => {
-    if (cachedUser) return cachedUser;
+  async ({ token, cache }) => {
+    if (cache.user) return cache.user as User;
     const endpoint = `me`;
     const data = await spotifyFetch<User>(endpoint, token);
     deepFreeze(data);
-    cachedUser = data;
+    cache.user = data;
     return data;
   };
 

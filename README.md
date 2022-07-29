@@ -114,3 +114,21 @@ const user = client(getCurrentUser());
 
 console.log(user); // should log user
 ```
+
+## Special Utilities
+
+### Cache Busting
+
+As noted, a major benefit of this API wrapper is the intelligent use of caches. However, caches may not always be accurate, or may introduce other issues in certain contexts. As such, there is a special utility for cache busting.
+
+```js
+import { resetCache } from '@ekwoka/spotify-api';
+
+// clears entire cache
+client(resetCache());
+
+// clears specific cached value
+client(resetCache('user')); // should clear user cache only
+```
+
+Where caches are utilized, the documentation for those endpoints will include information about the cache key(s) used.
