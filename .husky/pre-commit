@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+bun run lint || npm run lint
+bun run build:tsc || npm run build:tsc
+bun run test:run || npm run test:run
