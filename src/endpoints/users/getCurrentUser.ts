@@ -1,5 +1,5 @@
 import { QueryConstructor } from '../..';
-import { deepFreeze, spotifyFetch } from '../../../utils';
+import { deepFreeze, spotifyFetch } from '../../utils';
 
 let cachedUser: User | undefined;
 

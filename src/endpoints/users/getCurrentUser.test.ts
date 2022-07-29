@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { beforeAll, describe, expect, it } from 'vitest';
-import { refreshToken } from '../../../auth';
-import { spotifyApiClient } from '../../spotifyApiClient';
+import { refreshToken } from '../../auth';
+import { spotifyApiClient } from '../../core/spotifyApiClient';
 import { getCurrentUser } from './getCurrentUser';
 
 describe('Get Current User', () => {
