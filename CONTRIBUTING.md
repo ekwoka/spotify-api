@@ -15,6 +15,22 @@ To get an overview of the project, read the [README](https://github.com/ekwoka/
 
 ## Getting started
 
+Getting started is quite simple. You can clone the repo or fork it and get to work.
+
+Once cloned, just run `npm install`.
+
+You will need to add a `.env` file containing the following key-value pairs:
+
+```
+REFRESH_TOKEN='a valid refresh token'
+SPOTIFY_CLIENT='spotify developer client id'
+SPOTIFY_SECRET='spotify developer client secret'
+```
+
+You can get these by [visiting the Spotify Developer Dashboard](https://developer.spotify.com/dashboard/login)
+
+> TODO: Add info about how to get a refresh token
+
 ### Issues
 
 #### Create a new issue
