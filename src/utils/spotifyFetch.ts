@@ -35,7 +35,7 @@ export const spotifyFetch = async <T>(
      * - Bad Network (auto resume?)
      * - Other?
      */
-    console.error(e);
+    console.error('Error in spotifyFetch');
     throw e;
   }
 };
