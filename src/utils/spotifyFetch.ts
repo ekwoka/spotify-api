@@ -26,16 +26,23 @@ export const spotifyFetch = async <T>(
       headers,
       ...data,
     });
-    if (!response.ok) throw new Error(response.statusText);
+    if (!response.ok) throw new Error(response.status.toString());
     return await response.json();
   } catch (e) {
     /**
-     * TODO: Decide on Error Handling Method
-     * - Expired Token
-     * - Bad Network (auto resume?)
-     * - Other?
+     * Spotify API Error Handling
+     * 401: Bad of Expired Token. Should reauthenticate.
+     * 403: Forbidden. Fatal Error.
+     * 404: Not Found. Internal Error.
+     * 429: Too Many Requests. Should wait and reattempt.
      */
-    console.error('Error in spotifyFetch');
+    if (e.message === '401') throw new Error('Token Expired');
+    if (e.message === '403') throw new Error('Forbidden');
+    if (e.message === '404') throw new Error('Not Found');
+    if (e.message === '429')
+      return new Promise((res) =>
+        setTimeout(() => res(spotifyFetch(endpoint, token, data)), 200)
+      );
     throw e;
   }
 };
