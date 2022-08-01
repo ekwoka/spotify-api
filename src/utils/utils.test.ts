@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { deepFreeze, isBrowser, isNode, toBase64 } from './';
+import { deepFreeze, isBrowser, isNode, toBase64, sleep } from './';
 
 describe('Utils', () => {
   it('should deep freeze', () => {
@@ -22,5 +22,11 @@ describe('Utils', () => {
   });
   it('encodes string to base64', () => {
     expect(toBase64('test')).toBe('dGVzdA==');
+  });
+  it('sleeps', async () => {
+    const start = Date.now();
+    await sleep(100);
+    const end = Date.now();
+    expect(end - start).toBeGreaterThan(98);
   });
 });

@@ -14,9 +14,13 @@ describe('spotifyFetch', () => {
     expect(user.email).toBeDefined();
   });
   it('should throw on invalid endpoint', async () => {
-    await expect(() => spotifyFetch('invalid', token)).rejects.toThrow();
+    await expect(() => spotifyFetch('invalid', token)).rejects.toThrow(
+      'Not Found'
+    );
   });
   it('should throw on invalid token', async () => {
-    await expect(() => spotifyFetch('me', 'invalid')).rejects.toThrow();
+    await expect(() => spotifyFetch('me', 'invalid')).rejects.toThrow(
+      'Token Expired'
+    );
   });
 });
