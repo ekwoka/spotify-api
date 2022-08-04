@@ -6,7 +6,7 @@ export const makeMock: MakeMock = (endpoint, options) => {
   const statusCode = options.statusCode ?? 200;
   mockPool
     .intercept({
-      path: `v1/${endpoint}`,
+      path: endpoint,
       method,
     })
     .reply(
@@ -15,7 +15,8 @@ export const makeMock: MakeMock = (endpoint, options) => {
           data: options.data ?? {},
           statusCode,
         }))
-    );
+    )
+    .persist();
 };
 
 type MakeMock = (endpoint: string, options: MockOptions) => void;

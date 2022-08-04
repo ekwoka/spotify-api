@@ -37,7 +37,7 @@ const fetchOptions = (refreshToken: string) => ({
   }),
 });
 
-type RefreshedToken = {
+export type RefreshedToken = {
   access_token: string;
   token_type: 'Bearer';
   scope: string;

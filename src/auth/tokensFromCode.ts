@@ -13,7 +13,7 @@ export const tokensFromCode = async (code: string): Promise<SpotifyTokens> => {
       'https://accounts.spotify.com/api/token',
       fetchOptions(code)
     );
-    if (!response.ok) throw 'Error fetching token';
+    if (!response.ok) throw new Error(response.statusText);
 
     return (await response.json()) as SpotifyTokens;
   } catch (error) {
