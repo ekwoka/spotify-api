@@ -10,17 +10,12 @@ import { toBase64 } from '../utils';
 export const refreshToken = async (
   refreshToken: string
 ): Promise<RefreshedToken> => {
-  try {
-    const response = await fetch(
-      'https://accounts.spotify.com/api/token',
-      fetchOptions(refreshToken)
-    );
-    if (!response.ok) throw 'Error fetching token';
-    return (await response.json()) as RefreshedToken;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+  const response = await fetch(
+    'https://accounts.spotify.com/api/token',
+    fetchOptions(refreshToken)
+  );
+  if (!response.ok) throw new Error('Error fetching token');
+  return (await response.json()) as RefreshedToken;
 };
 
 const fetchOptions = (refreshToken: string) => ({
@@ -37,7 +32,7 @@ const fetchOptions = (refreshToken: string) => ({
   }),
 });
 
-type RefreshedToken = {
+export type RefreshedToken = {
   access_token: string;
   token_type: 'Bearer';
   scope: string;

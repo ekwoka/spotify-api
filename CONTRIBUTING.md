@@ -19,17 +19,20 @@ Getting started is quite simple. You can clone the repo or fork it and get to wo
 
 Once cloned, just run `npm install`.
 
-You will need to add a `.env` file containing the following key-value pairs:
+From there, you can test the app with
 
-```
-REFRESH_TOKEN='a valid refresh token'
-SPOTIFY_CLIENT='spotify developer client id'
-SPOTIFY_SECRET='spotify developer client secret'
+```zsh
+npm test
 ```
 
-You can get these by [visiting the Spotify Developer Dashboard](https://developer.spotify.com/dashboard/login)
+This project uses husky pre-commits, and it's expected that you have these setup and used when making commits and PR.
 
-> TODO: Add info about how to get a refresh token
+These should automatically install, but if they do not, simply run:
+
+```zsh
+npm run prepare
+```
+
 
 ### Issues
 
