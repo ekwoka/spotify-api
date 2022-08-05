@@ -4,6 +4,7 @@
   "files": [
     "dist"
   ],
+  "sideEffects": false,
   "main": "dist/",
   "types": "dist/",
   "author": "Eric Kwoka",
