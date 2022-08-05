@@ -49,8 +49,5 @@
   "prettier": {
     "singleQuote": true,
     "bracketSameLine": true
-  },
-  "dependencies": {
-    "dotenv": "^16.0.1"
   }
 }

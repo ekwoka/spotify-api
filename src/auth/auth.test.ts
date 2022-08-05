@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { makeMock } from '../../testingTools/makeMock';
 import { refreshToken, tokensFromCode } from './';
