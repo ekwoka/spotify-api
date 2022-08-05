@@ -6,7 +6,7 @@ import { getCurrentUser } from './getCurrentUser';
 
 describe('Get Current User', () => {
   beforeAll(() => {
-    makeMock('v1/me', { data: mockedUser });
+    makeMock('v1/me', { data: mockedUser }).persist();
   });
   it('should return Current User', async () => {
     const spotify = spotifyApiClient('token');

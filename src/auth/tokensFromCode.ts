@@ -8,18 +8,13 @@ import { toBase64 } from '../utils';
  * @returns SpotifyTokens
  */
 export const tokensFromCode = async (code: string): Promise<SpotifyTokens> => {
-  try {
-    const response = await fetch(
-      'https://accounts.spotify.com/api/token',
-      fetchOptions(code)
-    );
-    if (!response.ok) throw new Error(response.statusText);
+  const response = await fetch(
+    'https://accounts.spotify.com/api/token',
+    fetchOptions(code)
+  );
+  if (!response.ok) throw new Error('Error fetching token');
 
-    return (await response.json()) as SpotifyTokens;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+  return (await response.json()) as SpotifyTokens;
 };
 
 const fetchOptions = (code: string) => ({

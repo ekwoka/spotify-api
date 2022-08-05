@@ -8,7 +8,6 @@ describe('AUTH Helpers', () => {
     makeMock('api/token', {
       method: 'POST',
       handler: ({ body }) => {
-        console.log('Mocking token');
         const params = new URLSearchParams(body as string);
         if (params.get('grant_type') === 'authorization_code') {
           return params.get('code') === 'valid'
@@ -22,7 +21,7 @@ describe('AUTH Helpers', () => {
         }
         return { statusCode: 401 };
       },
-    });
+    }).persist();
   });
   describe('refreshToken', () => {
     it('should refresh access token', async () => {
@@ -31,7 +30,9 @@ describe('AUTH Helpers', () => {
       expect(tokens).toHaveProperty('expires_in');
     });
     it('should throw on invalid refresh token', async () => {
-      await expect(() => refreshToken('invalid')).rejects.toThrow();
+      await expect(() => refreshToken('invalid')).rejects.toThrow(
+        'Error fetching token'
+      );
     });
   });
   describe('tokensFromCode', () => {
@@ -41,7 +42,9 @@ describe('AUTH Helpers', () => {
       expect(codes).toHaveProperty('refresh_token');
     });
     it('should throw when given invalid code', async () => {
-      await expect(() => tokensFromCode('invalid')).rejects.toThrow();
+      await expect(() => tokensFromCode('invalid')).rejects.toThrow(
+        'Error fetching token'
+      );
     });
   });
 });
