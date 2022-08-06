@@ -24,6 +24,7 @@
     "size": "node scripts/esbuild.js",
     "build": "tsc",
     "lint": "eslint --fix ./src; prettier --write ./src --loglevel error",
+    "prebuild": "rm -rf dist",
     "patch": "run-s test:run build && pnpm version patch && pnpm publish",
     "minor": "run-s test:run build && pnpm version minor && pnpm publish",
     "major": "run-s test:run build && pnpm version major && pnpm publish",
