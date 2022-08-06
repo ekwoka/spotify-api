@@ -33,7 +33,6 @@ These should automatically install, but if they do not, simply run:
 npm run prepare
 ```
 
-
 ### Issues
 
 #### Create a new issue
@@ -65,8 +64,6 @@ Scan through our [existing issues](https://github.com/ekwoka/spotify-api/issues
 > Node 18.x is recommended for local development, as this library depends on the native fetch, only available in Node versions above 18.0.0. While users of the library can use their own fetch implementations, for development none will be added (DO NOT TRY TO PR ADDING ANY FETCH POLYFILL).
 
 3.  Create a working branch and start with your changes!
-
-> TODO: Add details of setting up testing with a Spotify Refresh Token
 
 ### Commit your update
 

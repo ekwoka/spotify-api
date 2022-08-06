@@ -1,4 +1,5 @@
-import { toBase64 } from '../utils';
+import { SPOTIFY_AUTH } from '../constants';
+import { fetchOptions } from './fetchOptions';
 
 /**
  * This accepts a 'code' provided by the Spotify Auth Portal, trades it with
@@ -9,28 +10,17 @@ import { toBase64 } from '../utils';
  */
 export const tokensFromCode = async (code: string): Promise<SpotifyTokens> => {
   const response = await fetch(
-    'https://accounts.spotify.com/api/token',
-    fetchOptions(code)
+    SPOTIFY_AUTH,
+    fetchOptions({
+      code,
+      redirect_uri: process.env.REDIRECT,
+      grant_type: 'authorization_code',
+    })
   );
   if (!response.ok) throw new Error('Error fetching token');
 
   return (await response.json()) as SpotifyTokens;
 };
-
-const fetchOptions = (code: string) => ({
-  method: 'POST',
-  headers: {
-    Authorization: `Basic ${toBase64(
-      `${process.env.SPOTIFY_CLIENT}:${process.env.SPOTIFY_SECRET}`
-    )}`,
-    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-  },
-  body: new URLSearchParams({
-    code,
-    redirect_uri: process.env.REDIRECT,
-    grant_type: 'authorization_code',
-  }),
-});
 
 export type SpotifyTokens = {
   access_token: string;

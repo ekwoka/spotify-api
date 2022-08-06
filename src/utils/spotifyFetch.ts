@@ -1,13 +1,9 @@
 import { SPOTIFY_URL } from '../constants';
 
 /**
- * TODO: Add Tests
- */
-
-/**
  * Wrapper for fetching data from Spotify's API Endpoints with sensible and
  * consistent error handling for the common application failure points.
- * TODO: Decide on auto-resume implementation and invalid token.
+ * When rate limited, the request is delayed and reattempted.
  * @param endpoint string
  * @param token string
  * @param data object
@@ -16,7 +12,7 @@ import { SPOTIFY_URL } from '../constants';
 export const spotifyFetch = async <T>(
   endpoint: string,
   token: string,
-  data = {}
+  data: Record<string, unknown> = {}
 ): Promise<T> => {
   try {
     const headers = {

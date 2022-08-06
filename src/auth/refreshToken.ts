@@ -1,4 +1,5 @@
-import { toBase64 } from '../utils';
+import { SPOTIFY_AUTH } from '../constants';
+import { fetchOptions } from './fetchOptions';
 
 /**
  * refreshToken accepts a 'refresh_token' issued by Spotify and returns a new
@@ -11,26 +12,15 @@ export const refreshToken = async (
   refreshToken: string
 ): Promise<RefreshedToken> => {
   const response = await fetch(
-    'https://accounts.spotify.com/api/token',
-    fetchOptions(refreshToken)
+    SPOTIFY_AUTH,
+    fetchOptions({
+      refresh_token: refreshToken,
+      grant_type: 'refresh_token',
+    })
   );
-  if (!response.ok) throw new Error('Error fetching token');
+  if (!response.ok) throw new Error('Error refreshing token');
   return (await response.json()) as RefreshedToken;
 };
-
-const fetchOptions = (refreshToken: string) => ({
-  method: 'POST',
-  headers: {
-    Authorization: `Basic ${toBase64(
-      `${process.env.SPOTIFY_CLIENT}:${process.env.SPOTIFY_SECRET}`
-    )}`,
-    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-  },
-  body: new URLSearchParams({
-    refresh_token: refreshToken,
-    grant_type: 'refresh_token',
-  }),
-});
 
 export type RefreshedToken = {
   access_token: string;
