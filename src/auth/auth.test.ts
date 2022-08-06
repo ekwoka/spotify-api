@@ -30,7 +30,7 @@ describe('AUTH Helpers', () => {
     });
     it('should throw on invalid refresh token', async () => {
       await expect(() => refreshToken('invalid')).rejects.toThrow(
-        'Error fetching token'
+        'Error refreshing token'
       );
     });
   });

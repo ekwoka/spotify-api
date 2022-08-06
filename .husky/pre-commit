@@ -2,5 +2,6 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 bun run lint || npm run lint
-bun run build:tsc || npm run build:tsc
+bun run build || npm run build
 bun run test:run || npm run test:run
+bun run size || npm run size

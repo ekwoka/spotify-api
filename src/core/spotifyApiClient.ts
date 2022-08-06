@@ -5,7 +5,8 @@ import {
 } from './types';
 
 export function spotifyApiClient(token: string): SpotifyApiClient {
-  if (!token) throw 'Token is required at Spotify API Initialization';
+  if (!token)
+    throw new TypeError('Token is required at Spotify API Initialization');
   const ApiClient: PersistentApiProperties = {
     token,
     cache: {},
