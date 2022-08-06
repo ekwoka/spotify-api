@@ -3,7 +3,7 @@
 [<img src="https://badgen.net/npm/v/@ekwoka/spotify-api">](https://www.npmjs.com/package/@ekwoka/spotify-api)
 <img src="https://badgen.net/npm/types/@ekwoka/spotify-api?icon=typescript">
 <img src="https://badgen.net/npm/dt/@ekwoka/spotify-api" >
-<img src="https://badgen.net/bundlephobia/minzip/@ekwoka/spotify-api">
+[<img src="https://badgen.net/bundlephobia/minzip/@ekwoka/spotify-api">](https://bundlephobia.com/package/@ekwoka/spotify-api)
 
 Born from my own difficulties using other wrapper libraries for Spotify, this library seeks to be the best possible API wrapper.
 
