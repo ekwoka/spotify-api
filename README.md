@@ -110,11 +110,34 @@ Currently Available methods in the Users category include:
 
 #### getCurrentUser
 
+Gets details of the currently logged in user (identified by token)
+
 ```js
 const user = client(getCurrentUser());
 
 console.log(user); // should log user
 ```
+
+cache key: 'user'
+
+#### getTopItems
+
+Gets the users top tracks or artists
+
+```js
+const topTracks = await client(
+  getTopItems('tracks', { limit: 50, time_range: 'long_term' })
+);
+const topArtists = await client(
+  getTopItems('artists', { offset: 20, limit: 10 })
+);
+```
+
+Options:
+
+- `limit`: The number of items to return. Default: `20`. Maximum: `50`.
+- `offset`: The index of the first item to return. Default: `0`.
+- `time_range`: Over what time frame the data is retrieved. Options: `short_term`, `medium_term`, `long_term`. Default: `medium_term`.
 
 ## Special Utilities
 

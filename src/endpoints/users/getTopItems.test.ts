@@ -6,6 +6,13 @@ describe('getTopItems', () => {
   beforeAll(() => {
     makeMock('v1/me/top/tracks', { data: mockedTracks }).persist();
     makeMock('v1/me/top/artists', { data: mockedArtists }).persist();
+    makeMock('v1/me/top/testquery?limit=10', {
+      handler: (thing) => {
+        const paramString = thing.path.split('?')[1];
+        const params = new URLSearchParams(paramString);
+        return { statusCode: 200, data: { limit: params.get('limit') } };
+      },
+    }).persist();
   });
   it('should return top tracks', async () => {
     const tracks = await getTopItems('tracks')({ token: 'token', cache: {} });
@@ -16,6 +23,13 @@ describe('getTopItems', () => {
     const tracks = await getTopItems('artists')({ token: 'token', cache: {} });
     expect(Array.isArray(tracks.items)).toBe(true);
     expect(tracks.items[0].type).toBe('artist');
+  });
+  it('should pass in query params', async () => {
+    const tracks = await getTopItems('testquery', { limit: 10 })({
+      token: 'token',
+      cache: {},
+    });
+    expect(tracks.limit).toBe('10');
   });
 });
 

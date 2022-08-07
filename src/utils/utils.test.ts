@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
-import { deepFreeze, isBrowser, isNode, toBase64, sleep } from './';
+import {
+  deepFreeze,
+  isBrowser,
+  isNode,
+  toBase64,
+  sleep,
+  toURLString,
+} from './';
 
 describe('Utils', () => {
   it('should deep freeze', () => {
@@ -28,5 +35,13 @@ describe('Utils', () => {
     await sleep(100);
     const end = Date.now();
     expect(end - start).toBeGreaterThan(98);
+  });
+  it('creates URL string from object', () => {
+    expect(
+      toURLString({
+        foo: 1,
+        baz: 'qux',
+      })
+    ).toBe('foo=1&baz=qux');
   });
 });
