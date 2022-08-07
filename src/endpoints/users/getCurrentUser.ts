@@ -1,4 +1,4 @@
-import { QueryConstructor } from '../..';
+import { QueryFunction } from '../../core';
 import { deepFreeze, spotifyFetch } from '../../utils';
 
 /**
@@ -7,8 +7,8 @@ import { deepFreeze, spotifyFetch } from '../../utils';
  * to refetch the data or having other functions modify the cached data
  * @returns User
  */
-export const getCurrentUser: QueryConstructor<Promise<User>> =
-  () =>
+export const getCurrentUser =
+  (): QueryFunction<Promise<User>> =>
   async ({ token, cache }) => {
     if (cache.user) return cache.user as User;
     const endpoint = `me`;

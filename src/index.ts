@@ -13,7 +13,6 @@ export type {
   PersistentApiProperties,
   SpotifyApiClient,
   QueryFunction,
-  QueryConstructor,
 } from './core/types';
 export type { Artist, ArtistStub } from './endpoints/artists/types';
 export type { Track, AlbumStub } from './endpoints/tracks/types';

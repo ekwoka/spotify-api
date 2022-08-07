@@ -5,5 +5,4 @@ export type {
   PersistentApiProperties,
   SpotifyApiClient,
   QueryFunction,
-  QueryConstructor,
 } from './types';

@@ -1,4 +1,6 @@
-import { QueryConstructor } from './';
+import { QueryFunction } from './types';
 
-export const setToken: QueryConstructor = (newToken: string) => (Client) =>
-  (Client.token = newToken);
+export const setToken =
+  (newToken: string): QueryFunction =>
+  (Client) =>
+    (Client.token = newToken);

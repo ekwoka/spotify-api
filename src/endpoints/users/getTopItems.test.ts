@@ -25,7 +25,7 @@ describe('getTopItems', () => {
     expect(artists.items[0].type).toBe('artist');
   });
   it('should pass in query params', async () => {
-    const tracks = await getTopItems('testquery', { limit: 10 })({
+    const tracks = await getTopItems('testquery' as 'artists', { limit: 10 })({
       token: 'token',
       cache: {},
     });
