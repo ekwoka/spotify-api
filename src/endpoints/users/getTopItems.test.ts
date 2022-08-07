@@ -20,9 +20,9 @@ describe('getTopItems', () => {
     expect(tracks.items[0].type).toBe('track');
   });
   it('should return top artists', async () => {
-    const tracks = await getTopItems('artists')({ token: 'token', cache: {} });
-    expect(Array.isArray(tracks.items)).toBe(true);
-    expect(tracks.items[0].type).toBe('artist');
+    const artists = await getTopItems('artists')({ token: 'token', cache: {} });
+    expect(Array.isArray(artists.items)).toBe(true);
+    expect(artists.items[0].type).toBe('artist');
   });
   it('should pass in query params', async () => {
     const tracks = await getTopItems('testquery', { limit: 10 })({

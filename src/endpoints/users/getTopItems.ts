@@ -1,5 +1,6 @@
 import { QueryConstructor } from '../../core';
 import { spotifyFetch, toURLString } from '../../utils';
+import { Artist } from '../artists/types';
 import { Track } from '../tracks/types';
 
 export const getTopItems: QueryConstructor<
@@ -27,7 +28,7 @@ type TopItems<T> = {
 
 type TopItem = {
   tracks: Track;
-  artists: Track;
+  artists: Artist;
 };
 
 type TopItemOptions = {
