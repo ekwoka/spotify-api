@@ -4,7 +4,4 @@ export type PersistentApiProperties = {
 };
 
 export type SpotifyApiClient = <T>(fn: QueryFunction<T>) => T;
-export type QueryFunction<T> = (props: PersistentApiProperties) => T;
-export type QueryConstructor<T = void> = (
-  ...args: unknown[]
-) => QueryFunction<T>;
+export type QueryFunction<T = void> = (props: PersistentApiProperties) => T;

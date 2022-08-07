@@ -1,4 +1,4 @@
-import { QueryConstructor } from './types';
+import { QueryFunction } from './types';
 
 /**
  * The resetCache utility cleans out the cache on the active client, either
@@ -7,8 +7,9 @@ import { QueryConstructor } from './types';
  * @param cacheType string
  * @returns void
  */
-export const resetCache: QueryConstructor =
-  (cacheType?: string) => (Client) => {
+export const resetCache =
+  (cacheType?: string): QueryFunction =>
+  (Client) => {
     if (!cacheType) Client.cache = {};
     else delete Client.cache[cacheType];
   };
