@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 import { makeMock } from '../../testingTools/makeMock';
-import { refreshToken, tokensFromCode } from './';
+import { refreshToken, tokensFromCode, makeAuthURL } from './';
 
 describe('AUTH Helpers', () => {
   beforeAll(() => {
@@ -21,6 +21,21 @@ describe('AUTH Helpers', () => {
         return { statusCode: 401 };
       },
     }).persist();
+  });
+  describe('makeAuthURL', () => {
+    it('should create auth url', () => {
+      process.env.REDIRECT = 'http://localhost:3000/';
+      process.env.SPOTIFY_CLIENT = 'valid-client';
+      process.env.SPOTIFY_SECRET = 'supersecret';
+      const authURL = makeAuthURL([
+        'streaming',
+        'user-read-email',
+        'user-read-private',
+      ]);
+      expect(authURL).toBe(
+        'https://accounts.spotify.com/authorize?response_type=code&client_id=valid-client&scope=streaming+user-read-email+user-read-private&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F'
+      );
+    });
   });
   describe('refreshToken', () => {
     it('should refresh access token', async () => {
