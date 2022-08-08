@@ -8,7 +8,7 @@ This document serves the purpose of documenting the progress of the API. This ca
 
 - [x] Get Tokens from Code
 - [x] Get token from refresh token
-- [ ] Build Auth Login URL
+- [x] Build Auth Login URL
 
 ## Endpoints
 
