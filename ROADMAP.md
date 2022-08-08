@@ -36,7 +36,7 @@ This document serves the purpose of documenting the progress of the API. This ca
 
 - [x] [GET Current User Profile](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-current-users-profile) - `/me`
 - [x] [GET User's Top Items](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-users-top-artists-and-tracks) - `/me/top/{type}`
-- [ ] [GET User Profile by ID](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-users-profile) - `/users/{user_id}`
+- [x] [GET User Profile by ID](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-users-profile) - `/users/{user_id}`
 
 > Note: These next two could be merged to a single wrapper endpoint
 

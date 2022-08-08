@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 import { makeMock } from '../../../testingTools/makeMock';
-import { getTopItems } from './getTopItems';
+import { getTopItems } from './';
 
 describe('getTopItems', () => {
   beforeAll(() => {

@@ -139,6 +139,14 @@ Options:
 - `offset`: The index of the first item to return. Default: `0`.
 - `time_range`: Over what time frame the data is retrieved. Options: `short_term`, `medium_term`, `long_term`. Default: `medium_term`.
 
+#### getUserProfile
+
+Get's another user's profile by ID
+
+```js
+const thekwoka = await client(getUserProfile('thekwoka'));
+```
+
 ## Special Utilities
 
 ### Cache Busting
