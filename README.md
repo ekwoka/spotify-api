@@ -1,9 +1,9 @@
 # ⚡️A tree-shakable, composable, lightweight wrapper for the multiple Spotify APIs🔥
 
-[<img src="https://badgen.net/npm/v/@ekwoka/spotify-api">](https://www.npmjs.com/package/@ekwoka/spotify-api)
-<img src="https://badgen.net/npm/types/@ekwoka/spotify-api?icon=typescript">
-<img src="https://badgen.net/npm/dt/@ekwoka/spotify-api" >
-[<img src="https://badgen.net/bundlephobia/minzip/@ekwoka/spotify-api">](https://bundlephobia.com/package/@ekwoka/spotify-api)
+[<img src="https://img.shields.io/npm/v/@ekwoka/spotify-api?style=for-the-badge">](https://www.npmjs.com/package/@ekwoka/spotify-api)
+<img src="https://img.shields.io/npm/types/@ekwoka/spotify-api?label=%20&amp;logo=typescript&amp;logoColor=white&amp;style=for-the-badge">
+<img src="https://img.shields.io/npm/dt/@ekwoka/spotify-api?style=for-the-badge" >
+[<img src="https://img.shields.io/bundlephobia/minzip/@ekwoka/spotify-api?style=for-the-badge">](https://bundlephobia.com/package/@ekwoka/spotify-api)
 
 Born from my own difficulties using other wrapper libraries for Spotify, this library seeks to be the best possible API wrapper.
 
