@@ -59,20 +59,27 @@ Includes in this package are some additional helper functions for interacting wi
 
 These helpers are:
 
+- `makeAuthURL`: Generates an Auth URL to direct the user to for logging in with Spotify OAuth
 - `getTokenFromCode`: Accepts a code from the Spotify authentication flow and returns a suite of tokens (access and refresh).
 - `refreshToken`: Accepts a refresh token and returns a new access token.
 
-These currently depend on you setting up and exposing certain environment variables for the functions to access:
+These currently depend on you setting up and exposing certain environment variables for the functions to access on the `process.env` object:
 
 - `SPOTIFY_CLIENT`: Client id from Spotify Developer Dashboard.
 - `SPOTIFY_SECRET`: Client secret.
+- `REDIRECT`: URL to pass to Spotify Auth for handling the user returning to your app.
 
 If these are not defined, the function will throw.
 
 ### Examples (Pseudo Express code)
 
 ```js
-import { getTokenFromCode, refreshToken } from '@ekwoka/spotify-api';
+import { getTokenFromCode, refreshToken, makeAuthURL } from '@ekwoka/spotify-api';
+
+const loginHandler = async(req, res) => {
+	const url = makeAuthURL(['user-read-email'])
+	res.redirect(302, url)
+}
 
 const codeHandler = async (req, res) => {
   try {

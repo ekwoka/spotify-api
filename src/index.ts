@@ -1,6 +1,9 @@
-export { fetchOptions } from './auth/fetchOptions';
-export { refreshToken } from './auth/refreshToken';
-export { tokensFromCode } from './auth/tokensFromCode';
+export {
+  fetchOptions,
+  makeAuthURL,
+  refreshToken,
+  tokensFromCode,
+} from './auth';
 export { resetCache } from './core/resetCache';
 export { setToken } from './core/setToken';
 export { spotifyApiClient } from './core/spotifyApiClient';
