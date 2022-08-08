@@ -33,8 +33,9 @@ build({
     null,
     2
   );
-  console.log(content);
   await writeFile(join('size.json'), content, 'utf8');
+  console.log(`New Package size: ${minified.pretty}`);
+  console.log(`Minzipped size: ${gzipped.pretty}`);
 });
 
 function sizeInfo(bytesSize) {
