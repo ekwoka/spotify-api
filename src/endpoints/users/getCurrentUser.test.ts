@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 import { makeMock } from '../../../testingTools/makeMock';
 import { spotifyApiClient } from '../../core/spotifyApiClient';
-import { getCurrentUser } from './getCurrentUser';
+import { getCurrentUser } from './';
 
 describe('Get Current User', () => {
   beforeAll(() => {
