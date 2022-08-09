@@ -22,7 +22,9 @@ describe('getAlbum', () => {
           return { statusCode: 401 };
         return {
           statusCode: 200,
-          data: { market: req.path.split('?')[1].split('=')[1] },
+          data: {
+            market: new URLSearchParams(req.path.split('?')[1]).get('market'),
+          },
         };
       },
     });
