@@ -109,11 +109,51 @@ Endpoints are importable both from `@ekwoka/spotify-api` or `@ekwoka/spotify-api
 
 > NOTE: The following documentation uses the same structure as the Official Spotify Docs for organization
 
+### Albums
+
+Currently Available methods in the Albums category include:
+
+- `getAlbum` - Retrieves info about an album by ID
+- `getAlbums` - Retrieves info about multiple albums by ID
+- `getAlbumTracks` - Retrieves info about an albums tracks
+
+> While these correspond to 3 different endpoints to Spotify's API, internally these 3 use only the `getAlbums` endpoints for improved code-reuse as well as future batching and caching.
+
+### getAlbum
+
+Gets details of an Album by ID.
+
+```js
+const album = client(getAlbum('6tLZvqqoWszgPagzzNNQQF'))
+const albumInMarket = client(getAlbum('6tLZvqqoWszgPagzzNNQQF', 'KR'))
+```
+
+#### getAlbums
+
+Gets Details about multiple Albums at once.
+
+```js
+const albums = client(getAlbums(['6tLZvqqoWszgPagzzNNQQF','6XBIkDFhDgc3PQOUEcO2fd']))
+const albumsInMarket = client(getAlbums(['6tLZvqqoWszgPagzzNNQQF','6XBIkDFhDgc3PQOUEcO2fd'], 'KR'))
+```
+
+#### getAlbumTracks
+
+Gets Track Info about Album
+
+```js
+const album = client(getAlbumTracks('6tLZvqqoWszgPagzzNNQQF'))
+const albumInMarket = client(getAlbumTracks('6tLZvqqoWszgPagzzNNQQF', 'KR'))
+```
+
+
 ### Users
 
 Currently Available methods in the Users category include:
 
 - `getCurrentUser` - Retrieves data related to the actively logged in user (as defined by access token)
+- `getTopItems` - Retrieves info covering the Users Top Tracks and Artists
+- `getUserProfile` - Retrieves public info regarding another User by ID
 
 #### getCurrentUser
 
