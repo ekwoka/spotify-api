@@ -6,24 +6,31 @@ import { getAlbum } from './';
 
 describe('getAlbum', () => {
   beforeAll(() => {
-    makeMock('v1/albums/GOOD', {
+    makeMock('v1/albums?ids=GOOD', {
       handler: (req) => {
         if (!hasToken(req.headers as unknown as string[]))
           return { statusCode: 401 };
         return {
           statusCode: 200,
-          data: mockedAlbum,
+          data: { albums: [mockedAlbum] },
         };
       },
     });
-    makeMock('v1/albums/GOOD?market=EN', {
+    makeMock('v1/albums?ids=GOOD&market=EN', {
       handler: (req) => {
         if (!hasToken(req.headers as unknown as string[]))
           return { statusCode: 401 };
         return {
           statusCode: 200,
           data: {
-            market: new URLSearchParams(req.path.split('?')[1]).get('market'),
+            albums: [
+              {
+                ...mockedAlbum,
+                market: new URLSearchParams(req.path.split('?')[1]).get(
+                  'market'
+                ),
+              },
+            ],
           },
         };
       },
