@@ -2,12 +2,11 @@ import { beforeAll } from 'vitest';
 import { describe, expect, it } from 'vitest';
 import { hasToken } from '../../../testingTools/hasToken';
 import { makeMock } from '../../../testingTools/makeMock';
-import { getAlbum } from './';
-import { mockedAlbums } from './getAlbums.test.js';
+import { mockedAlbums, getAlbumTracks } from './';
 
-describe('getAlbum', () => {
+describe('getAlbumTracks', () => {
   beforeAll(() => {
-    makeMock('v1/albums?ids=GOOD', {
+    makeMock('v1/albums?ids=TRACKS', {
       handler: (req) => {
         if (!hasToken(req.headers as unknown as string[]))
           return { statusCode: 401 };
@@ -17,7 +16,7 @@ describe('getAlbum', () => {
         };
       },
     });
-    makeMock('v1/albums?ids=GOOD&market=EN', {
+    makeMock('v1/albums?ids=TRACKS&market=EN', {
       handler: (req) => {
         if (!hasToken(req.headers as unknown as string[]))
           return { statusCode: 401 };
@@ -26,10 +25,12 @@ describe('getAlbum', () => {
           data: {
             albums: [
               {
-                ...mockedAlbums.albums[0],
-                market: new URLSearchParams(req.path.split('?')[1]).get(
-                  'market'
-                ),
+                tracks: {
+                  ...mockedAlbums.albums[0].tracks,
+                  market: new URLSearchParams(req.path.split('?')[1]).get(
+                    'market'
+                  ),
+                },
               },
             ],
           },
@@ -37,13 +38,18 @@ describe('getAlbum', () => {
       },
     });
   });
-  it('should return an album', async () => {
-    const album = await getAlbum('GOOD')({ token: 'token', cache: {} });
-    expect(album).toEqual(mockedAlbums.albums[0]);
+
+  it('should return a tracklist', async () => {
+    const tracks = await getAlbumTracks('TRACKS')({
+      token: 'token',
+      cache: {},
+    });
+    expect(tracks).toEqual(mockedAlbums.albums[0].tracks);
   });
+
   it('should pass market as query param', async () => {
-    const { market } = (await getAlbum(
-      'GOOD',
+    const { market } = (await getAlbumTracks(
+      'TRACKS',
       'EN'
     )({ token: 'token', cache: {} })) as unknown as { market: string };
     expect(market).toEqual('EN');

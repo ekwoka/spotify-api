@@ -1,5 +1,6 @@
 import { SpotifyAPIURL, SpotifyPageURL, Image } from '../../utils';
-import { ArtistStub } from '../artists/types';
+import { ArtistStub } from '../artists/';
+import { Track } from '../tracks/';
 
 export type AlbumStub = {
   album_type: 'single' | 'album' | 'compilation';
@@ -23,13 +24,14 @@ export type Album = AlbumStub & {
   restrictions?: {
     reason: 'market' | 'product' | 'explicit';
   };
-  tracks: {
-    href: SpotifyAPIURL;
-    items: [];
-    limit: number;
-    next: SpotifyAPIURL | null;
-    offset: number;
-    previous: SpotifyAPIURL | null;
-    total: number;
-  };
+  tracks: TrackList;
+};
+export type TrackList = {
+  href: SpotifyAPIURL;
+  items: Track[];
+  limit: number;
+  next: SpotifyAPIURL | null;
+  offset: number;
+  previous: SpotifyAPIURL | null;
+  total: number;
 };

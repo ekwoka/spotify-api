@@ -47,7 +47,7 @@ describe('getAlbums', () => {
   });
 });
 
-const mockedAlbums = {
+export const mockedAlbums = {
   albums: [
     {
       album_type: 'compilation',
