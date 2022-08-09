@@ -1,5 +1,4 @@
 export { getAlbum } from './albums/getAlbum';
-export { mockedAlbums } from './albums/getAlbums.test';
 export { getAlbums } from './albums/getAlbums';
 export { getAlbumTracks } from './albums/getAlbumTracks';
 export { getCurrentUser } from './users/getCurrentUser';
