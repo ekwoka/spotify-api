@@ -16,8 +16,8 @@ This document serves the purpose of documenting the progress of the API. This ca
 
 > NOTE: These two can be merged for convenience, or even only implement multi album. Will need to evaluate returned types to see what makes most sense
 
-- [ ] [GET Album](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-an-album) - `/albums/{id}`
-- [ ] [GET Several Albums](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-multiple-albums) - `/albums`
+- [x] [GET Album](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-an-album) - `/albums/{id}`
+- [x] [GET Several Albums](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-multiple-albums) - `/albums`
 - [ ] [GET Album Tracks](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-an-albums-tracks) - `/albums/{id}/tracks`
 - [ ] [GET Saved Albums](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-users-saved-albums) - `/me/albums`
 
