@@ -1,4 +1,5 @@
 {
   "vitest.enable": true,
-  "vitest.showFailMessages": true
+  "vitest.showFailMessages": true,
+  "vitest.commandLine": "bun run test:run --"
 }

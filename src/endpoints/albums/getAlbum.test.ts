@@ -15,7 +15,7 @@ describe('getAlbum', () => {
           data: mockedAlbums,
         };
       },
-    });
+    }).persist();
     makeMock('v1/albums?ids=GOOD&market=EN', {
       handler: (req) => {
         if (!hasToken(req.headers as unknown as string[]))
@@ -46,6 +46,14 @@ describe('getAlbum', () => {
       'EN'
     )({ token: 'token', cache: {} })) as unknown as { market: string };
     expect(market).toEqual('EN');
+  });
+  it('caches album result', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const cache = {} as Record<string, any>;
+    const album1 = await getAlbum('GOOD')({ token: 'token', cache });
+    expect(cache.albums?.GOOD).toBe(album1);
+    const album2 = await getAlbum('GOOD')({ token: 'token', cache });
+    expect(album1).toBe(album2);
   });
 });
 

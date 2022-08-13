@@ -4,11 +4,12 @@ import { join } from 'node:path';
 import { gzipSize } from 'gzip-size';
 import prettyBytes from 'pretty-bytes';
 
+const test = process.env.NODE_ENV === 'test';
 build({
   entryPoints: ['./src/index.ts'],
   inject: [],
   outfile: 'testing/bundle.js',
-  write: false,
+  write: test,
   splitting: false,
   format: 'esm',
   bundle: true,

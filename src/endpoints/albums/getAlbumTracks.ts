@@ -1,10 +1,10 @@
 import { QueryFunction } from '../../core';
-import { getAlbums, TrackList } from './';
+import { getAlbum, TrackList } from './';
 
 /**
  * Gets single album's TrackList by ID. This endpoint is implemented through
- * getAlbums to allow for improved performance and a smaller bundle size.
- * In the future, this endpoint will batch and cache Tracklist info.
+ * getAlbum to allow for improved performance and a smaller bundle size.
+ * This batches Tracklist Requests into single calls to the API.
  * @param id string
  * @param market string
  * @returns TrackList
@@ -12,6 +12,6 @@ import { getAlbums, TrackList } from './';
 export const getAlbumTracks =
   (id: string, market?: string): QueryFunction<Promise<TrackList>> =>
   async (client) => {
-    const { albums } = await getAlbums([id], market)(client);
-    return albums[0].tracks;
+    const album = await getAlbum(id, market)(client);
+    return album.tracks;
   };
