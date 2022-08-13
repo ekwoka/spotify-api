@@ -9,7 +9,7 @@
   "types": "dist/",
   "author": "Eric Kwoka",
   "license": "MIT",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "Composable Wrapper for the Spotify Web Api and Spotify Web Playback SDK",
   "keywords": [
     "spotify",
