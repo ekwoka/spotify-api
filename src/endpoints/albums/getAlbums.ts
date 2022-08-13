@@ -1,4 +1,4 @@
-import { Album, batchAlbums } from '.';
+import { Album, getAlbum } from '.';
 import { QueryFunction } from '../../core';
 /**
  * Gets multiple albums with one request to Spotify. Market limits the search
@@ -10,9 +10,9 @@ import { QueryFunction } from '../../core';
  */
 export const getAlbums =
   (ids: string[], market?: string): QueryFunction<Promise<Albums>> =>
-  async ({ token }) => {
+  async (client) => {
     const albums = await Promise.all(
-      ids.map((id) => batchAlbums(token, id, market))
+      ids.map((id) => getAlbum(id, market)(client))
     );
     return { albums };
   };
