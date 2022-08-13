@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import {
   deepFreeze,
@@ -7,7 +7,10 @@ import {
   toBase64,
   sleep,
   toURLString,
-} from './';
+  debounce,
+  chunkArray,
+  arrayWrap,
+} from '.';
 
 describe('Utils', () => {
   it('should deep freeze', () => {
@@ -43,5 +46,27 @@ describe('Utils', () => {
         baz: 'qux',
       })
     ).toBe('foo=1&baz=qux');
+  });
+  it('debounces', async () => {
+    const spy = vi.fn().mockImplementation(() => null);
+    const debounced = debounce(spy, 10);
+    expect(debounced).toBeInstanceOf(Function);
+    debounced();
+    debounced();
+    debounced();
+    await sleep(20);
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+  it('chunks an array into designated size', () => {
+    expect(chunkArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 3)).toEqual([
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9],
+      [10],
+    ]);
+  });
+  it('wraps non-array in an array', () => {
+    expect(arrayWrap(1)).toEqual([1]);
+    expect(arrayWrap([1, 2, 3])).toEqual([1, 2, 3]);
   });
 });

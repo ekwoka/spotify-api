@@ -1,3 +1,7 @@
+export { arrayWrap } from './arrayWrap';
+export { batchWrap } from './batchRequests';
+export { chunkArray } from './chunkArray';
+export { debounce } from './debounce';
 export { deepFreeze } from './deepFreeze';
 export { isBrowser, isNode } from './isBrowserOrNode';
 export { sleep } from './sleep';

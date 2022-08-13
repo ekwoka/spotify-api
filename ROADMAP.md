@@ -18,7 +18,7 @@ This document serves the purpose of documenting the progress of the API. This ca
 
 - [x] [GET Album](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-an-album) - `/albums/{id}`
 - [x] [GET Several Albums](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-multiple-albums) - `/albums`
-- [ ] [GET Album Tracks](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-an-albums-tracks) - `/albums/{id}/tracks`
+- [x] [GET Album Tracks](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-an-albums-tracks) - `/albums/{id}/tracks`
 - [ ] [GET Saved Albums](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-users-saved-albums) - `/me/albums`
 
 > NOTE: These two can likely be merged
