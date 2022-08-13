@@ -74,12 +74,16 @@ If these are not defined, the function will throw.
 ### Examples (Pseudo Express code)
 
 ```js
-import { getTokenFromCode, refreshToken, makeAuthURL } from '@ekwoka/spotify-api';
+import {
+  getTokenFromCode,
+  refreshToken,
+  makeAuthURL,
+} from '@ekwoka/spotify-api';
 
-const loginHandler = async(req, res) => {
-	const url = makeAuthURL(['user-read-email'])
-	res.redirect(302, url)
-}
+const loginHandler = async (req, res) => {
+  const url = makeAuthURL(['user-read-email']);
+  res.redirect(302, url);
+};
 
 const codeHandler = async (req, res) => {
   try {
@@ -117,15 +121,18 @@ Currently Available methods in the Albums category include:
 - `getAlbums` - Retrieves info about multiple albums by ID
 - `getAlbumTracks` - Retrieves info about an albums tracks
 
-> While these correspond to 3 different endpoints to Spotify's API, internally these 3 use only the `getAlbums` endpoints for improved code-reuse as well as future batching and caching.
+> While these correspond to 3 different endpoints to Spotify's API, internally these 3 use only the `getAlbums` endpoints for improved code-reuse.
+
+Cachekey: 'albums.[id]'
+Batching Limit: 20
 
 ### getAlbum
 
 Gets details of an Album by ID.
 
 ```js
-const album = client(getAlbum('6tLZvqqoWszgPagzzNNQQF'))
-const albumInMarket = client(getAlbum('6tLZvqqoWszgPagzzNNQQF', 'KR'))
+const album = client(getAlbum('6tLZvqqoWszgPagzzNNQQF'));
+const albumInMarket = client(getAlbum('6tLZvqqoWszgPagzzNNQQF', 'KR'));
 ```
 
 #### getAlbums
@@ -133,8 +140,12 @@ const albumInMarket = client(getAlbum('6tLZvqqoWszgPagzzNNQQF', 'KR'))
 Gets Details about multiple Albums at once.
 
 ```js
-const albums = client(getAlbums(['6tLZvqqoWszgPagzzNNQQF','6XBIkDFhDgc3PQOUEcO2fd']))
-const albumsInMarket = client(getAlbums(['6tLZvqqoWszgPagzzNNQQF','6XBIkDFhDgc3PQOUEcO2fd'], 'KR'))
+const albums = client(
+  getAlbums(['6tLZvqqoWszgPagzzNNQQF', '6XBIkDFhDgc3PQOUEcO2fd'])
+);
+const albumsInMarket = client(
+  getAlbums(['6tLZvqqoWszgPagzzNNQQF', '6XBIkDFhDgc3PQOUEcO2fd'], 'KR')
+);
 ```
 
 #### getAlbumTracks
@@ -142,10 +153,9 @@ const albumsInMarket = client(getAlbums(['6tLZvqqoWszgPagzzNNQQF','6XBIkDFhDgc3P
 Gets Track Info about Album
 
 ```js
-const album = client(getAlbumTracks('6tLZvqqoWszgPagzzNNQQF'))
-const albumInMarket = client(getAlbumTracks('6tLZvqqoWszgPagzzNNQQF', 'KR'))
+const album = client(getAlbumTracks('6tLZvqqoWszgPagzzNNQQF'));
+const albumInMarket = client(getAlbumTracks('6tLZvqqoWszgPagzzNNQQF', 'KR'));
 ```
-
 
 ### Users
 
@@ -193,6 +203,44 @@ Get's another user's profile by ID
 ```js
 const thekwoka = await client(getUserProfile('thekwoka'));
 ```
+
+## Batching and Caching
+
+One of the unique features of this API wrapper is the use of batched requests and intelligent caching. These features serve the purpose of reducing the number of requests make to the Spotify API and generally improving the responsiveness of your application.
+
+All of these takes place under the hood, and the implementation of your code should be relatively agnostic to the fact this is happening.
+
+### Batching
+
+Many endpoints that exist with the Spotify API accept the request for multiple items at a single time. For example, even though a singular `album` endpoint exists, there is also an `albums` endpoint that returns the same information, but simply using an array of album IDs instead of a singular one.
+
+So, the basic idea is that, if the application is making calls for many individual items ( like `album`), and those items can be batched (into `albums`), this wrapper will automatically do so and distribute the results.
+
+Example:
+
+```js
+const ids = ['6tLZvqqoWszgPagzzNNQQF', '6XBIkDFhDgc3PQOUEcO2fd'];
+ids.forEach(async (id) => {
+  const album = await client(getAlbum(id));
+  console.log(album.name);
+});
+```
+
+While this isa bit contrived, in a component based framework, you might have these actual calls happening in places far away from each other.
+
+In the background, these two ids will be bunched together (if they come in close enough to eachother) sent as a single request to Spotify, and resolved from the return. This also includes combining multiple requests for a single album into only the one reference requested from Spotify.
+
+#### Splitting Large Lists
+
+This system also comes with another nice feature. These multiple item endpoints have limits on the total number of items in a single request. For the above example of `albums` it's 20.
+
+Once again, in the background, as these requests come in, the total number of albums may be greater than 20. Or you may even do a direct request for more than 20 albums.
+
+In the background, the request will be bunched into groups of 20, sent as requests, and, once again, distributed back to whence they came.
+
+### Caching
+
+As this data changes infrequently, responses will be cached and reused when the same information is requested again. This works with the above batching, as well. So if you make a bulk request for 10 albums, 3 of which you've already searched for before, those 3 will be returned from cache and the other 7 will be fetched anew, all without any adjustments to how your code behaves.
 
 ## Special Utilities
 

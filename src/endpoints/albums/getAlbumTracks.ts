@@ -3,8 +3,8 @@ import { getAlbum, TrackList } from './';
 
 /**
  * Gets single album's TrackList by ID. This endpoint is implemented through
- * getAlbums to allow for improved performance and a smaller bundle size.
- * In the future, this endpoint will batch and cache Tracklist info.
+ * getAlbum to allow for improved performance and a smaller bundle size.
+ * This batches Tracklist Requests into single calls to the API.
  * @param id string
  * @param market string
  * @returns TrackList

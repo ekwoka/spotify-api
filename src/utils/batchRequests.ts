@@ -1,5 +1,13 @@
 import { chunkArray, debounce } from './';
 
+/**
+ * This is the core system for batching requests to Spotify's API. This piece
+ * is used in the creation of batched endpoints and returns a function to
+ * be called when wanting to add a new request to the batched queue.
+ * @param cb string[] => any[]
+ * @param max number
+ * @returns BatchedFunction
+ */
 export const batchWrap = <T extends string, S>(
   cb: BatchCallback<T, S>,
   max = 20
