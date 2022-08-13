@@ -3,21 +3,21 @@ import { chunkArray, debounce } from './';
 export const batchWrap = <T extends string, S>(
   cb: BatchCallback<T, S>,
   max = 20
-): ((tkn: string, id: string) => Promise<S>) => {
+): BatchedFunction<S> => {
   let batch: BatchQueue<S> = {};
   const addToBatch = (item: T, res: ResolveBatch<S>) => {
     if (!batch[item]) batch[item] = [];
     batch[item].push(res);
   };
-  const performRequests = debounce((token: string) => {
-    performBatchedRequest(token, batch, cb, max);
+  const performRequests = debounce((token: string, ...rest: unknown[]) => {
+    performBatchedRequest(token, batch, cb, max, ...rest);
     batch = {};
   }, 50);
 
-  return (token: string, id: T): Promise<S> => {
+  return (token: string, id: T, ...rest: unknown[]): Promise<S> => {
     return new Promise((res, rej) => {
       addToBatch(id, resOrRej(res, rej));
-      performRequests(token);
+      performRequests(token, ...rest);
     });
   };
 };
@@ -33,12 +33,13 @@ const performBatchedRequest = <T extends string, S>(
   token: string,
   batchQueue: BatchQueue<S>,
   cb: BatchCallback<T, S>,
-  max: number
+  max: number,
+  ...rest: unknown[]
 ) => {
   const batches = chunkArray(Object.keys(batchQueue), max) as T[][];
   batches.forEach(async (batch) => {
     try {
-      const dataToReturn = await cb(token, batch);
+      const dataToReturn = await cb(token, batch, ...rest);
       while (batch.length) {
         const resolves = batchQueue[batch.pop()];
         const nextData = dataToReturn.pop();
@@ -53,9 +54,16 @@ const performBatchedRequest = <T extends string, S>(
   });
 };
 
+export type BatchedFunction<S> = (
+  tkn: string,
+  id: string,
+  ...rest: unknown[]
+) => Promise<S>;
+
 type BatchCallback<T extends string, S> = (
   token: string,
-  data: T[]
+  data: T[],
+  ...rest: unknown[]
 ) => Promise<S[]>;
 
 type BatchQueue<S> = {

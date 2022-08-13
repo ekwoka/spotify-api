@@ -1,6 +1,5 @@
-import { Album } from '.';
+import { Album, batchAlbums } from '.';
 import { QueryFunction } from '../../core';
-import { spotifyFetch, toURLString } from '../../utils';
 /**
  * Gets multiple albums with one request to Spotify. Market limits the search
  * to a specific market. In the future, this endpoint will intelligently
@@ -12,12 +11,10 @@ import { spotifyFetch, toURLString } from '../../utils';
 export const getAlbums =
   (ids: string[], market?: string): QueryFunction<Promise<Albums>> =>
   async ({ token }) => {
-    const endpoint = `albums?${toURLString({
-      ids: ids.join(','),
-      ...(market && { market }),
-    })}`;
-    const data = await spotifyFetch<Albums>(endpoint, token);
-    return data;
+    const albums = await Promise.all(
+      ids.map((id) => batchAlbums(token, id, market))
+    );
+    return { albums };
   };
 
 export type Albums = {

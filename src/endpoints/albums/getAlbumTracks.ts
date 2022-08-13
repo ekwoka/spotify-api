@@ -1,5 +1,5 @@
 import { QueryFunction } from '../../core';
-import { getAlbums, TrackList } from './';
+import { batchAlbums, TrackList } from './';
 
 /**
  * Gets single album's TrackList by ID. This endpoint is implemented through
@@ -11,7 +11,7 @@ import { getAlbums, TrackList } from './';
  */
 export const getAlbumTracks =
   (id: string, market?: string): QueryFunction<Promise<TrackList>> =>
-  async (client) => {
-    const { albums } = await getAlbums([id], market)(client);
-    return albums[0].tracks;
+  async ({ token }) => {
+    const album = await batchAlbums(token, id, market);
+    return album.tracks;
   };
