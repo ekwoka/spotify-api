@@ -1,6 +1,7 @@
+import { Copyrights } from '../../core/types';
 import { SpotifyAPIURL, SpotifyPageURL, Image } from '../../utils';
 import { ArtistStub } from '../artists/';
-import { Track } from '../tracks/';
+import { TrackStub } from '../tracks/types';
 
 export type AlbumStub = {
   album_type: 'single' | 'album' | 'compilation';
@@ -25,10 +26,15 @@ export type Album = AlbumStub & {
     reason: 'market' | 'product' | 'explicit';
   };
   tracks: TrackList;
+  copyrights?: Copyrights;
+  external_ids: Record<string, string>;
+  genres: string[];
+  label: string;
+  popularity: number;
 };
 export type TrackList = {
   href: SpotifyAPIURL;
-  items: Track[];
+  items: TrackStub[];
   limit: number;
   next: SpotifyAPIURL | null;
   offset: number;

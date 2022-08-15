@@ -2,18 +2,22 @@ import { SpotifyAPIURL, SpotifyPageURL } from '../../utils/SpotifyUtilityTypes';
 import { AlbumStub } from '../albums';
 import { ArtistStub } from '../artists/types';
 
-export type Track = {
+export type Track = TrackStub & {
   album: AlbumStub;
-  artists: ArtistStub[];
-  available_markets: string[];
-  disc_number: number;
-  duration_ms: number;
-  explicit: boolean;
   external_ids: {
     isrc?: string;
     ean?: string;
     upc?: string;
   };
+  popularity: number;
+};
+
+export type TrackStub = {
+  artists: ArtistStub[];
+  available_markets: string[];
+  disc_number: number;
+  duration_ms: number;
+  explicit: boolean;
   external_urls: {
     spotify: SpotifyPageURL;
   };
@@ -21,7 +25,6 @@ export type Track = {
   id: string;
   is_local: boolean;
   name: string;
-  popularity: number;
   preview_url: string;
   track_number: number;
   type: 'track';

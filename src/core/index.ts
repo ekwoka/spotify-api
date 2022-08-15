@@ -5,4 +5,5 @@ export type {
   PersistentApiProperties,
   SpotifyApiClient,
   QueryFunction,
+  PaginatedList,
 } from './types';
