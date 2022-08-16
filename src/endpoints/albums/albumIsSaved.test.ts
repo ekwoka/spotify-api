@@ -5,7 +5,7 @@ import { albumIsSaved } from './';
 
 describe('albumIsSaved', () => {
   beforeAll(() => {
-    makeMock('v1/albums/contains?ids=seoul%2Cdrip', {
+    makeMock('v1/me/albums/contains?ids=seoul%2Cdrip', {
       handler: (req) => {
         if (!hasToken(req.headers as unknown as string[]))
           return { statusCode: 401 };
@@ -15,7 +15,7 @@ describe('albumIsSaved', () => {
         };
       },
     }).persist();
-    makeMock('v1/albums/contains?ids=seoul', {
+    makeMock('v1/me/albums/contains?ids=seoul', {
       handler: (req) => {
         if (!hasToken(req.headers as unknown as string[]))
           return { statusCode: 401 };

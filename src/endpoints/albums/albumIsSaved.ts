@@ -33,7 +33,9 @@ type AlbumIsSaved = {
 
 const batchAlbumIsSaved: BatchedFunction<boolean> = batchWrap(
   async (token, ids) => {
-    const endpoint = `albums/contains?${toURLString({ ids: ids.join(',') })}`;
+    const endpoint = `me/albums/contains?${toURLString({
+      ids: ids.join(','),
+    })}`;
     const data = await spotifyFetch<boolean[]>(endpoint, token);
     return data;
   }

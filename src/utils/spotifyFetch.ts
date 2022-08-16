@@ -27,7 +27,7 @@ export const spotifyFetch = async <T>(
   } catch (e) {
     /**
      * Spotify API Error Handling
-     * 401: Bad of Expired Token. Should reauthenticate.
+     * 401: Bad or Expired Token. Should reauthenticate.
      * 403: Forbidden. Fatal Error.
      * 404: Not Found. Internal Error.
      * 429: Too Many Requests. Should wait and reattempt.
