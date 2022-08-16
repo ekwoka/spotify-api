@@ -9,7 +9,12 @@ export function spotifyApiClient(token: string): SpotifyApiClient {
     throw new TypeError('Token is required at Spotify API Initialization');
   const ApiClient: PersistentApiProperties = {
     token,
-    cache: {},
+    cache: {
+      albums: {},
+      saved: {
+        albums: {},
+      },
+    },
   };
 
   return <T>(fn: QueryFunction<T>): T => {

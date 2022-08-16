@@ -10,6 +10,12 @@ import { QueryFunction } from './types';
 export const resetCache =
   (cacheType?: string): QueryFunction =>
   (Client) => {
-    if (!cacheType) Client.cache = {};
+    if (!cacheType)
+      Client.cache = {
+        albums: {},
+        saved: {
+          albums: {},
+        },
+      };
     else delete Client.cache[cacheType];
   };

@@ -120,13 +120,24 @@ Currently Available methods in the Albums category include:
 - `getAlbum` - Retrieves info about an album by ID
 - `getAlbums` - Retrieves info about multiple albums by ID
 - `getAlbumTracks` - Retrieves info about an albums tracks
+- `getSavedAlbums` - Retrieves a paginated list of albums in the user's library
 
 > While these correspond to 3 different endpoints to Spotify's API, internally these 3 use only the `getAlbums` endpoints for improved code-reuse.
 
-Cachekey: 'albums.[id]'
+Cachekey: `albums.[id]`
 Batching Limit: 20
 
-### getAlbum
+
+- `albumIsSaved` - Retrieves whether a provided album id is in the user's library
+- `saveAlbums` - Adds albums to the user's library
+- `removeAlbums` - Removes albums from the user's library
+
+> These last 3 all use batching to improve performance, and these 3 all also use a shared cache of in-Library states.
+
+Cachekey: `saved.albums[id]`
+Batching Limit: 20
+
+#### getAlbum
 
 Gets details of an Album by ID.
 
@@ -157,6 +168,47 @@ const album = client(getAlbumTracks('6tLZvqqoWszgPagzzNNQQF'));
 const albumInMarket = client(getAlbumTracks('6tLZvqqoWszgPagzzNNQQF', 'KR'));
 ```
 
+#### getSavedAlbums
+
+Gets a list of the users saved albums (those in the users library)
+
+```js
+const savedAlbums = client(getSavedAlbums())
+const savedAlbumsLong = client(getSavedAlbums({ limit: 50 }))
+```
+
+Options:
+
+- `limit`: The number of items to return. Default: `20`. Maximum: `50`.
+- `offset`: The index of the first item to return. Default: `0`.
+- `time_range`: Over what time frame the data is retrieved. Options: `short_term`, `medium_term`, `long_term`. Default: `medium_term`.
+
+#### albumIsSaved
+
+Gets whether the provided album IDs are present in the user's library. Works with single IDs or arrays of IDs.
+
+```js
+const isSaved = client(albumIsSaved('6tLZvqqoWszgPagzzNNQQF')) // true | false
+const areSaved = client(albumIsSaved(['6tLZvqqoWszgPagzzNNQQF', '6XBIkDFhDgc3PQOUEcO2fd'])) // [true, false]
+```
+
+#### saveAlbums
+
+Puts album ID into the user's library. Returns `true` if successful. Works with single IDs or arrays of IDs.
+```js
+const isSaved = client(saveAlbums('6tLZvqqoWszgPagzzNNQQF')) // true
+const wasSaved = client(saveAlbums(['6tLZvqqoWszgPagzzNNQQF', '6XBIkDFhDgc3PQOUEcO2fd'])) // [true, true]
+```
+
+#### removeAlbums
+
+Deletes album ID from the user's library. Returns `true` if successful. Works with single IDs or arrays of IDs.
+```js
+const isRemoved = client(removeAlbums('6tLZvqqoWszgPagzzNNQQF')) // true
+const wasRemoved = client(removeAlbums(['6tLZvqqoWszgPagzzNNQQF', '6XBIkDFhDgc3PQOUEcO2fd'])) // [true, true]
+```
+
+
 ### Users
 
 Currently Available methods in the Users category include:
@@ -175,7 +227,7 @@ const user = client(getCurrentUser());
 console.log(user); // should log user
 ```
 
-cache key: 'user'
+CacheKey: `user`
 
 #### getTopItems
 

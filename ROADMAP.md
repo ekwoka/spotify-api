@@ -19,13 +19,13 @@ This document serves the purpose of documenting the progress of the API. This ca
 - [x] [GET Album](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-an-album) - `/albums/{id}`
 - [x] [GET Several Albums](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-multiple-albums) - `/albums`
 - [x] [GET Album Tracks](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-an-albums-tracks) - `/albums/{id}/tracks`
-- [ ] [GET Saved Albums](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-users-saved-albums) - `/me/albums`
+- [x] [GET Saved Albums](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-users-saved-albums) - `/me/albums`
 
 > NOTE: These two can likely be merged
 
-- [ ] [PUT Save Album](https://developer.spotify.com/documentation/web-api/reference/#/operations/save-albums-user) - `/me/albums`
-- [ ] [DELETE Remove Album](https://developer.spotify.com/documentation/web-api/reference/#/operations/remove-albums-user) - `/me/albums`
-- [ ] [GET If User Saved Album](https://developer.spotify.com/documentation/web-api/reference/#/operations/check-users-saved-albums) - `/me/albums/contains`
+- [x] [PUT Save Album](https://developer.spotify.com/documentation/web-api/reference/#/operations/save-albums-user) - `/me/albums`
+- [x] [DELETE Remove Album](https://developer.spotify.com/documentation/web-api/reference/#/operations/remove-albums-user) - `/me/albums`
+- [x] [GET If User Saved Album](https://developer.spotify.com/documentation/web-api/reference/#/operations/check-users-saved-albums) - `/me/albums/contains`
 - [ ] [GET New Releases](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-new-releases) - `/browser/new-releases`
 
 ### Search

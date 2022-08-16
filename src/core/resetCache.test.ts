@@ -17,6 +17,11 @@ describe('Reset Cache', () => {
       cache: { foo: 'bar', fizz: 'buzz' },
     } as unknown as PersistentApiProperties;
     resetCache()(Client);
-    expect(Client.cache).toEqual({});
+    expect(Client.cache).toEqual({
+      albums: {},
+      saved: {
+        albums: {},
+      },
+    });
   });
 });
