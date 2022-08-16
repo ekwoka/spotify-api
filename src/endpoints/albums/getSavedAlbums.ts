@@ -2,6 +2,16 @@ import { Album } from './';
 import { PaginatedList, QueryFunction } from '../../core';
 import { deepFreeze, spotifyFetch, toURLString } from '../../utils';
 
+/**
+ * Retrieves a paginated list of Albums currently saved in the User's Library.
+ * Accepts options to change the per page limit, as well as the initial
+ * item offset. These can used combined to change the returned page.
+ * @param {Object} options
+ *  {number} options.limit
+ *  {number} options.offset
+ *  {string} options.market
+ * @returns PaginatedList<Albums>
+ */
 export const getSavedAlbums =
   (
     options: SavedAlbumOptions = {}

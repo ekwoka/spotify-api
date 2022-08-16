@@ -1,6 +1,13 @@
 import { PersistentApiProperties, QueryFunction } from '../../core';
 import { BatchedFunction, batchWrap, spotifyFetch } from '../../utils';
 
+/**
+ * Removes albums from the current user's library. Accepts both a single ID
+ * as well as an array of album IDs. Will return true if successful and
+ * throw if unsuccessful. Caches new status in the Saved Albums cache.
+ * @param ids: string | string[]
+ * @returns true | true[]
+ */
 export const removeAlbums: RemoveAlbums = ((
   ids: string | string[]
 ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> => {

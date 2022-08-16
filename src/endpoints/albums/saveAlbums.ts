@@ -1,6 +1,13 @@
 import { PersistentApiProperties, QueryFunction } from '../../core';
 import { BatchedFunction, batchWrap, spotifyFetch } from '../../utils';
 
+/**
+ * Adds an album or albums to the current user's library. Accepts both single
+ * album IDs or an array of album IDs. Will return true if successful and
+ * throw if unsuccessful. Caches new status in the Saved Albums cache.
+ * @param ids: string | string[]
+ * @returns true | true[]
+ */
 export const saveAlbums: SaveAlbums = ((
   ids: string | string[]
 ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> => {

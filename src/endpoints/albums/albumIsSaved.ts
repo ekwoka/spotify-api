@@ -6,6 +6,13 @@ import {
   toURLString,
 } from '../../utils';
 
+/**
+ * Checks whether a provided album ID (or IDs in array) exist in the current
+ * user's library. Returns a boolean of the status. Batches requests and
+ * Caches the result in the saved albums cache for easier retrieval.
+ * @param album: string | string[]
+ * @returns boolean | boolean[]
+ */
 export const albumIsSaved: AlbumIsSaved = ((
   album: string | string[]
 ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> => {
