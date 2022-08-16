@@ -1,3 +1,4 @@
+export { albumIsSaved } from './albumIsSaved';
 export { batchAlbums } from './batchAlbums';
 export { getAlbum } from './getAlbum';
 export { getAlbums } from './getAlbums';

@@ -1,10 +1,14 @@
+export { albumIsSaved } from './albums/albumIsSaved';
+export { batchAlbums } from './albums/batchAlbums';
 export { getAlbum } from './albums/getAlbum';
 export { getAlbums } from './albums/getAlbums';
 export { getAlbumTracks } from './albums/getAlbumTracks';
+export { getSavedAlbums } from './albums/getSavedAlbums';
 export { getCurrentUser } from './users/getCurrentUser';
 export { getTopItems } from './users/getTopItems';
 export { getUserProfile } from './users/getUserProfile';
 export type { Albums } from './albums/getAlbums';
+export type { SavedAlbum } from './albums/getSavedAlbums';
 export type { AlbumStub, Album, TrackList } from './albums/types';
 export type { Artist, ArtistStub } from './artists/types';
-export type { Track } from './tracks/types';
+export type { Track, TrackStub } from './tracks/types';

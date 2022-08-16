@@ -3,7 +3,10 @@ import { Album } from '../endpoints/albums';
 export type PersistentApiProperties = {
   token: string;
   cache: {
-    albums?: Record<string, Album>;
+    albums: Record<string, Album>;
+    saved: {
+      albums: Record<string, boolean>;
+    };
     [key: string]: unknown;
   };
 };

@@ -14,6 +14,8 @@ export {
   getAlbum,
   getAlbums,
   getAlbumTracks,
+  getSavedAlbums,
+  albumIsSaved,
 } from './endpoints';
 export { spotifyFetch } from './utils/spotifyFetch';
 export type { RefreshedToken } from './auth';
