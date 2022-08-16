@@ -4,6 +4,8 @@ export { getAlbum } from './albums/getAlbum';
 export { getAlbums } from './albums/getAlbums';
 export { getAlbumTracks } from './albums/getAlbumTracks';
 export { getSavedAlbums } from './albums/getSavedAlbums';
+export { removeAlbums } from './albums/removeAlbums';
+export { saveAlbums } from './albums/saveAlbums';
 export { getCurrentUser } from './users/getCurrentUser';
 export { getTopItems } from './users/getTopItems';
 export { getUserProfile } from './users/getUserProfile';
