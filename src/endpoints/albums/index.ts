@@ -4,6 +4,7 @@ export { getAlbum } from './getAlbum';
 export { getAlbums } from './getAlbums';
 export { getAlbumTracks } from './getAlbumTracks';
 export { getSavedAlbums } from './getSavedAlbums';
+export { newReleases } from './newReleases';
 export { removeAlbums } from './removeAlbums';
 export { saveAlbums } from './saveAlbums';
 export type { Albums } from './getAlbums';
