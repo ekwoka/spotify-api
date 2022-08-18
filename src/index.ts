@@ -18,6 +18,7 @@ export {
   albumIsSaved,
   saveAlbums,
   removeAlbums,
+  newReleases,
 } from './endpoints';
 export { spotifyFetch } from './utils/spotifyFetch';
 export type { RefreshedToken } from './auth';
