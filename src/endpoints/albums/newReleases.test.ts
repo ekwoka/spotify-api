@@ -15,6 +15,25 @@ describe('newReleases', () => {
         };
       },
     }).persist();
+    makeMock('v1/browse/new-releases?country=KR&limit=5&offset=5', {
+      handler: (req) => {
+        if (!hasToken(req.headers as unknown as string[]))
+          return { statusCode: 401 };
+        const params = new URLSearchParams(req.path.split('?')[1]);
+        const data = {
+          albums: {
+            ...mockedReleases.albums,
+            limit: params.get('limit'),
+            offset: params.get('offset'),
+            country: params.get('country'),
+          },
+        };
+        return {
+          statusCode: 200,
+          data: data,
+        };
+      },
+    }).persist();
   });
   it('returns a function', () => {
     expect(typeof newReleases()).toBe('function');
@@ -24,6 +43,21 @@ describe('newReleases', () => {
       token: 'token',
     } as PersistentApiProperties);
     expect(releases).toEqual(mockedReleases);
+  });
+  it('passes query parameters', async () => {
+    const testQuery = {
+      country: 'KR',
+      limit: 5,
+      offset: 5,
+    };
+    const {
+      albums: { limit, offset, country },
+    } = (await newReleases(testQuery)({
+      token: 'token',
+    } as PersistentApiProperties)) as unknown as { albums: typeof testQuery };
+    expect({ country, limit: Number(limit), offset: Number(offset) }).toEqual(
+      testQuery
+    );
   });
 });
 
