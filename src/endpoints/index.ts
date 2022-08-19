@@ -4,6 +4,7 @@ export { getAlbum } from './albums/getAlbum';
 export { getAlbums } from './albums/getAlbums';
 export { getAlbumTracks } from './albums/getAlbumTracks';
 export { getSavedAlbums } from './albums/getSavedAlbums';
+export { newReleases } from './albums/newReleases';
 export { removeAlbums } from './albums/removeAlbums';
 export { saveAlbums } from './albums/saveAlbums';
 export { getCurrentUser } from './users/getCurrentUser';

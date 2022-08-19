@@ -137,6 +137,9 @@ Batching Limit: 20
 Cachekey: `saved.albums[id]`
 Batching Limit: 20
 
+- `newReleases` - Retrieves a paginated result of new releases
+
+
 #### getAlbum
 
 Gets details of an Album by ID.
@@ -208,6 +211,24 @@ const isRemoved = client(removeAlbums('6tLZvqqoWszgPagzzNNQQF')) // true
 const wasRemoved = client(removeAlbums(['6tLZvqqoWszgPagzzNNQQF', '6XBIkDFhDgc3PQOUEcO2fd'])) // [true, true]
 ```
 
+
+#### newReleases
+Gets new Album releases, optionally scoped to a specific country
+
+```js
+const newReleases = client(newReleases())
+const releasesWithOptions = client(newReleases({
+	country: 'KR',
+	limit: 50,
+	offset: 0
+}))
+```
+
+Options:
+
+- `limit`: The number of items to return. Default: `20`. Maximum: `50`.
+- `offset`: The index of the first item to return. Default: `0`.
+- `country`: Country code of results to return.
 
 ### Users
 
