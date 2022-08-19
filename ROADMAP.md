@@ -26,7 +26,7 @@ This document serves the purpose of documenting the progress of the API. This ca
 - [x] [PUT Save Album](https://developer.spotify.com/documentation/web-api/reference/#/operations/save-albums-user) - `/me/albums`
 - [x] [DELETE Remove Album](https://developer.spotify.com/documentation/web-api/reference/#/operations/remove-albums-user) - `/me/albums`
 - [x] [GET If User Saved Album](https://developer.spotify.com/documentation/web-api/reference/#/operations/check-users-saved-albums) - `/me/albums/contains`
-- [ ] [GET New Releases](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-new-releases) - `/browser/new-releases`
+- [x] [GET New Releases](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-new-releases) - `/browser/new-releases`
 
 ### Search
 
