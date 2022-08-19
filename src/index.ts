@@ -8,17 +8,18 @@ export { resetCache } from './core/resetCache';
 export { setToken } from './core/setToken';
 export { spotifyApiClient } from './core/spotifyApiClient';
 export {
-  getCurrentUser,
-  getTopItems,
-  getUserProfile,
+  albumIsSaved,
   getAlbum,
   getAlbums,
   getAlbumTracks,
+  getCurrentUser,
   getSavedAlbums,
-  albumIsSaved,
-  saveAlbums,
-  removeAlbums,
+  getTopItems,
+  getUserProfile,
   newReleases,
+  removeAlbums,
+  saveAlbums,
+  search,
 } from './endpoints';
 export { spotifyFetch } from './utils/spotifyFetch';
 export type { RefreshedToken } from './auth';
