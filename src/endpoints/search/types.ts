@@ -32,11 +32,4 @@ export type PageType = {
 export type SearchResults<T extends QueryType> = Record<
   QueryMap[T],
   PageType[T]
-> & {
-  albums?: PaginatedList<Album>;
-  artists?: PaginatedList<Artist>;
-  playlists?: PaginatedList<unknown>;
-  tracks?: PaginatedList<Track>;
-  shows?: PaginatedList<unknown>;
-  episodes?: PaginatedList<unknown>;
-};
+>;

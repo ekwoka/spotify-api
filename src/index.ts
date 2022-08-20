@@ -21,6 +21,7 @@ export {
   saveAlbums,
   search,
 } from './endpoints';
+export { searchString } from './endpoints/search';
 export { spotifyFetch } from './utils/spotifyFetch';
 export type { RefreshedToken } from './auth';
 export type { SpotifyTokens } from './auth';
