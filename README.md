@@ -4,6 +4,7 @@
 <img src="https://img.shields.io/npm/types/@ekwoka/spotify-api?label=%20&amp;logo=typescript&amp;logoColor=white&amp;style=for-the-badge">
 <img src="https://img.shields.io/npm/dt/@ekwoka/spotify-api?style=for-the-badge" >
 [<img src="https://img.shields.io/bundlephobia/minzip/@ekwoka/spotify-api?style=for-the-badge">](https://bundlephobia.com/package/@ekwoka/spotify-api)
+<img src="https://img.shields.io/badge/coverage-99%25-success?style=for-the-badge&logo=testCafe&logoColor=white" alt="99% test coverage">
 
 Born from my own difficulties using other wrapper libraries for Spotify, this library seeks to be the best possible API wrapper.
 
