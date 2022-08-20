@@ -30,7 +30,7 @@ This document serves the purpose of documenting the progress of the API. This ca
 
 ### Search
 
-- [ ] [GET Search for Item](https://developer.spotify.com/documentation/web-api/reference/#/operations/search) - `/search`
+- [x] [GET Search for Item](https://developer.spotify.com/documentation/web-api/reference/#/operations/search) - `/search`
 
 ### User
 

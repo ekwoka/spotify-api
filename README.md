@@ -230,6 +230,83 @@ Options:
 - `offset`: The index of the first item to return. Default: `0`.
 - `country`: Country code of results to return.
 
+### Search
+There is only one Search endpoint:
+- `search`
+
+Included is also a utility function for building more advanced query string.
+
+#### search
+This endpoint performs a query search of various Spotify data types and returns data on all of them.
+  
+```js
+// Single Search Type
+const results = client(search('pink venom', 'track'))
+
+// Multiple Search Types
+const results = client(search('pink venom', ['track', 'album']))
+
+// With additional options
+const results = client(search('pink venom', 'track', {
+	limit: 50,
+	offset: 0,
+	market: 'KR',
+	include_external: 'audio'
+}))
+```
+
+- Arguments:
+	1. query: `string` *required*
+	2. type: `string | string[]` *required*
+		- `track`
+		- `album`
+		- `artist`
+		- `playlist`
+		- `track`
+		- `show`
+		- `episode`
+	3. Options: `object`
+		- `limit`: The number of items to return. Default: `20`. Maximum: `50`.
+		- `offset`: The index of the first item to return. Default: `0`.
+		- `market`: String representation of market.
+		- `include_external`: Allows including references to playable content from outside Spotify. This defaults to nothing, and must be set to `audio` to include those references.
+
+While other endpoints mostly have pretty concrete return types, this endpoint returns an object with keys that are the provided `type` strings with an `s` appended.
+
+Example:
+```js
+client(search('pink venom', 'track'))
+// { tracks: {...} }
+
+client(search('pink venom', ['track', 'album']))
+// { 
+//  tracks: {...},
+//	albums: {...}
+// }
+```
+
+#### searchString helper
+
+The provided `searchString` function accepts and object and can easily create more advanced search queries to filter results
+
+```js
+import { searchString } from '@ekwoka/spotify-api/endpoints/search'
+
+const query = searchString({
+	q: 'pink venom', // string
+    artist: 'blackpink', // string: filters for provided artist
+    album: 'pink venom', // string: filters for provided album
+    year: 2022, // number | string: filters for provided year
+    genre: 'pop', // string: filters for provided genre
+    tag: 'hipster', // 'hipster' | 'new': filters for low popularity or recent releases
+});
+
+const results = client(search(searchString()))
+```
+
+For more information on all the options here, check the [official Spotify docs for the Search endpoint](https://developer.spotify.com/documentation/web-api/reference/#/operations/search)
+
+
 ### Users
 
 Currently Available methods in the Users category include:
