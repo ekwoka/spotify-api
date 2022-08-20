@@ -32,4 +32,8 @@ describe('spotifyFetch', () => {
     const user = await spotifyFetch<{ email: string }>('me', 'token');
     expect(user.email).toBeDefined();
   });
+  it('should throw on unexpected error', async () => {
+    makeMock('v1/me', { statusCode: 500 } as any);
+    await expect(() => spotifyFetch('me', 'token')).rejects.toThrow('500');
+  });
 });
