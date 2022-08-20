@@ -4,9 +4,7 @@ export {
   refreshToken,
   tokensFromCode,
 } from './auth';
-export { resetCache } from './core/resetCache';
-export { setToken } from './core/setToken';
-export { spotifyApiClient } from './core/spotifyApiClient';
+export { resetCache, setToken, spotifyApiClient } from './core';
 export {
   albumIsSaved,
   getAlbum,
@@ -22,8 +20,7 @@ export {
   search,
 } from './endpoints';
 export { spotifyFetch } from './utils/spotifyFetch';
-export type { RefreshedToken } from './auth';
-export type { SpotifyTokens } from './auth';
+export type { RefreshedToken, SpotifyTokens } from './auth';
 export type {
   PersistentApiProperties,
   SpotifyApiClient,
