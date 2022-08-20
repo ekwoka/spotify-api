@@ -7,10 +7,15 @@
   "sideEffects": false,
   "main": "dist/",
   "types": "dist/",
-  "author": "Eric Kwoka",
+  "author": {
+    "name": "Eric Kwoka",
+    "email": "ninjatheory@gmail.com",
+    "url": "https://thekwoka.net/"
+  },
   "license": "MIT",
   "version": "0.4.0",
   "description": "Composable Wrapper for the Spotify Web Api and Spotify Web Playback SDK",
+  "repository": "github:ekwoka/spotify-api",
   "keywords": [
     "spotify",
     "api",
