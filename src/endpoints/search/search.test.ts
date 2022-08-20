@@ -14,12 +14,44 @@ describe('search', () => {
           data: mockedSearch,
         };
       },
-    }).persist();
+    });
+    makeMock('/v1/search?q=pink+venom&type=track%2Cartist', {
+      handler: (req) => {
+        if (!hasToken(req.headers as unknown as string[]))
+          return { statusCode: 401 };
+        return {
+          statusCode: 200,
+          data: { ...mockedSearch, artists: mockedSearch.tracks },
+        };
+      },
+    });
+    makeMock(
+      '/v1/search?q=pink+venom&type=track&limit=10&offset=5&market=KR&include_external=audio',
+      {
+        handler: (req) => {
+          if (!hasToken(req.headers as unknown as string[]))
+            return { statusCode: 401 };
+          const params = new URLSearchParams(req.path.split('?')[1]);
+          return {
+            statusCode: 200,
+            data: {
+              tracks: {
+                ...mockedSearch.tracks,
+                limit: params.get('limit'),
+                offset: params.get('offset'),
+                market: params.get('market'),
+                include_external: params.get('include_external'),
+              },
+            },
+          };
+        },
+      }
+    );
   });
   it('should return a function', () => {
     expect(typeof search('pink venom', 'track')).toBe('function');
   });
-  it('should pass searchQuery through', async () => {
+  it('should handle searchQuery & type', async () => {
     const searchQuery = 'pink venom';
     const results = await search(
       searchQuery,
@@ -28,6 +60,25 @@ describe('search', () => {
       token: 'token',
     } as PersistentApiProperties);
     expect(results.tracks.items[0].name).toBe('Pink Venom');
+  });
+  it('should accept a type array', async () => {
+    const results = await search('pink venom', ['track', 'artist'])({
+      token: 'token',
+    } as PersistentApiProperties);
+    expect(results.tracks).toBeDefined();
+    expect(results.artists).toBeDefined();
+  });
+  it('should pass options to query', async () => {
+    const results = (await search('pink venom', 'track', {
+      limit: 10,
+      offset: 5,
+      market: 'KR',
+      include_external: 'audio',
+    })({ token: 'token' } as PersistentApiProperties)) as any;
+    expect(results.tracks.limit).toBe('10');
+    expect(results.tracks.offset).toBe('5');
+    expect(results.tracks.market).toBe('KR');
+    expect(results.tracks.include_external).toBe('audio');
   });
 });
 

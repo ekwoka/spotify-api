@@ -25,7 +25,7 @@
     "size:test": "NODE_ENV=test node scripts/esbuild.js",
     "build": "tsc",
     "lint": "eslint --fix ./src; prettier --write ./src --loglevel error",
-    "lint:check": "eslint --max-warnings 0 ./src && prettier --check ./src",
+    "lint:check": "eslint --max-warnings 10 ./src && prettier --check ./src",
     "prebuild": "rm -rf dist",
     "patch": "run-s test:run build && pnpm version patch && pnpm publish",
     "minor": "run-s test:run build && pnpm version minor && pnpm publish",
