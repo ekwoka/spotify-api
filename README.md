@@ -288,7 +288,7 @@ client(search('pink venom', ['track', 'album']))
 
 #### searchString helper
 
-The provided `searchString` function accepts and object and can easily create more advanced search queries to filter results
+The provided `searchString` function accepts an object and can easily create more advanced search queries to filter results
 
 ```js
 import { searchString } from '@ekwoka/spotify-api/endpoints/search'
@@ -302,7 +302,7 @@ const query = searchString({
     tag: 'hipster', // 'hipster' | 'new': filters for low popularity or recent releases
 });
 
-const results = client(search(searchString()))
+const results = client(search(searchString(query)))
 ```
 
 For more information on all the options here, check the [official Spotify docs for the Search endpoint](https://developer.spotify.com/documentation/web-api/reference/#/operations/search)
