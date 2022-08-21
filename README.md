@@ -302,7 +302,7 @@ const query = searchString({
     tag: 'hipster', // 'hipster' | 'new': filters for low popularity or recent releases
 });
 
-const results = client(search(searchString(query)))
+const results = client(search(searchString(query, 'track')))
 ```
 
 For more information on all the options here, check the [official Spotify docs for the Search endpoint](https://developer.spotify.com/documentation/web-api/reference/#/operations/search)
