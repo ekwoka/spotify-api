@@ -28,6 +28,10 @@ This document serves the purpose of documenting the progress of the API. This ca
 - [x] [GET If User Saved Album](https://developer.spotify.com/documentation/web-api/reference/#/operations/check-users-saved-albums) - `/me/albums/contains`
 - [x] [GET New Releases](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-new-releases) - `/browser/new-releases`
 
+### Player
+
+- [ ] [GET Recently Played Tracks](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-recently-played) - `me/player/recently-played`
+
 ### Search
 
 - [x] [GET Search for Item](https://developer.spotify.com/documentation/web-api/reference/#/operations/search) - `/search`
@@ -53,6 +57,6 @@ This document serves the purpose of documenting the progress of the API. This ca
 - [ ] [GET If User Follows Artist or User](https://developer.spotify.com/documentation/web-api/reference/#/operations/check-current-user-follows) - `/me/following/cotains`
 
 ### Tracks
-- [ ] [GET If User Saved Track](https://developer.spotify.com/documentation/web-api/reference/#/operations/check-users-saved-tracks) - `/me/tracks/contains`
-- [ ] [PUT Track into User's Saved](https://developer.spotify.com/documentation/web-api/reference/#/operations/save-tracks-user) - `/me/tracks`
-- [ ] [DELETE Track from User's Saved](https://developer.spotify.com/documentation/web-api/reference/#/operations/remove-tracks-user) - `/me/tracks`
+- [x] [GET If User Saved Track](https://developer.spotify.com/documentation/web-api/reference/#/operations/check-users-saved-tracks) - `/me/tracks/contains`
+- [x] [PUT Track into User's Saved](https://developer.spotify.com/documentation/web-api/reference/#/operations/save-tracks-user) - `/me/tracks`
+- [x] [DELETE Track from User's Saved](https://developer.spotify.com/documentation/web-api/reference/#/operations/remove-tracks-user) - `/me/tracks`
