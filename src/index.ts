@@ -16,8 +16,11 @@ export {
   getUserProfile,
   newReleases,
   removeAlbums,
+  removeTracks,
   saveAlbums,
+  saveTracks,
   search,
+  trackIsSaved,
 } from './endpoints';
 export { spotifyFetch } from './utils/spotifyFetch';
 export type { RefreshedToken, SpotifyTokens } from './auth';

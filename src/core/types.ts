@@ -6,6 +6,7 @@ export type PersistentApiProperties = {
     albums: Record<string, Album>;
     saved: {
       albums: Record<string, boolean>;
+      tracks: Record<string, boolean>;
     };
     [key: string]: unknown;
   };

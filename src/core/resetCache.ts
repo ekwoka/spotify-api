@@ -15,6 +15,7 @@ export const resetCache =
         albums: {},
         saved: {
           albums: {},
+          tracks: {},
         },
       };
     else delete Client.cache[cacheType];
