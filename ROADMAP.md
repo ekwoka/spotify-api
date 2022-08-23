@@ -51,3 +51,8 @@ This document serves the purpose of documenting the progress of the API. This ca
 - [ ] [PUT Follow Artist or User](https://developer.spotify.com/documentation/web-api/reference/#/operations/follow-artists-users) - `/me/following`
 - [ ] [DELETE Unfollow Artist or User](https://developer.spotify.com/documentation/web-api/reference/#/operations/unfollow-artists-users) - `/me/following`
 - [ ] [GET If User Follows Artist or User](https://developer.spotify.com/documentation/web-api/reference/#/operations/check-current-user-follows) - `/me/following/cotains`
+
+### Tracks
+- [ ] [GET If User Saved Track](https://developer.spotify.com/documentation/web-api/reference/#/operations/check-users-saved-tracks) - `/me/tracks/contains`
+- [ ] [PUT Track into User's Saved](https://developer.spotify.com/documentation/web-api/reference/#/operations/save-tracks-user) - `/me/tracks`
+- [ ] [DELETE Track from User's Saved](https://developer.spotify.com/documentation/web-api/reference/#/operations/remove-tracks-user) - `/me/tracks`
