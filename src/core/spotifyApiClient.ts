@@ -13,6 +13,7 @@ export function spotifyApiClient(token: string): SpotifyApiClient {
       albums: {},
       saved: {
         albums: {},
+        tracks: {},
       },
     },
   };

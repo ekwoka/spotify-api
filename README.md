@@ -308,6 +308,45 @@ const results = client(search(searchString(query, 'track')))
 For more information on all the options here, check the [official Spotify docs for the Search endpoint](https://developer.spotify.com/documentation/web-api/reference/#/operations/search)
 
 
+### Tracks
+
+Current available endpoints within the Tracks category include:
+
+- `trackIsSaved` - Retrieves whether a provided album id is in the user's library
+- `saveTracks` - Adds albums to the user's library
+- `removeTracks` - Removes albums from the user's library
+
+> These last 3 all use batching to improve performance, and these 3 all also use a shared cache of in-Library states.
+
+
+Cachekey: `saved.tracks[id]`
+Batching Limit: 50
+
+#### albumIsSaved
+
+Gets whether the provided album IDs are present in the user's library. Works with single IDs or arrays of IDs.
+
+```js
+const isSaved = client(albumIsSaved('0skYUMpS0AcbpjcGsAbRGj')) // true | false
+const areSaved = client(albumIsSaved(['0skYUMpS0AcbpjcGsAbRGj', '60jFaQV7Z4boGC4ob5B5c6'])) // [true, false]
+```
+
+#### saveAlbums
+
+Puts album ID into the user's library. Returns `true` if successful. Works with single IDs or arrays of IDs.
+```js
+const isSaved = client(saveAlbums('0skYUMpS0AcbpjcGsAbRGj')) // true
+const wasSaved = client(saveAlbums(['0skYUMpS0AcbpjcGsAbRGj', '60jFaQV7Z4boGC4ob5B5c6'])) // [true, true]
+```
+
+#### removeAlbums
+
+Deletes album ID from the user's library. Returns `true` if successful. Works with single IDs or arrays of IDs.
+```js
+const isRemoved = client(removeAlbums('0skYUMpS0AcbpjcGsAbRGj')) // true
+const wasRemoved = client(removeAlbums(['0skYUMpS0AcbpjcGsAbRGj', '60jFaQV7Z4boGC4ob5B5c6'])) // [true, true]
+```
+
 ### Users
 
 Currently Available methods in the Users category include:

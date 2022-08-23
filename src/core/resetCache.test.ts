@@ -21,6 +21,7 @@ describe('Reset Cache', () => {
       albums: {},
       saved: {
         albums: {},
+        tracks: {},
       },
     });
   });
