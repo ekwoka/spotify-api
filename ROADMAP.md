@@ -60,3 +60,5 @@ This document serves the purpose of documenting the progress of the API. This ca
 - [x] [GET If User Saved Track](https://developer.spotify.com/documentation/web-api/reference/#/operations/check-users-saved-tracks) - `/me/tracks/contains`
 - [x] [PUT Track into User's Saved](https://developer.spotify.com/documentation/web-api/reference/#/operations/save-tracks-user) - `/me/tracks`
 - [x] [DELETE Track from User's Saved](https://developer.spotify.com/documentation/web-api/reference/#/operations/remove-tracks-user) - `/me/tracks`
+
+- [ ] [GET recommendations](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-recommendations) - `/recommendations`
