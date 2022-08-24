@@ -13,4 +13,7 @@ export type {
   Image,
   SpotifyPageURL,
   SpotifyAPIURL,
+  UNIXTimeNumber,
+  UNIXTimeString,
+  ISOTimeString,
 } from './SpotifyUtilityTypes';

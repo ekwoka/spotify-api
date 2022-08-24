@@ -231,6 +231,32 @@ Options:
 - `offset`: The index of the first item to return. Default: `0`.
 - `country`: Country code of results to return.
 
+### Player
+
+Endpoints included in the Player category include:
+
+- `recentlyPlayedTracks` - Gets user's recently played tracks
+
+
+#### recentlyPlayedTracks
+
+Get the user's recently played tracks and their playing context (like in a playlist or artist). Results can be filtered by play date
+
+```js
+const recentlyPlayed = client(recentlyPlayed())
+const recentlypPlayedFiltered = client(recentlyPlayed({ 
+	after: 1145736000000, 
+	before: 1653508800000, 
+	limit: 10
+}))
+```
+
+Options:
+
+- `limit`: The number of items to return. Default: `20`. Maximum: `50`.
+- `after`: UNIX timestamp of time after which results should return.
+- `before`: UNIX timestamp of time before which results should return.
+
 ### Search
 There is only one Search endpoint:
 - `search`
