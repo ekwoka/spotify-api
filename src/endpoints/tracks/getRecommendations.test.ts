@@ -4,7 +4,7 @@ import { getRecommendations, Recommendations } from './';
 
 describe('getRecommendations', () => {
   beforeAll(() => {
-    makeMock('v1/recommendations', {
+    makeMock('/v1/recommendations?seed_artists=1VwDG9aBflQupaFNjUru9A', {
       handler: (req) => {
         if (!hasToken(req.headers as any)) return { statusCode: 401 };
         return {
@@ -13,38 +13,39 @@ describe('getRecommendations', () => {
         };
       },
     });
-    makeMock('v1/recommendations?max_key=5&target_valence=0.6', {
-      handler: (req) => {
-        if (!hasToken(req.headers as any)) return { statusCode: 401 };
-        const params = new URLSearchParams(req.path.split('?')[1]);
-        const [max_key, target_valence] = ['max_key', 'target_valence'].map(
-          (key) => Number(params.get(key))
-        );
-        return {
-          statusCode: 200,
-          data: {
-            max_key,
-            target_valence,
-          },
-        };
-      },
-    });
     makeMock(
-      '/v1/recommendations?seed_artists=1VwDG9aBflQupaFNjUru9A%2C4k5fFEYgkWYrYvtOK3zVBl&seed_genres=rock%2Cpop&seed_tracks=3T4s8KFP2SGW7hfmbcICsv%2C2occELokWRfqLIlQJhJLZ6',
+      'v1/recommendations?seed_artists=1VwDG9aBflQupaFNjUru9A&max_key=5&target_valence=0.6',
       {
         handler: (req) => {
           if (!hasToken(req.headers as any)) return { statusCode: 401 };
           const params = new URLSearchParams(req.path.split('?')[1]);
-          const [seed_artists, seed_genres, seed_tracks] = [
+          const [max_key, target_valence] = ['max_key', 'target_valence'].map(
+            (key) => Number(params.get(key))
+          );
+          return {
+            statusCode: 200,
+            data: {
+              max_key,
+              target_valence,
+            },
+          };
+        },
+      }
+    );
+    makeMock(
+      '/v1/recommendations?seed_artists=1VwDG9aBflQupaFNjUru9A%2C4k5fFEYgkWYrYvtOK3zVBl&seed_tracks=3T4s8KFP2SGW7hfmbcICsv%2C2occELokWRfqLIlQJhJLZ6',
+      {
+        handler: (req) => {
+          if (!hasToken(req.headers as any)) return { statusCode: 401 };
+          const params = new URLSearchParams(req.path.split('?')[1]);
+          const [seed_artists, seed_tracks] = [
             'seed_artists',
-            'seed_genres',
             'seed_tracks',
           ].map((key) => params.get(key));
           return {
             statusCode: 200,
             data: {
               seed_artists,
-              seed_genres,
               seed_tracks,
             },
           };
@@ -53,16 +54,23 @@ describe('getRecommendations', () => {
     );
   });
   it('should return a function', () => {
-    expect(typeof getRecommendations()).toBe('function');
+    expect(
+      typeof getRecommendations({
+        seed_artists: '1VwDG9aBflQupaFNjUru9A',
+      })
+    ).toBe('function');
   });
   it('should return a recommendations object', async () => {
-    const results = await getRecommendations()({
+    const results = await getRecommendations({
+      seed_artists: '1VwDG9aBflQupaFNjUru9A',
+    })({
       token: 'token',
     } as any);
     expect(results).toEqual(mockedRecommendations);
   });
   it('should accept options', async () => {
     const results = await getRecommendations({
+      seed_artists: '1VwDG9aBflQupaFNjUru9A',
       max_key: 5,
       target_valence: 0.6,
     })({
@@ -76,16 +84,26 @@ describe('getRecommendations', () => {
   it('should join seeds', async () => {
     const results = await getRecommendations({
       seed_artists: ['1VwDG9aBflQupaFNjUru9A', '4k5fFEYgkWYrYvtOK3zVBl'],
-      seed_genres: ['rock', 'pop'],
       seed_tracks: ['3T4s8KFP2SGW7hfmbcICsv', '2occELokWRfqLIlQJhJLZ6'],
     })({
       token: 'token',
     } as any);
     expect(results).toEqual({
       seed_artists: '1VwDG9aBflQupaFNjUru9A,4k5fFEYgkWYrYvtOK3zVBl',
-      seed_genres: 'rock,pop',
       seed_tracks: '3T4s8KFP2SGW7hfmbcICsv,2occELokWRfqLIlQJhJLZ6',
     });
+  });
+  it('should throw when no seeds provided', () => {
+    expect(() => getRecommendations({})).toThrowError('No seeds provided');
+  });
+  it('should throw when too many seeds provided', () => {
+    expect(() =>
+      getRecommendations({
+        seed_artists: ['1VwDG9aBflQupaFNjUru9A', '4k5fFEYgkWYrYvtOK3zVBl'],
+        seed_tracks: ['3T4s8KFP2SGW7hfmbcICsv', '2occELokWRfqLIlQJhJLZ6'],
+        seed_genres: ['rock', 'pop'],
+      })
+    ).toThrowError('Too many seeds provided');
   });
 });
 
