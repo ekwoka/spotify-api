@@ -30,7 +30,7 @@ This document serves the purpose of documenting the progress of the API. This ca
 
 ### Player
 
-- [ ] [GET Recently Played Tracks](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-recently-played) - `me/player/recently-played`
+- [x] [GET Recently Played Tracks](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-recently-played) - `me/player/recently-played`
 
 ### Search
 

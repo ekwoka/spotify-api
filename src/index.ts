@@ -15,6 +15,7 @@ export {
   getTopItems,
   getUserProfile,
   newReleases,
+  recentlyPlayedTracks,
   removeAlbums,
   removeTracks,
   saveAlbums,

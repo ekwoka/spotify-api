@@ -6,3 +6,6 @@ export type Image = {
 
 export type SpotifyPageURL = string;
 export type SpotifyAPIURL = string;
+export type UNIXTimeNumber = number;
+export type UNIXTimeString = string;
+export type ISOTimeString = string;
