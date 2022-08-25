@@ -11,6 +11,7 @@ export {
   getAlbums,
   getAlbumTracks,
   getCurrentUser,
+  getRecommendations,
   getSavedAlbums,
   getTopItems,
   getUserProfile,

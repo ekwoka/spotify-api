@@ -17,3 +17,4 @@ export type {
   UNIXTimeString,
   ISOTimeString,
 } from './SpotifyUtilityTypes';
+export type { maybeArray } from './types';

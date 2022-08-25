@@ -338,15 +338,17 @@ For more information on all the options here, check the [official Spotify docs f
 
 Current available endpoints within the Tracks category include:
 
-- `trackIsSaved` - Retrieves whether a provided album id is in the user's library
-- `saveTracks` - Adds albums to the user's library
-- `removeTracks` - Removes albums from the user's library
+- `trackIsSaved` - Gets whether a provided album id is in the user's library
+- `saveTracks` - Put's albums into the user's library
+- `removeTracks` - Deletes albums from the user's library
 
-> These last 3 all use batching to improve performance, and these 3 all also use a shared cache of in-Library states.
+> These 3 all use batching to improve performance, and these 3 all also use a shared cache of in-Library states.
 
 
 Cachekey: `saved.tracks[id]`
 Batching Limit: 50
+
+- `getRecommendations` - Gets recommendations based on provided seeds.
 
 #### albumIsSaved
 
@@ -372,6 +374,27 @@ Deletes album ID from the user's library. Returns `true` if successful. Works wi
 const isRemoved = client(removeAlbums('0skYUMpS0AcbpjcGsAbRGj')) // true
 const wasRemoved = client(removeAlbums(['0skYUMpS0AcbpjcGsAbRGj', '60jFaQV7Z4boGC4ob5B5c6'])) // [true, true]
 ```
+
+#### getRecommendations
+
+Get's recommendations based on provided seeds and musical properties.
+
+```js
+const recommended = client(getRecommendations({
+      seed_artists: ['1VwDG9aBflQupaFNjUru9A', '4k5fFEYgkWYrYvtOK3zVBl'],
+      seed_tracks: ['3T4s8KFP2SGW7hfmbcICsv', '2occELokWRfqLIlQJhJLZ6'],
+	}))
+const recommended = client(getRecommendations({
+      seed_artists: '1VwDG9aBflQupaFNjUru9A',
+      target_danceability: 0.35
+    }))
+```
+
+Seed count must be 1-5 spread between `seed_tracks`, `seed_artists`, and `seed_genres`. Providing no seeds, or more than 5 will throw an error at runtime.
+
+Options:
+Please refer to [Spotify's endpoint documentation](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-recommendations) for information on all the details of all the available tunable options for the recommendations api.
+
 
 ### Users
 
