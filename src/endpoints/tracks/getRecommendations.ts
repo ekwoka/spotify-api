@@ -2,6 +2,13 @@ import { Track } from '.';
 import { QueryFunction } from '../../core';
 import { SpotifyAPIURL, spotifyFetch, toURLString } from '../../utils';
 
+/**
+ * Gets a list of recommended Tracks based on the provided seeds. Accepts up
+ * to 5 seeds across Track, Artist, and Genre, as well as many additional
+ * filtering options based on track attributes (loudness, energy, etc).
+ * @param options Seed and Options Object
+ * @returns Recommendations
+ */
 export const getRecommendations = (
   options: RecomendationOptions
 ): QueryFunction<Promise<Recommendations>> => {
