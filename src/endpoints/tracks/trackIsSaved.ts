@@ -45,5 +45,6 @@ const batchTrackIsSaved: BatchedFunction<boolean> = batchWrap(
     })}`;
     const data = await spotifyFetch<boolean[]>(endpoint, token);
     return data;
-  }
+  },
+  50
 );

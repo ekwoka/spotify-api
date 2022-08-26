@@ -121,14 +121,13 @@ Currently Available methods in the Albums category include:
 - `getAlbum` - Retrieves info about an album by ID
 - `getAlbums` - Retrieves info about multiple albums by ID
 - `getAlbumTracks` - Retrieves info about an albums tracks
-- `getSavedAlbums` - Retrieves a paginated list of albums in the user's library
 
 > While these correspond to 3 different endpoints to Spotify's API, internally these 3 use only the `getAlbums` endpoints for improved code-reuse.
 
 Cachekey: `albums.[id]`
 Batching Limit: 20
 
-
+- `getSavedAlbums` - Retrieves a paginated list of albums in the user's library
 - `albumIsSaved` - Retrieves whether a provided album id is in the user's library
 - `saveAlbums` - Adds albums to the user's library
 - `removeAlbums` - Removes albums from the user's library
@@ -230,6 +229,40 @@ Options:
 - `limit`: The number of items to return. Default: `20`. Maximum: `50`.
 - `offset`: The index of the first item to return. Default: `0`.
 - `country`: Country code of results to return.
+
+### Artists
+
+Currently Available methods in the Albums category include:
+
+- `getAlbum` - Retrieves info about an album by ID
+- `getAlbums` - Retrieves info about multiple albums by ID
+
+> While these correspond to 2 different endpoints to Spotify's API, internally these 3 use only the `getArtists` endpoints for improved code-reuse.
+
+Cachekey: `arists.[id]`
+Batching Limit: 50
+
+#### getAlbum
+
+Gets details of an Album by ID.
+
+```js
+const album = client(getAlbum('6tLZvqqoWszgPagzzNNQQF'));
+const albumInMarket = client(getAlbum('6tLZvqqoWszgPagzzNNQQF', 'KR'));
+```
+
+#### getAlbums
+
+Gets Details about multiple Albums at once.
+
+```js
+const albums = client(
+  getAlbums(['6tLZvqqoWszgPagzzNNQQF', '6XBIkDFhDgc3PQOUEcO2fd'])
+);
+const albumsInMarket = client(
+  getAlbums(['6tLZvqqoWszgPagzzNNQQF', '6XBIkDFhDgc3PQOUEcO2fd'], 'KR')
+);
+```
 
 ### Player
 

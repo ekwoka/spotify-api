@@ -14,7 +14,6 @@ import { Album } from './types';
 export const getAlbum =
   (id: string, market?: string): QueryFunction<Promise<Album>> =>
   async ({ token, cache }) => {
-    if (!cache.albums) cache.albums = {};
     if (cache.albums[id]) return cache.albums[id];
     const album = await batchAlbums(token, id, market);
     cache.albums[id] = deepFreeze(album);

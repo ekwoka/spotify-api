@@ -13,6 +13,7 @@ export const resetCache =
     if (!cacheType)
       Client.cache = {
         albums: {},
+        artists: {},
         saved: {
           albums: {},
           tracks: {},

@@ -42,7 +42,7 @@ describe('getAlbumTracks', () => {
   it('should return a tracklist', async () => {
     const tracks = await getAlbumTracks('TRACKS')({
       token: 'token',
-      cache: {},
+      cache: { albums: {} } as any,
     });
     expect(tracks).toEqual(mockedAlbums.albums[0].tracks);
   });
@@ -51,7 +51,10 @@ describe('getAlbumTracks', () => {
     const { market } = (await getAlbumTracks(
       'TRACKS',
       'EN'
-    )({ token: 'token', cache: {} })) as unknown as { market: string };
+    )({
+      token: 'token',
+      cache: { albums: {} } as any,
+    })) as unknown as { market: string };
     expect(market).toEqual('EN');
   });
 });

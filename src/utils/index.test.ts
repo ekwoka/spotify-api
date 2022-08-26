@@ -26,12 +26,14 @@ describe('Utils', () => {
     expect(() => (testObj.baz.qux = 'corge')).toThrow();
     expect(testObj).toEqual(compareObj);
   });
+  it('encodes string to base64', () => {
+    expect(toBase64('test')).toBe('dGVzdA==');
+  });
   it('detects when in node or browser', () => {
     expect(isNode()).toBe(true);
     expect(isBrowser()).toBe(false);
-  });
-  it('encodes string to base64', () => {
-    expect(toBase64('test')).toBe('dGVzdA==');
+    globalThis.window = { document: {} as any } as any;
+    expect(isBrowser()).toBe(true);
   });
   it('sleeps', async () => {
     const start = Date.now();

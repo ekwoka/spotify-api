@@ -1,9 +1,11 @@
 import { Album } from '../endpoints/albums';
+import { Artist } from '../endpoints/artists';
 
 export type PersistentApiProperties = {
   token: string;
   cache: {
     albums: Record<string, Album>;
+    artists: Record<string, Artist>;
     saved: {
       albums: Record<string, boolean>;
       tracks: Record<string, boolean>;
