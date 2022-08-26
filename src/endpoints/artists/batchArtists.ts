@@ -9,7 +9,7 @@ import { Artist, Artists } from './';
 /**
  * Wraps up the function for requesting multiple artists from the Spotify API
  * in a BatchedFunction Wrapper for use in the album endpoints, reducing
- * the number of calls to Spotify's API. Album IDs in, Album Data Out.
+ * the number of calls to Spotify's API. Artist IDs in, Artist Data Out.
  */
 export const batchArtists: BatchedFunction<Artist> = batchWrap(
   async (token, ids) => {

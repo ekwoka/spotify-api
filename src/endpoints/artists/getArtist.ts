@@ -8,14 +8,13 @@ import { Artist } from './';
  * endpoints allowing for improved performance and smaller bundle sizes.
  * This handles the individual calls to batch the requests together.
  * @param id string
- * @param market string
  * @returns Artist
  */
 export const getArtist =
-  (id: string, market?: string): QueryFunction<Promise<Artist>> =>
+  (id: string): QueryFunction<Promise<Artist>> =>
   async ({ token, cache }) => {
     if (cache.artists[id]) return cache.artists[id];
-    const artist = await batchArtists(token, id, market);
+    const artist = await batchArtists(token, id);
     cache.artists[id] = deepFreeze(artist);
     return artist;
   };
