@@ -37,6 +37,12 @@ This document serves the purpose of documenting the progress of the API. This ca
 
 - [x] [GET Recently Played Tracks](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-recently-played) - `me/player/recently-played`
 
+### Playlists
+
+- [ ] [GET Playlist](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-playlist) - `/playlists/{id}`
+- [ ] [GET Playlist Tracks](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-playlists-tracks) - `/playlists/{id}/tracks`
+- [ ] [GET Current Users Saved Playlists](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-a-list-of-current-users-playlists) - `/me/playlists`
+
 ### Search
 
 - [x] [GET Search for Item](https://developer.spotify.com/documentation/web-api/reference/#/operations/search) - `/search`
