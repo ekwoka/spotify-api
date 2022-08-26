@@ -1,10 +1,19 @@
 import { QueryFunction } from '../../core';
-import { spotifyFetch } from '../../utils';
+import { spotifyFetch, toURLString } from '../../utils';
 import { Playlist } from './types';
 
 export const getPlaylist =
-  (playlistID: string): QueryFunction<Promise<Playlist>> =>
+  (
+    playlistID: string,
+    options?: GetPlaylistOptions
+  ): QueryFunction<Promise<Playlist>> =>
   ({ token }) => {
-    const endpoint = `playlists/${playlistID}`;
+    const endpoint = `playlists/${playlistID}?${toURLString(options)}`;
     return spotifyFetch(endpoint, token);
   };
+
+type GetPlaylistOptions = {
+  fields?: string;
+  market?: string;
+  additional_types?: string;
+};

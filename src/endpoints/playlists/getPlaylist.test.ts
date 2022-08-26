@@ -16,6 +16,31 @@ describe('getPlaylist', () => {
         };
       },
     });
+    makeMock(
+      '/v1/playlists/37i9dQZF1DX5g856aiKiDS?additional_types=tracks&fields=name%2Cimages&market=KR',
+      {
+        handler: (req) => {
+          if (!hasToken(req.headers as any))
+            return {
+              statusCode: 401,
+            };
+          const params = new URLSearchParams(req.path.split('?')[1]);
+          const [market, additional_types, fields] = [
+            'market',
+            'additional_types',
+            'fields',
+          ].map((param) => params.get(param));
+          return {
+            statusCode: 200,
+            data: {
+              market,
+              additional_types,
+              fields,
+            },
+          };
+        },
+      }
+    );
   });
   it('should return a function', () => {
     expect(typeof getPlaylist('37i9dQZF1DX5g856aiKiDS')).toBe('function');
@@ -25,6 +50,21 @@ describe('getPlaylist', () => {
       token: 'token',
     } as any);
     expect(playlist).toEqual(mockedPlaylist);
+  });
+  it('should pass through params', async () => {
+    const { additional_types, fields, market } = (await getPlaylist(
+      '37i9dQZF1DX5g856aiKiDS',
+      {
+        additional_types: 'tracks',
+        fields: 'name,images',
+        market: 'KR',
+      }
+    )({
+      token: 'token',
+    } as any)) as any;
+    expect(additional_types).toEqual('tracks');
+    expect(fields).toEqual('name,images');
+    expect(market).toEqual('KR');
   });
 });
 
