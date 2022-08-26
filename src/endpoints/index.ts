@@ -12,6 +12,7 @@ export { getArtist } from './artists/getArtist';
 export { getArtists } from './artists/getArtists';
 export { recentlyPlayedTracks } from './player/recentlyPlayedTracks';
 export { getPlaylist } from './playlists/getPlaylist';
+export { getUsersPlaylists } from './playlists/getUsersPlaylists';
 export { search } from './search/search';
 export { searchString } from './search/searchString';
 export { getRecommendations } from './tracks/getRecommendations';

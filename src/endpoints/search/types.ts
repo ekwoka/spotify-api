@@ -1,6 +1,7 @@
 import { PaginatedList } from '../../core';
 import { Album } from '../albums';
 import { Artist } from '../artists';
+import { PlaylistStub } from '../playlists';
 import { Track } from '../tracks';
 
 export type QueryType = {
@@ -16,7 +17,7 @@ export type QueryType = {
 export type PageType = {
   albums: PaginatedList<Album>;
   artists: PaginatedList<Artist>;
-  playlists: PaginatedList<unknown>;
+  playlists: PaginatedList<PlaylistStub>;
   tracks: PaginatedList<Track>;
   shows: PaginatedList<unknown>;
   episodes: PaginatedList<unknown>;

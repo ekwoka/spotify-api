@@ -18,6 +18,7 @@ export {
   getSavedAlbums,
   getTopItems,
   getUserProfile,
+  getUsersPlaylists,
   newReleases,
   recentlyPlayedTracks,
   removeAlbums,
