@@ -19,6 +19,7 @@ describe('Reset Cache', () => {
     resetCache()(Client);
     expect(Client.cache).toEqual({
       albums: {},
+      artists: {},
       saved: {
         albums: {},
         tracks: {},

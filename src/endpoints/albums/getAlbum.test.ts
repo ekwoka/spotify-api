@@ -37,22 +37,34 @@ describe('getAlbum', () => {
     });
   });
   it('should return an album', async () => {
-    const album = await getAlbum('GOOD')({ token: 'token', cache: {} });
+    const album = await getAlbum('GOOD')({
+      token: 'token',
+      cache: { albums: {} } as any,
+    });
     expect(album).toEqual(mockedAlbums.albums[0]);
   });
   it('should pass market as query param', async () => {
     const { market } = (await getAlbum(
       'GOOD',
       'EN'
-    )({ token: 'token', cache: {} })) as unknown as { market: string };
+    )({
+      token: 'token',
+      cache: { albums: {} } as any,
+    })) as any;
     expect(market).toEqual('EN');
   });
   it('caches album result', async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const cache = {} as Record<string, any>;
-    const album1 = await getAlbum('GOOD')({ token: 'token', cache });
-    expect(cache.albums?.GOOD).toBe(album1);
-    const album2 = await getAlbum('GOOD')({ token: 'token', cache });
+    const cache = { albums: {} } as any;
+    const album1 = await getAlbum('GOOD')({
+      token: 'token',
+      cache,
+    });
+    expect(cache.albums.GOOD).toBe(album1);
+    const album2 = await getAlbum('GOOD')({
+      token: 'token',
+      cache,
+    });
     expect(album1).toBe(album2);
   });
 });

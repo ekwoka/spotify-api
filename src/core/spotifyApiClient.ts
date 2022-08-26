@@ -11,6 +11,7 @@ export function spotifyApiClient(token: string): SpotifyApiClient {
     token,
     cache: {
       albums: {},
+      artists: {},
       saved: {
         albums: {},
         tracks: {},

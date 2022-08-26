@@ -39,7 +39,7 @@ describe('getAlbums', () => {
   it('should return an album list', async () => {
     const albums = await getAlbums(['drip', 'seoul'])({
       token: 'token',
-      cache: {},
+      cache: { albums: {} } as any,
     });
     expect(albums).toEqual(mockedAlbums);
   });
@@ -47,7 +47,13 @@ describe('getAlbums', () => {
   it('should pass market as query param', async () => {
     const {
       albums: [{ market }],
-    } = await getAlbums(['testid'], 'EN')({ token: 'token', cache: {} });
+    } = await getAlbums(
+      ['testid'],
+      'EN'
+    )({
+      token: 'token',
+      cache: { albums: {} } as any,
+    });
     expect(market).toEqual('EN');
   });
 });

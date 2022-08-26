@@ -10,6 +10,8 @@ export {
   getAlbum,
   getAlbums,
   getAlbumTracks,
+  getArtist,
+  getArtists,
   getCurrentUser,
   getRecommendations,
   getSavedAlbums,
