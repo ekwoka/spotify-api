@@ -290,6 +290,39 @@ Options:
 - `after`: UNIX timestamp of time after which results should return.
 - `before`: UNIX timestamp of time before which results should return.
 
+### Playlists
+The following endpoints are available in the Playlists category:
+
+- `getPlaylist` - Gets complete playlist information by playlist ID
+- `getUsersPlaylists` - Gets playlists created by or saved by the current user
+
+#### getPlaylist
+Gets the complete playlist information by playlistID.
+
+```js
+const playlist = await client(getPlaylist('37i9dQZF1DX5g856aiKiDS'))
+const playlistDescription = await client(getPlaylist('37i9dQZF1DX5g856aiKiDS', {
+	fields: 'description'
+}))
+```
+
+The options object accepts a fields string, which is a comma-separated list of the fields from the Playlist object to return. (This currently does not return the correct type when fields entry is used).
+
+#### getUsersPlaylists
+Gets the playlists created by or saved by the current user.
+
+```js
+const savedPlaylists = await client(getUsersPlaylists())
+const fivePlaylists = await client(getUsersPlaylists({ limit: 5 }))
+```
+
+Options:
+
+- `limit`: How many playlists to return in the results.
+- `offset`: How far into the list to start the results
+
+Playlists returned by this endpoint do not include track information.
+
 ### Search
 There is only one Search endpoint:
 - `search`
