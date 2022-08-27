@@ -4,7 +4,13 @@ import { ArtistStub } from '../artists/';
 import { TrackStub } from '../tracks/types';
 
 export type AlbumStub = {
-  album_type: 'SINGLE' | 'ALBUM' | 'COMPILATION';
+  album_type:
+    | 'SINGLE'
+    | 'ALBUM'
+    | 'COMPILATION'
+    | 'single'
+    | 'album'
+    | 'compilation';
   artists: ArtistStub[];
   available_markets: string[];
   external_urls: {
