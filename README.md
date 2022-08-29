@@ -268,16 +268,26 @@ const albumsInMarket = client(
 
 Endpoints included in the Player category include:
 
+- `addToQueue` - Posts new item to the current playback queue
 - `recentlyPlayedTracks` - Gets user's recently played tracks
 
+#### addToQueue
+
+Posts the provided item URI (track or episode) to the active playback queue.
+
+```js
+client(addToQueue('spotify:track:5expoVGQPvXuwBBFuNGqBd'))
+```
+
+If there is any error, this function will throw (as with all endpoints) but will return `null` when successful.
 
 #### recentlyPlayedTracks
 
 Get the user's recently played tracks and their playing context (like in a playlist or artist). Results can be filtered by play date
 
 ```js
-const recentlyPlayed = client(recentlyPlayed())
-const recentlypPlayedFiltered = client(recentlyPlayed({ 
+const recentlyPlayed = await client(recentlyPlayed())
+const recentlypPlayedFiltered = await client(recentlyPlayed({ 
 	after: 1145736000000, 
 	before: 1653508800000, 
 	limit: 10

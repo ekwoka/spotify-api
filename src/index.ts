@@ -7,6 +7,7 @@ export {
 export { resetCache, setToken, spotifyApiClient } from './core';
 export {
   albumIsSaved,
+  addToQueue,
   getAlbum,
   getAlbums,
   getAlbumTracks,
