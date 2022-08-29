@@ -12,7 +12,8 @@ import { SPOTIFY_URL } from '../constants';
 export const spotifyFetch = async <T>(
   endpoint: string,
   token: string,
-  data: Record<string, unknown> = {}
+  data: Record<string, unknown> = {},
+  hasReturn = true
 ): Promise<T> => {
   try {
     const headers = {
@@ -23,6 +24,7 @@ export const spotifyFetch = async <T>(
       ...data,
     });
     if (!response.ok) throw new Error(response.status.toString());
+    if (!hasReturn) return null;
     return await response.json();
   } catch (e) {
     /**
