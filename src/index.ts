@@ -8,6 +8,7 @@ export { resetCache, setToken, spotifyApiClient } from './core';
 export {
   albumIsSaved,
   addToQueue,
+  currentlyPlayingTrack,
   getAlbum,
   getAlbums,
   getAlbumTracks,
