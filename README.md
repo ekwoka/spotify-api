@@ -139,7 +139,6 @@ Batching Limit: 20
 
 - `newReleases` - Retrieves a paginated result of new releases
 
-
 #### getAlbum
 
 Gets details of an Album by ID.
@@ -176,8 +175,8 @@ const albumInMarket = client(getAlbumTracks('6tLZvqqoWszgPagzzNNQQF', 'KR'));
 Gets a list of the users saved albums (those in the users library)
 
 ```js
-const savedAlbums = client(getSavedAlbums())
-const savedAlbumsLong = client(getSavedAlbums({ limit: 50 }))
+const savedAlbums = client(getSavedAlbums());
+const savedAlbumsLong = client(getSavedAlbums({ limit: 50 }));
 ```
 
 Options:
@@ -191,37 +190,47 @@ Options:
 Gets whether the provided album IDs are present in the user's library. Works with single IDs or arrays of IDs.
 
 ```js
-const isSaved = client(albumIsSaved('6tLZvqqoWszgPagzzNNQQF')) // true | false
-const areSaved = client(albumIsSaved(['6tLZvqqoWszgPagzzNNQQF', '6XBIkDFhDgc3PQOUEcO2fd'])) // [true, false]
+const isSaved = client(albumIsSaved('6tLZvqqoWszgPagzzNNQQF')); // true | false
+const areSaved = client(
+  albumIsSaved(['6tLZvqqoWszgPagzzNNQQF', '6XBIkDFhDgc3PQOUEcO2fd'])
+); // [true, false]
 ```
 
 #### saveAlbums
 
 Puts album ID into the user's library. Returns `true` if successful. Works with single IDs or arrays of IDs.
+
 ```js
-const isSaved = client(saveAlbums('6tLZvqqoWszgPagzzNNQQF')) // true
-const wasSaved = client(saveAlbums(['6tLZvqqoWszgPagzzNNQQF', '6XBIkDFhDgc3PQOUEcO2fd'])) // [true, true]
+const isSaved = client(saveAlbums('6tLZvqqoWszgPagzzNNQQF')); // true
+const wasSaved = client(
+  saveAlbums(['6tLZvqqoWszgPagzzNNQQF', '6XBIkDFhDgc3PQOUEcO2fd'])
+); // [true, true]
 ```
 
 #### removeAlbums
 
 Deletes album ID from the user's library. Returns `true` if successful. Works with single IDs or arrays of IDs.
+
 ```js
-const isRemoved = client(removeAlbums('6tLZvqqoWszgPagzzNNQQF')) // true
-const wasRemoved = client(removeAlbums(['6tLZvqqoWszgPagzzNNQQF', '6XBIkDFhDgc3PQOUEcO2fd'])) // [true, true]
+const isRemoved = client(removeAlbums('6tLZvqqoWszgPagzzNNQQF')); // true
+const wasRemoved = client(
+  removeAlbums(['6tLZvqqoWszgPagzzNNQQF', '6XBIkDFhDgc3PQOUEcO2fd'])
+); // [true, true]
 ```
 
-
 #### newReleases
+
 Gets new Album releases, optionally scoped to a specific country
 
 ```js
-const newReleases = client(newReleases())
-const releasesWithOptions = client(newReleases({
-	country: 'KR',
-	limit: 50,
-	offset: 0
-}))
+const newReleases = client(newReleases());
+const releasesWithOptions = client(
+  newReleases({
+    country: 'KR',
+    limit: 50,
+    offset: 0,
+  })
+);
 ```
 
 Options:
@@ -269,6 +278,7 @@ const albumsInMarket = client(
 Endpoints included in the Player category include:
 
 - `addToQueue` - Posts new item to the current playback queue
+- `currentlyPlayingTrack` - Gets the current playing track
 - `recentlyPlayedTracks` - Gets user's recently played tracks
 
 #### addToQueue
@@ -276,22 +286,34 @@ Endpoints included in the Player category include:
 Posts the provided item URI (track or episode) to the active playback queue.
 
 ```js
-client(addToQueue('spotify:track:5expoVGQPvXuwBBFuNGqBd'))
+client(addToQueue('spotify:track:5expoVGQPvXuwBBFuNGqBd'));
 ```
 
 If there is any error, this function will throw (as with all endpoints) but will return `null` when successful.
+
+#### currentlyPlayingTrack
+
+Gets the currently playing track on the user's account.
+
+```js
+client(currentlyPlayingTrack());
+```
+
+Returns `null` if no Track currently playing.
 
 #### recentlyPlayedTracks
 
 Get the user's recently played tracks and their playing context (like in a playlist or artist). Results can be filtered by play date
 
 ```js
-const recentlyPlayed = await client(recentlyPlayed())
-const recentlypPlayedFiltered = await client(recentlyPlayed({ 
-	after: 1145736000000, 
-	before: 1653508800000, 
-	limit: 10
-}))
+const recentlyPlayed = await client(recentlyPlayed());
+const recentlypPlayedFiltered = await client(
+  recentlyPlayed({
+    after: 1145736000000,
+    before: 1653508800000,
+    limit: 10,
+  })
+);
 ```
 
 Options:
@@ -301,29 +323,34 @@ Options:
 - `before`: UNIX timestamp of time before which results should return.
 
 ### Playlists
+
 The following endpoints are available in the Playlists category:
 
 - `getPlaylist` - Gets complete playlist information by playlist ID
 - `getUsersPlaylists` - Gets playlists created by or saved by the current user
 
 #### getPlaylist
+
 Gets the complete playlist information by playlistID.
 
 ```js
-const playlist = await client(getPlaylist('37i9dQZF1DX5g856aiKiDS'))
-const playlistDescription = await client(getPlaylist('37i9dQZF1DX5g856aiKiDS', {
-	fields: 'description'
-}))
+const playlist = await client(getPlaylist('37i9dQZF1DX5g856aiKiDS'));
+const playlistDescription = await client(
+  getPlaylist('37i9dQZF1DX5g856aiKiDS', {
+    fields: 'description',
+  })
+);
 ```
 
 The options object accepts a fields string, which is a comma-separated list of the fields from the Playlist object to return. (This currently does not return the correct type when fields entry is used).
 
 #### getUsersPlaylists
+
 Gets the playlists created by or saved by the current user.
 
 ```js
-const savedPlaylists = await client(getUsersPlaylists())
-const fivePlaylists = await client(getUsersPlaylists({ limit: 5 }))
+const savedPlaylists = await client(getUsersPlaylists());
+const fivePlaylists = await client(getUsersPlaylists({ limit: 5 }));
 ```
 
 Options:
@@ -334,55 +361,61 @@ Options:
 Playlists returned by this endpoint do not include track information.
 
 ### Search
+
 There is only one Search endpoint:
+
 - `search`
 
 Included is also a utility function for building more advanced query string.
 
 #### search
+
 This endpoint performs a query search of various Spotify data types and returns data on all of them.
-  
+
 ```js
 // Single Search Type
-const results = client(search('pink venom', 'track'))
+const results = client(search('pink venom', 'track'));
 
 // Multiple Search Types
-const results = client(search('pink venom', ['track', 'album']))
+const results = client(search('pink venom', ['track', 'album']));
 
 // With additional options
-const results = client(search('pink venom', 'track', {
-	limit: 50,
-	offset: 0,
-	market: 'KR',
-	include_external: 'audio'
-}))
+const results = client(
+  search('pink venom', 'track', {
+    limit: 50,
+    offset: 0,
+    market: 'KR',
+    include_external: 'audio',
+  })
+);
 ```
 
 - Arguments:
-	1. query: `string` *required*
-	2. type: `string | string[]` *required*
-		- `track`
-		- `album`
-		- `artist`
-		- `playlist`
-		- `track`
-		- `show`
-		- `episode`
-	3. Options: `object`
-		- `limit`: The number of items to return. Default: `20`. Maximum: `50`.
-		- `offset`: The index of the first item to return. Default: `0`.
-		- `market`: String representation of market.
-		- `include_external`: Allows including references to playable content from outside Spotify. This defaults to nothing, and must be set to `audio` to include those references.
+  1.  query: `string` _required_
+  2.  type: `string | string[]` _required_
+      - `track`
+      - `album`
+      - `artist`
+      - `playlist`
+      - `track`
+      - `show`
+      - `episode`
+  3.  Options: `object`
+      - `limit`: The number of items to return. Default: `20`. Maximum: `50`.
+      - `offset`: The index of the first item to return. Default: `0`.
+      - `market`: String representation of market.
+      - `include_external`: Allows including references to playable content from outside Spotify. This defaults to nothing, and must be set to `audio` to include those references.
 
 While other endpoints mostly have pretty concrete return types, this endpoint returns an object with keys that are the provided `type` strings with an `s` appended.
 
 Example:
+
 ```js
-client(search('pink venom', 'track'))
+client(search('pink venom', 'track'));
 // { tracks: {...} }
 
-client(search('pink venom', ['track', 'album']))
-// { 
+client(search('pink venom', ['track', 'album']));
+// {
 //  tracks: {...},
 //	albums: {...}
 // }
@@ -393,22 +426,21 @@ client(search('pink venom', ['track', 'album']))
 The provided `searchString` function accepts an object and can easily create more advanced search queries to filter results
 
 ```js
-import { searchString } from '@ekwoka/spotify-api/endpoints/search'
+import { searchString } from '@ekwoka/spotify-api/endpoints/search';
 
 const query = searchString({
-	q: 'pink venom', // string
-    artist: 'blackpink', // string: filters for provided artist
-    album: 'pink venom', // string: filters for provided album
-    year: 2022, // number | string: filters for provided year
-    genre: 'pop', // string: filters for provided genre
-    tag: 'hipster', // 'hipster' | 'new': filters for low popularity or recent releases
+  q: 'pink venom', // string
+  artist: 'blackpink', // string: filters for provided artist
+  album: 'pink venom', // string: filters for provided album
+  year: 2022, // number | string: filters for provided year
+  genre: 'pop', // string: filters for provided genre
+  tag: 'hipster', // 'hipster' | 'new': filters for low popularity or recent releases
 });
 
-const results = client(search(searchString(query, 'track')))
+const results = client(search(searchString(query, 'track')));
 ```
 
 For more information on all the options here, check the [official Spotify docs for the Search endpoint](https://developer.spotify.com/documentation/web-api/reference/#/operations/search)
-
 
 ### Tracks
 
@@ -420,7 +452,6 @@ Current available endpoints within the Tracks category include:
 
 > These 3 all use batching to improve performance, and these 3 all also use a shared cache of in-Library states.
 
-
 Cachekey: `saved.tracks[id]`
 Batching Limit: 50
 
@@ -431,24 +462,32 @@ Batching Limit: 50
 Gets whether the provided album IDs are present in the user's library. Works with single IDs or arrays of IDs.
 
 ```js
-const isSaved = client(albumIsSaved('0skYUMpS0AcbpjcGsAbRGj')) // true | false
-const areSaved = client(albumIsSaved(['0skYUMpS0AcbpjcGsAbRGj', '60jFaQV7Z4boGC4ob5B5c6'])) // [true, false]
+const isSaved = client(albumIsSaved('0skYUMpS0AcbpjcGsAbRGj')); // true | false
+const areSaved = client(
+  albumIsSaved(['0skYUMpS0AcbpjcGsAbRGj', '60jFaQV7Z4boGC4ob5B5c6'])
+); // [true, false]
 ```
 
 #### saveAlbums
 
 Puts album ID into the user's library. Returns `true` if successful. Works with single IDs or arrays of IDs.
+
 ```js
-const isSaved = client(saveAlbums('0skYUMpS0AcbpjcGsAbRGj')) // true
-const wasSaved = client(saveAlbums(['0skYUMpS0AcbpjcGsAbRGj', '60jFaQV7Z4boGC4ob5B5c6'])) // [true, true]
+const isSaved = client(saveAlbums('0skYUMpS0AcbpjcGsAbRGj')); // true
+const wasSaved = client(
+  saveAlbums(['0skYUMpS0AcbpjcGsAbRGj', '60jFaQV7Z4boGC4ob5B5c6'])
+); // [true, true]
 ```
 
 #### removeAlbums
 
 Deletes album ID from the user's library. Returns `true` if successful. Works with single IDs or arrays of IDs.
+
 ```js
-const isRemoved = client(removeAlbums('0skYUMpS0AcbpjcGsAbRGj')) // true
-const wasRemoved = client(removeAlbums(['0skYUMpS0AcbpjcGsAbRGj', '60jFaQV7Z4boGC4ob5B5c6'])) // [true, true]
+const isRemoved = client(removeAlbums('0skYUMpS0AcbpjcGsAbRGj')); // true
+const wasRemoved = client(
+  removeAlbums(['0skYUMpS0AcbpjcGsAbRGj', '60jFaQV7Z4boGC4ob5B5c6'])
+); // [true, true]
 ```
 
 #### getRecommendations
@@ -456,21 +495,24 @@ const wasRemoved = client(removeAlbums(['0skYUMpS0AcbpjcGsAbRGj', '60jFaQV7Z4boG
 Get's recommendations based on provided seeds and musical properties.
 
 ```js
-const recommended = client(getRecommendations({
-      seed_artists: ['1VwDG9aBflQupaFNjUru9A', '4k5fFEYgkWYrYvtOK3zVBl'],
-      seed_tracks: ['3T4s8KFP2SGW7hfmbcICsv', '2occELokWRfqLIlQJhJLZ6'],
-	}))
-const recommended = client(getRecommendations({
-      seed_artists: '1VwDG9aBflQupaFNjUru9A',
-      target_danceability: 0.35
-    }))
+const recommended = client(
+  getRecommendations({
+    seed_artists: ['1VwDG9aBflQupaFNjUru9A', '4k5fFEYgkWYrYvtOK3zVBl'],
+    seed_tracks: ['3T4s8KFP2SGW7hfmbcICsv', '2occELokWRfqLIlQJhJLZ6'],
+  })
+);
+const recommended = client(
+  getRecommendations({
+    seed_artists: '1VwDG9aBflQupaFNjUru9A',
+    target_danceability: 0.35,
+  })
+);
 ```
 
 Seed count must be 1-5 spread between `seed_tracks`, `seed_artists`, and `seed_genres`. Providing no seeds, or more than 5 will throw an error at runtime.
 
 Options:
 Please refer to [Spotify's endpoint documentation](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-recommendations) for information on all the details of all the available tunable options for the recommendations api.
-
 
 ### Users
 
