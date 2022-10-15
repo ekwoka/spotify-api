@@ -1,11 +1,15 @@
 import { toURLString } from '../utils';
 
-export const makeAuthURL = (scopes: scope[]): string =>
+export const makeAuthURL = (
+  scopes: scope[],
+  clientId?: string,
+  redirectUri?: string
+): string =>
   `https://accounts.spotify.com/authorize?${toURLString({
     response_type: 'code',
-    client_id: process.env.SPOTIFY_CLIENT,
+    client_id: clientId ?? process.env.SPOTIFY_CLIENT,
     scope: scopes.join(' '),
-    redirect_uri: process.env.REDIRECT,
+    redirect_uri: redirectUri ?? process.env.REDIRECT,
   })}`;
 
 export type scope =

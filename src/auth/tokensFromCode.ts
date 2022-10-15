@@ -8,14 +8,22 @@ import { fetchOptions } from './fetchOptions';
  * @param code string
  * @returns SpotifyTokens
  */
-export const tokensFromCode = async (code: string): Promise<SpotifyTokens> => {
+export const tokensFromCode = async (
+  code: string,
+  client: string = process.env.SPOTIFY_CLIENT,
+  secret: string = process.env.SPOTIFY_SECRET
+): Promise<SpotifyTokens> => {
   const response = await fetch(
     SPOTIFY_AUTH,
-    fetchOptions({
-      code,
-      redirect_uri: process.env.REDIRECT,
-      grant_type: 'authorization_code',
-    })
+    fetchOptions(
+      {
+        code,
+        redirect_uri: process.env.REDIRECT,
+        grant_type: 'authorization_code',
+      },
+      client,
+      secret
+    )
   );
   if (!response.ok) throw new Error('Error fetching token');
 
