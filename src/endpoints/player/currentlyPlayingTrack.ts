@@ -4,9 +4,14 @@ import { Track } from '../tracks';
 
 export const currentlyPlayingTrack =
   (): QueryFunction<Promise<CurrentlyPlayingTrack>> =>
-  ({ token }) => {
+  async ({ token }) => {
     const endpoint = 'me/player/currently-playing';
-    return spotifyFetch<CurrentlyPlayingTrack>(endpoint, token);
+    try {
+      return await spotifyFetch<CurrentlyPlayingTrack>(endpoint, token);
+    } catch (e) {
+      if (e.message.includes('end of JSON')) return null;
+      throw e;
+    }
   };
 
 export type CurrentlyPlayingTrack = {

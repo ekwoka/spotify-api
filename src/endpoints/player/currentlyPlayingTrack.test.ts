@@ -15,6 +15,9 @@ describe('currentlyPlayingTrack', () => {
         };
       },
     });
+    makeMock('v1/me/player/currently-playing', {
+      handler: () => ({ statusCode: 200, data: undefined }),
+    });
   });
   it('should return a function', () => {
     expect(typeof currentlyPlayingTrack()).toBe('function');
@@ -24,6 +27,12 @@ describe('currentlyPlayingTrack', () => {
       token: 'token',
     } as PersistentApiProperties);
     expect(results.item).toBeDefined();
+  });
+  it('should return null if no track is playing', async () => {
+    const result = await currentlyPlayingTrack()({
+      token: 'token',
+    } as PersistentApiProperties);
+    expect(result).toBeNull();
   });
 });
 
