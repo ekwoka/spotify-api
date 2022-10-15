@@ -37,7 +37,7 @@ This document serves the purpose of documenting the progress of the API. This ca
 
 - [x] [GET Recently Played Tracks](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-recently-played) - `me/player/recently-played`
 - [x] [POST Item to current playback queue](https://developer.spotify.com/documentation/web-api/reference/#/operations/add-to-queue) - `me/player/queue`
-- [ ] [GET Current Playing track](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-the-users-currently-playing-track) - `/me/player/currently-playing`
+- [x] [GET Current Playing track](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-the-users-currently-playing-track) - `/me/player/currently-playing`
 
 ### Playlists
 
