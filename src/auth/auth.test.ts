@@ -8,8 +8,6 @@ describe('AUTH Helpers', () => {
       method: 'POST',
       handler: ({ body, headers }) => {
         const params = new URLSearchParams(body as string);
-
-        console.log(headers[1]);
         if (headers[1] !== 'Basic dmFsaWQtY2xpZW50OnN1cGVyc2VjcmV0')
           return { statusCode: 401 };
         if (params.get('grant_type') === 'authorization_code') {
