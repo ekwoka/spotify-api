@@ -64,7 +64,7 @@ These helpers are:
 - `getTokenFromCode`: Accepts a code from the Spotify authentication flow and returns a suite of tokens (access and refresh).
 - `refreshToken`: Accepts a refresh token and returns a new access token.
 
-These currently depend on you setting up and exposing certain environment variables for the functions to access on the `process.env` object:
+While these functions do allow passing in the valid parameters, you can also depend on evironment variables by setting up and exposing the following on the `process.env` object:
 
 - `SPOTIFY_CLIENT`: Client id from Spotify Developer Dashboard.
 - `SPOTIFY_SECRET`: Client secret.
@@ -82,14 +82,18 @@ import {
 } from '@ekwoka/spotify-api';
 
 const loginHandler = async (req, res) => {
-  const url = makeAuthURL(['user-read-email']);
+  const url = makeAuthURL(['user-read-email'], CLIENT, REDIRECT);
   res.redirect(302, url);
 };
 
 const codeHandler = async (req, res) => {
   try {
     const { code } = JSON.parse(req.body);
-    const { access_token, refresh_token } = await getTokenFromCode(code);
+    const { access_token, refresh_token } = await getTokenFromCode(
+      code,
+      CLIENT,
+      SECRET
+    );
     res.cookie('refresh_token', refresh_token);
     res.status(200).json({ access_token });
   } catch (err) {
@@ -100,7 +104,7 @@ const codeHandler = async (req, res) => {
 const refreshHandler = async (req, res) => {
   try {
     const { refresh_token } = req.cookies;
-    const { access_token } = await refreshToken(refresh_token);
+    const { access_token } = await refreshToken(refresh_token, CLIENT, SECRET);
     res.status(200).json({ access_token });
   } catch (err) {
     res.status(500).json({ error: err.message });
