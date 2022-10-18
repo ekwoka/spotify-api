@@ -6,7 +6,7 @@ on:
     branches:
       - main
 jobs:
-  Build and Publish:
+  Build-Publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
