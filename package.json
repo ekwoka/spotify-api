@@ -13,7 +13,7 @@
     "url": "https://thekwoka.net/"
   },
   "license": "MIT",
-  "version": "0.11.3",
+  "version": "0.11.4",
   "description": "Composable Wrapper for the Spotify Web Api and Spotify Web Playback SDK",
   "repository": "github:ekwoka/spotify-api",
   "keywords": [
