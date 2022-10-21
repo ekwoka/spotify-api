@@ -10,7 +10,7 @@ export type Playlist = Omit<PlaylistStub, 'tracks'> & {
   tracks: PaginatedList<PlaylistItem>;
 };
 
-type PlaylistItem = {
+export type PlaylistItem = {
   added_at: string;
   added_by: {
     external_urls: {
