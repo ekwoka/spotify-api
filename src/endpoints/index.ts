@@ -14,6 +14,7 @@ export { addToQueue } from './player/addToQueue';
 export { currentlyPlayingTrack } from './player/currentlyPlayingTrack';
 export { recentlyPlayedTracks } from './player/recentlyPlayedTracks';
 export { getPlaylist } from './playlists/getPlaylist';
+export { getPlaylistItems } from './playlists/getPlaylistItems';
 export { getUsersPlaylists } from './playlists/getUsersPlaylists';
 export { search } from './search/search';
 export { searchString } from './search/searchString';

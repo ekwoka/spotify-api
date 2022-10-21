@@ -25,6 +25,7 @@ type PlaylistItem = {
   is_local: false;
   track: Track & {
     episode: boolean;
+    track: boolean;
   };
   video_thumbnail: {
     url: string | null;
