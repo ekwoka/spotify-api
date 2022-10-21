@@ -22,20 +22,13 @@ export const getPlaylistItems =
     const limit = Number(options.limit) || 100;
     if (!(limit > 100) || firstPage.items.length < 100) return firstPage;
 
-    const total = firstPage.total;
-    const initialOffset = Number(options.offset) || 0;
-    const lastToGet = Math.min(limit + initialOffset, total);
-    const pagesToGet = Math.ceil(lastToGet / 100) - 1;
-    const pages = await Promise.all(
-      Array.from({ length: pagesToGet }, async (_, i) => {
-        const offset = 100 * (i + 1) + initialOffset;
-        const limit = Math.min(100, lastToGet - offset);
-        const page = await spotifyFetch<PaginatedList<PlaylistItem>>(
-          makeEndpoint({ ...options, offset, limit }),
-          token
-        );
-        return page.items;
-      })
+    const pages = await getRemainingPages(
+      limit,
+      Number(options.offset) || 0,
+      firstPage.total,
+      options,
+      token,
+      makeEndpoint
     );
 
     return {
@@ -44,6 +37,29 @@ export const getPlaylistItems =
       limit,
     };
   };
+
+const getRemainingPages = <T extends Partial<Record<keyof T, T[keyof T]>>>(
+  fullLimit: number,
+  initialOffset: number,
+  totalItems: number,
+  options: T,
+  token: string,
+  makeEndpoint: (options: T) => string
+) => {
+  const lastToGet = Math.min(fullLimit + initialOffset, totalItems);
+  const pagesToGet = Math.ceil(lastToGet / 100) - 1;
+  return Promise.all(
+    Array.from({ length: pagesToGet }, async (_, i) => {
+      const offset = 100 * (i + 1) + initialOffset;
+      const limit = Math.min(100, lastToGet - offset);
+      const page = await spotifyFetch<PaginatedList<PlaylistItem>>(
+        makeEndpoint({ ...options, offset, limit }),
+        token
+      );
+      return page.items;
+    })
+  );
+};
 
 type GetPlaylistItemsOptions = {
   limit?: string | number;
