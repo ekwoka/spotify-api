@@ -10,6 +10,7 @@ export const getPlaylistItems =
   async ({ token }) => {
     const makeEndpoint = (options: GetPlaylistItemsOptions) =>
       `playlists/${playlistID}/tracks?${toURLString(options)}`;
+
     const endpoint = makeEndpoint({
       ...options,
       ...(options.limit ? { limit: Math.min(Number(options.limit), 100) } : {}),

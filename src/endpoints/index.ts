@@ -33,7 +33,7 @@ export type { Artist, ArtistStub } from './artists/types';
 export type { CurrentlyPlayingTrack } from './player/currentlyPlayingTrack';
 export type { RecentlyPlayedTrackList } from './player/recentlyPlayedTracks';
 export type { Context } from './player/types';
-export type { Playlist, PlaylistStub } from './playlists/types';
+export type { Playlist, PlaylistItem, PlaylistStub } from './playlists/types';
 export type { QueryType, PageType, SearchResults } from './search/types';
 export type { Recommendations } from './tracks/getRecommendations';
 export type { Track, TrackStub } from './tracks/types';
