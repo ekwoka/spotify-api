@@ -42,7 +42,7 @@ This document serves the purpose of documenting the progress of the API. This ca
 ### Playlists
 
 - [x] [GET Playlist](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-playlist) - `/playlists/{id}`
-- [ ] [GET Playlist Tracks](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-playlists-tracks) - `/playlists/{id}/tracks`
+- [x] [GET Playlist Tracks](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-playlists-tracks) - `/playlists/{id}/tracks`
 - [x] [GET Current Users Saved Playlists](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-a-list-of-current-users-playlists) - `/me/playlists`
 
 ### Search
