@@ -331,6 +331,7 @@ Options:
 The following endpoints are available in the Playlists category:
 
 - `getPlaylist` - Gets complete playlist information by playlist ID
+- `getPlaylistItems` - Gets Items from playlist by ID
 - `getUsersPlaylists` - Gets playlists created by or saved by the current user
 
 #### getPlaylist
@@ -347,6 +348,27 @@ const playlistDescription = await client(
 ```
 
 The options object accepts a fields string, which is a comma-separated list of the fields from the Playlist object to return. (This currently does not return the correct type when fields entry is used).
+
+#### getPlaylistItems
+
+Gets the items in a playlist (tracks and episodes)
+
+> Note: When using `getPlaylist` the first 100 items are returned automatically, making this endpoint unnecessary when that suffices
+
+```js
+const tracks = await client(getPlaylistItems('37i9dQZF1DX5g856aiKiDS'));
+const tracks = await client(
+  getPlaylistItems('37i9dQZF1DX5g856aiKiDS', { limit: Infinity })
+);
+```
+
+Options:
+
+- `limit`: How many playlists to return in the results. (default: `100`)
+- `offset`: How far into the list to start the results (default: `0`)
+- `market`: Which markets to filter the returned items by
+
+This endpoint dynamically bypasses the server-side limit cap of `100`. When larger limits are provided (and a playlist that has more than 100 items), this library will performa multiple requests to satisfy the limit. To retrieve the entire playlist, just provide a limit of `Infinity`
 
 #### getUsersPlaylists
 
