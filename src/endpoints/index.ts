@@ -10,6 +10,7 @@ export { saveAlbums } from './albums/saveAlbums';
 export { batchArtists } from './artists/batchArtists';
 export { getArtist } from './artists/getArtist';
 export { getArtists } from './artists/getArtists';
+export { getFollowedArtists } from './artists/getFollowedArtists';
 export { addToQueue } from './player/addToQueue';
 export { currentlyPlayingTrack } from './player/currentlyPlayingTrack';
 export { recentlyPlayedTracks } from './player/recentlyPlayedTracks';
