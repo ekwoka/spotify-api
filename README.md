@@ -255,13 +255,15 @@ Currently Available methods in the Albums category include:
 Cachekey: `arists.[id]`
 Batching Limit: 50
 
+- `getFollowedArtists` - Retrieves a list of artists followed by the user
+
 #### getAlbum
 
 Gets details of an Album by ID.
 
 ```js
-const album = client(getAlbum('6tLZvqqoWszgPagzzNNQQF'));
-const albumInMarket = client(getAlbum('6tLZvqqoWszgPagzzNNQQF', 'KR'));
+const album = await client(getAlbum('6tLZvqqoWszgPagzzNNQQF'));
+const albumInMarket = await client(getAlbum('6tLZvqqoWszgPagzzNNQQF', 'KR'));
 ```
 
 #### getAlbums
@@ -269,13 +271,29 @@ const albumInMarket = client(getAlbum('6tLZvqqoWszgPagzzNNQQF', 'KR'));
 Gets Details about multiple Albums at once.
 
 ```js
-const albums = client(
+const albums = await client(
   getAlbums(['6tLZvqqoWszgPagzzNNQQF', '6XBIkDFhDgc3PQOUEcO2fd'])
 );
-const albumsInMarket = client(
+const albumsInMarket = await client(
   getAlbums(['6tLZvqqoWszgPagzzNNQQF', '6XBIkDFhDgc3PQOUEcO2fd'], 'KR')
 );
 ```
+
+#### getFollowedArtists
+
+Gets the list of artists followed by the current user.
+
+```js
+const followedArtists = await client(getFollowedArtists());
+const followedArtists = await client(
+  getFollowedArtists('artist', { limit: 50 })
+);
+```
+
+Options:
+
+- `limit`: The number of items to return. Default: `20`. Maximum: `50`.
+- `after`: The ID of the artist provided at the end of the past page of results.
 
 ### Player
 
@@ -290,7 +308,7 @@ Endpoints included in the Player category include:
 Posts the provided item URI (track or episode) to the active playback queue.
 
 ```js
-client(addToQueue('spotify:track:5expoVGQPvXuwBBFuNGqBd'));
+await client(addToQueue('spotify:track:5expoVGQPvXuwBBFuNGqBd'));
 ```
 
 If there is any error, this function will throw (as with all endpoints) but will return `null` when successful.
@@ -300,7 +318,7 @@ If there is any error, this function will throw (as with all endpoints) but will
 Gets the currently playing track on the user's account.
 
 ```js
-client(currentlyPlayingTrack());
+const currentlyPlaying = await client(currentlyPlayingTrack());
 ```
 
 Returns `null` if no Track currently playing.

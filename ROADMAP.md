@@ -61,7 +61,7 @@ This document serves the purpose of documenting the progress of the API. This ca
 - [ ] [DELETE Unfollow Playlist](https://developer.spotify.com/documentation/web-api/reference/#/operations/unfollow-playlist) - `/playlists/{playlist_id}/followers`
 - [ ] [GET If User Follows Playlist](https://developer.spotify.com/documentation/web-api/reference/#/operations/check-if-user-follows-playlist) - `/playlists/{playlist_id}/followers/contains`
 
-- [ ] [GET Followed Artists](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-followed) - `/me/following`
+- [x] [GET Followed Artists](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-followed) - `/me/following`
 
 > Note: Next Two can be merged
 

@@ -15,6 +15,7 @@ export {
   getArtist,
   getArtists,
   getCurrentUser,
+  getFollowedArtists,
   getPlaylist,
   getPlaylistItems,
   getRecommendations,
