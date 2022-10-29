@@ -13,9 +13,6 @@ describe('saveTracks', () => {
         if (!req.body) return { statusCode: 403 };
         return {
           statusCode: 200,
-          data: (JSON.parse(req.body as string) as { ids: string[] }).ids.map(
-            () => true
-          ),
         };
       },
     }).persist();
@@ -54,9 +51,6 @@ describe('removeTracks', () => {
         if (!req.body) return { statusCode: 403 };
         return {
           statusCode: 200,
-          data: (JSON.parse(req.body as string) as { ids: string[] }).ids.map(
-            () => true
-          ),
         };
       },
     }).persist();
@@ -64,19 +58,19 @@ describe('removeTracks', () => {
   it('should return a function', () => {
     expect(typeof removeTracks('seoul')).toBe('function');
   });
-  it('should save tracks', async () => {
+  it('should remove tracks', async () => {
     const wasRemoved = await removeTracks('seoul')({
       token: 'token',
       cache: { saved: { tracks: {} } } as PersistentApiProperties['cache'],
     });
-    expect(wasRemoved).toEqual(true);
+    expect(wasRemoved).toEqual(false);
   });
   it('should accept an array of tracks', async () => {
     const wasRemoved = await removeTracks(['seoul', 'drip'])({
       token: 'token',
       cache: { saved: { tracks: {} } } as PersistentApiProperties['cache'],
     });
-    expect(wasRemoved).toEqual([true, true]);
+    expect(wasRemoved).toEqual([false, false]);
   });
   it('should cache result', async () => {
     const cache = {
