@@ -13,11 +13,11 @@ export const removeTracks: RemoveTracks = ((
 ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> => {
   if (Array.isArray(ids))
     return (client) =>
-      Promise.all(ids.map((id) => cacheSavedTracks(client, id)));
-  return (client) => cacheSavedTracks(client, ids);
+      Promise.all(ids.map((id) => cacheRemovedTracks(client, id)));
+  return (client) => cacheRemovedTracks(client, ids);
 }) as RemoveTracks;
 
-const cacheSavedTracks = async (
+const cacheRemovedTracks = async (
   { token, cache }: PersistentApiProperties,
   track: string
 ): Promise<boolean> => {
@@ -29,11 +29,16 @@ const cacheSavedTracks = async (
 const batchRemoveTracks: BatchedFunction<boolean> = batchWrap(
   async (token, ids) => {
     const endpoint = `me/tracks`;
-    const data = await spotifyFetch<boolean[]>(endpoint, token, {
-      method: 'DELETE',
-      body: JSON.stringify({ ids }),
-    });
-    return data;
+    await spotifyFetch<boolean[]>(
+      endpoint,
+      token,
+      {
+        method: 'DELETE',
+        body: JSON.stringify({ ids }),
+      },
+      false
+    );
+    return ids.map(() => false);
   }
 );
 

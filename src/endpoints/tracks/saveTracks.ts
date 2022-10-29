@@ -29,11 +29,16 @@ const cacheSavedTracks = async (
 const batchSaveTracks: BatchedFunction<boolean> = batchWrap(
   async (token, ids) => {
     const endpoint = `me/tracks`;
-    const data = await spotifyFetch<boolean[]>(endpoint, token, {
-      method: 'PUT',
-      body: JSON.stringify({ ids }),
-    });
-    return data;
+    await spotifyFetch<boolean[]>(
+      endpoint,
+      token,
+      {
+        method: 'PUT',
+        body: JSON.stringify({ ids }),
+      },
+      false
+    );
+    return ids.map(() => true);
   }
 );
 
