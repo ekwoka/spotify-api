@@ -50,7 +50,7 @@ const performBatchedRequest = <T extends string, S>(
       const dataToReturn = await cb(token, batch, ...rest);
       while (batch.length) {
         const resolves = batchQueue[batch.pop()];
-        const nextData = dataToReturn.pop();
+        const nextData = dataToReturn?.pop();
         resolves.forEach((res) => res(nextData));
       }
     } catch (e) {
@@ -68,7 +68,7 @@ export type BatchedFunction<S> = (
   ...rest: unknown[]
 ) => Promise<S>;
 
-type BatchCallback<T extends string, S> = (
+export type BatchCallback<T extends string, S> = (
   token: string,
   data: T[],
   ...rest: unknown[]
