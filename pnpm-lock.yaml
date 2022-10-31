@@ -1,10 +1,10 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@types/node': ^18.11.7
+  '@types/node': ^18.11.8
   '@typescript-eslint/eslint-plugin': ^5.41.0
   '@typescript-eslint/parser': ^5.41.0
-  '@vitest/coverage-c8': ^0.24.3
+  '@vitest/coverage-c8': ^0.24.4
   esbuild: ^0.15.12
   eslint: ^8.26.0
   gzip-size: ^7.0.0
@@ -15,14 +15,14 @@ specifiers:
   pretty-bytes: ^6.0.0
   typescript: ^4.8.4
   undici: ^5.12.0
-  vite: ^3.2.1
-  vitest: ^0.24.3
+  vite: ^3.2.2
+  vitest: ^0.24.4
 
 devDependencies:
-  '@types/node': 18.11.7
+  '@types/node': 18.11.8
   '@typescript-eslint/eslint-plugin': 5.41.0_huremdigmcnkianavgfk3x6iou
   '@typescript-eslint/parser': 5.41.0_wyqvi574yv7oiwfeinomdzmc3m
-  '@vitest/coverage-c8': 0.24.3
+  '@vitest/coverage-c8': 0.24.4
   esbuild: 0.15.12
   eslint: 8.26.0
   gzip-size: 7.0.0
@@ -33,8 +33,8 @@ devDependencies:
   pretty-bytes: 6.0.0
   typescript: 4.8.4
   undici: 5.12.0
-  vite: 3.2.1
-  vitest: 0.24.3
+  vite: 3.2.2
+  vitest: 0.24.4
 
 packages:
   /@bcoe/v8-coverage/0.2.3:
@@ -210,10 +210,10 @@ packages:
       }
     dev: true
 
-  /@types/node/18.11.7:
+  /@types/node/18.11.8:
     resolution:
       {
-        integrity: sha512-LhFTglglr63mNXUSRYD8A+ZAIu5sFqNJ4Y2fPuY7UlrySJH87rRRlhtVmMHplmfk5WkoJGmDjE9oiTfyX94CpQ==,
+        integrity: sha512-uGwPWlE0Hj972KkHtCDVwZ8O39GmyjfMane1Z3GUBGGnkZ2USDq7SxLpVIiIHpweY9DS0QTDH0Nw7RNBsAAZ5A==,
       }
     dev: true
 
@@ -376,14 +376,14 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
-  /@vitest/coverage-c8/0.24.3:
+  /@vitest/coverage-c8/0.24.4:
     resolution:
       {
-        integrity: sha512-tAmMyHxWYnAwGeJb7QgTuEX8aLasTg4X1/6INobXa/7wYGEJ28CACFO5iLn1HzFVPoLvhsS3luQjiflGjjSMRQ==,
+        integrity: sha512-1mhYQip6IJw1p9hzM+sH8O/RbILMe7FwScWI7COoMGAThdDRytDjmOal38F/EVrIPZY3nZ5hf7S7JFGjbb4bTg==,
       }
     dependencies:
       c8: 7.12.0
-      vitest: 0.24.3
+      vitest: 0.24.4
     transitivePeerDependencies:
       - '@edge-runtime/vm'
       - '@vitest/browser'
@@ -3152,10 +3152,10 @@ packages:
       }
     dev: true
 
-  /tinybench/2.3.0:
+  /tinybench/2.3.1:
     resolution:
       {
-        integrity: sha512-zs1gMVBwyyG2QbVchYIbnabRhMOCGvrwZz/q+SV+LIMa9q5YDQZi2kkI6ZRqV2Bz7ba1uvrc7ieUoE4KWnGeKg==,
+        integrity: sha512-hGYWYBMPr7p4g5IarQE7XhlyWveh1EKhy4wUBS1LrHXCKYgvz+4/jCqgmJqZxxldesn05vccrtME2RLLZNW7iA==,
       }
     dev: true
 
@@ -3308,10 +3308,10 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: true
 
-  /vite/3.2.1:
+  /vite/3.2.2:
     resolution:
       {
-        integrity: sha512-ADtMkfHuWq4tskJsri2n2FZkORO8ZyhI+zIz7zTrDAgDEtct1jdxOg3YsZBfHhKjmMoWLOSCr+64qrEDGo/DbQ==,
+        integrity: sha512-pLrhatFFOWO9kS19bQ658CnRYzv0WLbsPih6R+iFeEEhDOuYgYCX2rztUViMz/uy/V8cLCJvLFeiOK7RJEzHcw==,
       }
     engines: { node: ^14.18.0 || >=16.0.0 }
     hasBin: true
@@ -3341,10 +3341,10 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitest/0.24.3:
+  /vitest/0.24.4:
     resolution:
       {
-        integrity: sha512-aM0auuPPgMSstWvr851hB74g/LKaKBzSxcG3da7ejfZbx08Y21JpZmbmDYrMTCGhVZKqTGwzcnLMwyfz2WzkhQ==,
+        integrity: sha512-4ratHSyVEJPtBLV00uhL4Wj3Pmandc9rsxUkE0q9peNOfaOgGF4lEepdkaXGRi9AGFKr1GRVtjGOJ6Fp2lCpEg==,
       }
     engines: { node: '>=v14.16.0' }
     hasBin: true
@@ -3368,15 +3368,15 @@ packages:
     dependencies:
       '@types/chai': 4.3.3
       '@types/chai-subset': 1.3.3
-      '@types/node': 18.11.7
+      '@types/node': 18.11.8
       chai: 4.3.6
       debug: 4.3.4
       local-pkg: 0.4.2
       strip-literal: 0.4.2
-      tinybench: 2.3.0
+      tinybench: 2.3.1
       tinypool: 0.3.0
       tinyspy: 1.0.2
-      vite: 3.2.1
+      vite: 3.2.2
     transitivePeerDependencies:
       - less
       - sass
