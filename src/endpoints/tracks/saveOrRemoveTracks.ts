@@ -1,5 +1,11 @@
 import { PersistentApiProperties, QueryFunction } from '../../core';
-import { batchWrap, spotifyFetch, BatchCallback } from '../../utils';
+import {
+  batchWrap,
+  spotifyFetch,
+  BatchCallback,
+  createMapper,
+  mappedArguments,
+} from '../../utils';
 
 /**
  * Adds a track or tracks to the current user's library. Accepts both single
@@ -11,9 +17,9 @@ import { batchWrap, spotifyFetch, BatchCallback } from '../../utils';
 export const saveTracks: SaveTracks = ((
   ids: string | string[]
 ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> =>
-  createMap((id: string, client: PersistentApiProperties) =>
+  createMapper((id: string, client: PersistentApiProperties) =>
     cacheNewTrackState(client, id, true)
-  )(ids)) as SaveTracks;
+  )(ids as mappedArguments<string, boolean>)) as SaveTracks;
 
 type SaveTracks = {
   (trackID: string): QueryFunction<Promise<boolean>>;
@@ -30,22 +36,14 @@ type SaveTracks = {
 export const removeTracks: RemoveTracks = ((
   ids: string | string[]
 ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> =>
-  createMap((id: string, client: PersistentApiProperties) =>
+  createMapper((id: string, client: PersistentApiProperties) =>
     cacheNewTrackState(client, id, false)
-  )(ids)) as RemoveTracks;
+  )(ids as mappedArguments<string, boolean>)) as RemoveTracks;
 
 type RemoveTracks = {
   (trackID: string): QueryFunction<Promise<boolean>>;
   (trackIDs: string[]): QueryFunction<Promise<boolean[]>>;
 };
-
-const createMap =
-  <T, S>(cb: (val: T, client: PersistentApiProperties) => Promise<S>) =>
-  (vals: T | T[]) =>
-    Array.isArray(vals)
-      ? (client: PersistentApiProperties): Promise<S[]> =>
-          Promise.all(vals.map((val) => cb(val, client)))
-      : (client: PersistentApiProperties) => cb(vals, client);
 
 const cacheNewTrackState = async (
   { token, cache }: PersistentApiProperties,
