@@ -17,6 +17,10 @@ export { recentlyPlayedTracks } from './player/recentlyPlayedTracks';
 export { getPlaylist } from './playlists/getPlaylist';
 export { getPlaylistItems } from './playlists/getPlaylistItems';
 export { getUsersPlaylists } from './playlists/getUsersPlaylists';
+export {
+  savePlaylists,
+  removePlaylists,
+} from './playlists/saveOrRemovePlaylist';
 export { search } from './search/search';
 export { searchString } from './search/searchString';
 export { getRecommendations } from './tracks/getRecommendations';

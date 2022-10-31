@@ -16,6 +16,7 @@ export const resetCache =
         artists: {},
         saved: {
           albums: {},
+          playlists: {},
           tracks: {},
         },
       };
