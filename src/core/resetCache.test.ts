@@ -22,6 +22,7 @@ describe('Reset Cache', () => {
       artists: {},
       saved: {
         albums: {},
+        playlists: {},
         tracks: {},
       },
     });

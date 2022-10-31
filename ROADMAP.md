@@ -57,8 +57,8 @@ This document serves the purpose of documenting the progress of the API. This ca
 
 > Note: These next two could be merged to a single wrapper endpoint
 
-- [ ] [PUT Follow Playlist](https://developer.spotify.com/documentation/web-api/reference/#/operations/follow-playlist) - `/playlists/{playlist_id}/followers`
-- [ ] [DELETE Unfollow Playlist](https://developer.spotify.com/documentation/web-api/reference/#/operations/unfollow-playlist) - `/playlists/{playlist_id}/followers`
+- [x] [PUT Follow Playlist](https://developer.spotify.com/documentation/web-api/reference/#/operations/follow-playlist) - `/playlists/{playlist_id}/followers`
+- [x] [DELETE Unfollow Playlist](https://developer.spotify.com/documentation/web-api/reference/#/operations/unfollow-playlist) - `/playlists/{playlist_id}/followers`
 - [ ] [GET If User Follows Playlist](https://developer.spotify.com/documentation/web-api/reference/#/operations/check-if-user-follows-playlist) - `/playlists/{playlist_id}/followers/contains`
 
 - [x] [GET Followed Artists](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-followed) - `/me/following`

@@ -351,6 +351,8 @@ The following endpoints are available in the Playlists category:
 - `getPlaylist` - Gets complete playlist information by playlist ID
 - `getPlaylistItems` - Gets Items from playlist by ID
 - `getUsersPlaylists` - Gets playlists created by or saved by the current user
+- `savePlaylists` - Puts playlist(s) into user's library
+- `removePlaylists` - Deletes playlist(s) from user's library
 
 #### getPlaylist
 
@@ -403,6 +405,28 @@ Options:
 - `offset`: How far into the list to start the results
 
 Playlists returned by this endpoint do not include track information.
+
+#### savePlaylists
+
+Puts playlist ID into the user's library. Returns `true` if successful. Works with single IDs or arrays of IDs.
+
+```js
+const isSaved = client(savePlaylists('0skYUMpS0AcbpjcGsAbRGj')); // true
+const wasSaved = client(
+  savePlaylists(['0skYUMpS0AcbpjcGsAbRGj', '60jFaQV7Z4boGC4ob5B5c6'])
+); // [true, true]
+```
+
+#### removePlaylists
+
+Deletes playlist ID from the user's library. Returns `true` if successful. Works with single IDs or arrays of IDs.
+
+```js
+const isRemoved = client(removePlaylists('0skYUMpS0AcbpjcGsAbRGj')); // true
+const wasRemoved = client(
+  removePlaylists(['0skYUMpS0AcbpjcGsAbRGj', '60jFaQV7Z4boGC4ob5B5c6'])
+); // [true, true]
+```
 
 ### Search
 
@@ -490,9 +514,9 @@ For more information on all the options here, check the [official Spotify docs f
 
 Current available endpoints within the Tracks category include:
 
-- `trackIsSaved` - Gets whether a provided album id is in the user's library
-- `saveTracks` - Put's albums into the user's library
-- `removeTracks` - Deletes albums from the user's library
+- `trackIsSaved` - Gets whether a provided track id is in the user's library
+- `saveTracks` - Put's tracks into the user's library
+- `removeTracks` - Deletes tracks from the user's library
 
 > These 3 all use batching to improve performance, and these 3 all also use a shared cache of in-Library states.
 
@@ -501,36 +525,36 @@ Batching Limit: 50
 
 - `getRecommendations` - Gets recommendations based on provided seeds.
 
-#### albumIsSaved
+#### trackIsSaved
 
-Gets whether the provided album IDs are present in the user's library. Works with single IDs or arrays of IDs.
+Gets whether the provided track IDs are present in the user's library. Works with single IDs or arrays of IDs.
 
 ```js
-const isSaved = client(albumIsSaved('0skYUMpS0AcbpjcGsAbRGj')); // true | false
+const isSaved = client(trackIsSaved('0skYUMpS0AcbpjcGsAbRGj')); // true | false
 const areSaved = client(
-  albumIsSaved(['0skYUMpS0AcbpjcGsAbRGj', '60jFaQV7Z4boGC4ob5B5c6'])
+  trackIsSaved(['0skYUMpS0AcbpjcGsAbRGj', '60jFaQV7Z4boGC4ob5B5c6'])
 ); // [true, false]
 ```
 
-#### saveAlbums
+#### saveTracks
 
-Puts album ID into the user's library. Returns `true` if successful. Works with single IDs or arrays of IDs.
+Puts track ID into the user's library. Returns `true` if successful. Works with single IDs or arrays of IDs.
 
 ```js
-const isSaved = client(saveAlbums('0skYUMpS0AcbpjcGsAbRGj')); // true
+const isSaved = client(saveTracks('0skYUMpS0AcbpjcGsAbRGj')); // true
 const wasSaved = client(
-  saveAlbums(['0skYUMpS0AcbpjcGsAbRGj', '60jFaQV7Z4boGC4ob5B5c6'])
+  saveTracks(['0skYUMpS0AcbpjcGsAbRGj', '60jFaQV7Z4boGC4ob5B5c6'])
 ); // [true, true]
 ```
 
-#### removeAlbums
+#### removeTracks
 
-Deletes album ID from the user's library. Returns `true` if successful. Works with single IDs or arrays of IDs.
+Deletes track ID from the user's library. Returns `true` if successful. Works with single IDs or arrays of IDs.
 
 ```js
-const isRemoved = client(removeAlbums('0skYUMpS0AcbpjcGsAbRGj')); // true
+const isRemoved = client(removeTracks('0skYUMpS0AcbpjcGsAbRGj')); // true
 const wasRemoved = client(
-  removeAlbums(['0skYUMpS0AcbpjcGsAbRGj', '60jFaQV7Z4boGC4ob5B5c6'])
+  removeTracks(['0skYUMpS0AcbpjcGsAbRGj', '60jFaQV7Z4boGC4ob5B5c6'])
 ); // [true, true]
 ```
 
