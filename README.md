@@ -629,7 +629,7 @@ Get's another user's profile by ID
 const thekwoka = await client(getUserProfile('thekwoka'));
 ```
 
-## Batching and Caching
+## Batching, Caching, and Limit Breaking
 
 One of the unique features of this API wrapper is the use of batched requests and intelligent caching. These features serve the purpose of reducing the number of requests make to the Spotify API and generally improving the responsiveness of your application.
 
@@ -651,21 +651,49 @@ ids.forEach(async (id) => {
 });
 ```
 
-While this isa bit contrived, in a component based framework, you might have these actual calls happening in places far away from each other.
+While this is a bit contrived, in a component based framework, you might have these actual calls happening in places far away from each other.
 
 In the background, these two ids will be bunched together (if they come in close enough to eachother) sent as a single request to Spotify, and resolved from the return. This also includes combining multiple requests for a single album into only the one reference requested from Spotify.
 
+### Caching
+
+As this data changes infrequently, responses will be cached and reused when the same information is requested again. This works with the above batching, as well. So if you make a bulk request for 10 albums, 3 of which you've already searched for before, those 3 will be returned from cache and the other 7 will be fetched anew, all without any adjustments to how your code behaves.
+
+### Limit Breaking
+
+Many endpoints offered by Spotify provide limits to how many items can be handled in one request. Retrieving items from a playlist is limited to 100, getting multiple albums in a single request is limited to 20, etc.
+
+This api wrapper, in many places, dynamically breaks these limits.
+
+For example, if you want to get all the songs in a playlist:
+
+```js
+const tracks = await client(getPlaylistItems('37i9dQZF1DX5g856aiKiDS'));
+// only 100 items
+```
+
+This will retrieve up to 100 items from the playlist, and in other wrappers, or working with the API yourself, you'd need to then figure out next requests to send to get more items. This wrapper can allow larger limits (including `Infinity`!) and will make all the necessary requests in the background and return a clean list.
+
+```js
+const tracks = await client(
+  getPlaylistItems('37i9dQZF1DX5g856aiKiDS', { limit: Infinity })
+);
+// every item in the playlist
+```
+
+In the background, this will check how many items are in the playlist, and make all the requests necessary to reconstruct the entire playlist.
+
+The goal is to have every endpoint limit be broken like this.
+
 #### Splitting Large Lists
 
-This system also comes with another nice feature. These multiple item endpoints have limits on the total number of items in a single request. For the above example of `albums` it's 20.
+This system also comes with another nice feature. Multiple item endpoints have limits on the total number of items in a single request. For the above example of `albums` it's 20.
 
 Once again, in the background, as these requests come in, the total number of albums may be greater than 20. Or you may even do a direct request for more than 20 albums.
 
 In the background, the request will be bunched into groups of 20, sent as requests, and, once again, distributed back to whence they came.
 
-### Caching
-
-As this data changes infrequently, responses will be cached and reused when the same information is requested again. This works with the above batching, as well. So if you make a bulk request for 10 albums, 3 of which you've already searched for before, those 3 will be returned from cache and the other 7 will be fetched anew, all without any adjustments to how your code behaves.
+The goal is for this behavior to work on just about every endpoint you might want to access by an id.
 
 ## Special Utilities
 
