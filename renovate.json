@@ -1,6 +1,23 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base"
+  "extends": ["config:base"],
+  "rangeStrategy": "bump",
+  "assignees": ["ekwoka"],
+  "reviewers": ["ekwoka"],
+  "commitMessagePrefix": ":arrow_up: ",
+  "lockFileMaintenance": { "enabled": true },
+  "timezone": "GMT",
+  "stabilityDays": 3,
+  "packageRules": [
+    {
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "devDependencies"
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "devDependencies (major)"
+    }
   ]
 }
