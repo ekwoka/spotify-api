@@ -5,7 +5,7 @@ import { gzipSize } from 'gzip-size';
 import prettyBytes from 'pretty-bytes';
 
 const test = process.env.NODE_ENV === 'test';
-build({
+const { outputFiles } = await build({
   entryPoints: ['./src/index.ts'],
   inject: [],
   outfile: 'testing/bundle.js',
@@ -16,28 +16,20 @@ build({
   target: 'esnext',
   platform: 'node',
   minify: true,
-  watch: false,
-  /* {
-    onRebuild(error, { outputFiles }) {
-      console.log('ESBUILD:');
-      console.log(outputFiles[0].contents.byteLength, 'bytes');
-    },
-  } */
   plugins: [],
-}).then(async ({ outputFiles }) => {
-  const { minified, gzipped } = await getSizes(outputFiles[0].contents);
-  const content = JSON.stringify(
-    {
-      minified,
-      gzipped,
-    },
-    null,
-    2
-  );
-  await writeFile(join('size.json'), content, 'utf8');
-  console.log(`New Package size: ${minified.pretty}`);
-  console.log(`Minzipped size: ${gzipped.pretty}`);
 });
+const { minified, gzipped } = await getSizes(outputFiles[0].contents);
+const content = JSON.stringify(
+  {
+    minified,
+    gzipped,
+  },
+  null,
+  2
+);
+await writeFile(join('size.json'), content, 'utf8');
+console.log(`New Package size: ${minified.pretty}`);
+console.log(`Minzipped size: ${gzipped.pretty}`);
 
 function sizeInfo(bytesSize) {
   return {
