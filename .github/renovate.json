@@ -5,6 +5,7 @@
   "assignees": ["ekwoka"],
   "reviewers": ["ekwoka"],
   "commitMessagePrefix": ":arrow_up: ",
+  "schedule": ["on the last day of the month"],
   "timezone": "GMT",
   "stabilityDays": 3,
   "packageRules": [
