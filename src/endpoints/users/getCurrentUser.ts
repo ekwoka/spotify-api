@@ -10,11 +10,11 @@ import { deepFreeze, spotifyFetch } from '../../utils';
 export const getCurrentUser =
   (): QueryFunction<Promise<User>> =>
   async ({ token, cache }) => {
-    if (cache.user) return cache.user as User;
+    const cached = cache.get('user');
+    if (cached) return cached as User;
     const endpoint = `me`;
     const data = await spotifyFetch<User>(endpoint, token);
-    deepFreeze(data);
-    cache.user = data;
+    cache.set('user', deepFreeze(data));
     return data;
   };
 
