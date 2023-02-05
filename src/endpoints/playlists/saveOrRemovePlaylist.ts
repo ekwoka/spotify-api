@@ -1,5 +1,11 @@
-import { PersistentApiProperties, QueryFunction } from '../../core';
-import { createMapper, mappedArguments, spotifyFetch } from '../../utils';
+import { QueryFunction } from '../../core';
+import { PlaylistSavedStatus } from '../../core/cacheKeys';
+import {
+  arrayWrap,
+  createMapper,
+  mappedArguments,
+  spotifyFetch,
+} from '../../utils';
 
 /**
  * Adds a playlist or playlists to the current user's library. Accepts both single
@@ -11,9 +17,7 @@ import { createMapper, mappedArguments, spotifyFetch } from '../../utils';
 export const savePlaylists: SavePlaylists = ((
   ids: string | string[]
 ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> =>
-  createMapper((id: string, client: PersistentApiProperties) =>
-    cacheNewPlaylistState(client, id, true)
-  )(ids as mappedArguments<string, boolean>)) as SavePlaylists;
+  saveOrRemovePlaylist(ids, true)) as SavePlaylists;
 
 type SavePlaylists = {
   (playlistID: string): QueryFunction<Promise<boolean>>;
@@ -30,24 +34,33 @@ type SavePlaylists = {
 export const removePlaylists: RemovePlaylists = ((
   ids: string | string[]
 ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> =>
-  createMapper((id: string, client: PersistentApiProperties) =>
-    cacheNewPlaylistState(client, id, false)
-  )(ids as mappedArguments<string, boolean>)) as RemovePlaylists;
+  saveOrRemovePlaylist(ids, false)) as RemovePlaylists;
 
 type RemovePlaylists = {
   (playlistID: string): QueryFunction<Promise<boolean>>;
   (playlistIDs: string[]): QueryFunction<Promise<boolean[]>>;
 };
 
-const cacheNewPlaylistState = async (
-  { token, cache }: PersistentApiProperties,
-  playlist: string,
-  state: boolean
-): Promise<boolean> => {
-  await (state ? savePlaylist : removePlaylist)(token, playlist);
-  cache.saved.playlists[playlist] = state;
-  return state;
-};
+const saveOrRemovePlaylist =
+  (
+    ids: string | string[],
+    state: boolean
+  ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> =>
+  async (client) => {
+    const results = await createMapper<string, boolean>(
+      async (id: string, client) => (
+        await (state ? savePlaylist : removePlaylist)(client.token, id), state
+      )
+    )(ids as mappedArguments<string, boolean>)(client);
+    client.cache.set(
+      PlaylistSavedStatus,
+      arrayWrap(ids).reduce(
+        (acc, id) => ((acc[id] = state), acc),
+        client.cache.get(PlaylistSavedStatus) ?? {}
+      )
+    );
+    return results;
+  };
 
 const createFollowPlaylistCallback =
   (method: 'PUT' | 'DELETE') => (token: string, id: string) => {

@@ -2,6 +2,7 @@ import { Playlist } from './types';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { hasToken, makeMock } from '../../../testingTools';
 import { getPlaylistItems } from './getPlaylistItems';
+import WeakLRUCache from '@ekwoka/weak-lru-cache';
 
 describe('getPlaylistItems', () => {
   beforeAll(() => {
@@ -16,7 +17,7 @@ describe('getPlaylistItems', () => {
           data: mockedPlaylistItems,
         };
       },
-    });
+    }).times(2);
     makeMock(
       '/v1/playlists/37i9dQZF1DX5g856aiKiDS/tracks?limit=10&market=KR&offset=5',
       {
@@ -51,7 +52,7 @@ describe('getPlaylistItems', () => {
           data: mockedPlaylistItems,
         };
       },
-    });
+    }).times(2);
     makeMock(
       '/v1/playlists/37i9dQZF1DX5g856aiKiDS/tracks?limit=50&offset=100',
       {
@@ -66,7 +67,7 @@ describe('getPlaylistItems', () => {
           };
         },
       }
-    );
+    ).times(2);
   });
   it('should return a function', () => {
     expect(typeof getPlaylistItems('37i9dQZF1DX5g856aiKiDS')).toBe('function');
@@ -74,6 +75,7 @@ describe('getPlaylistItems', () => {
   it('should fetch playlist items', async () => {
     const playlist = await getPlaylistItems('37i9dQZF1DX5g856aiKiDS')({
       token: 'token',
+      cache: WeakLRUCache(),
     } as any);
     expect(playlist).toEqual(mockedPlaylistItems);
   });
@@ -87,6 +89,7 @@ describe('getPlaylistItems', () => {
       }
     )({
       token: 'token',
+      cache: WeakLRUCache(),
     } as any)) as any;
     expect(offset).toEqual('5');
     expect(limit).toEqual('10');
@@ -97,9 +100,29 @@ describe('getPlaylistItems', () => {
       limit: 150,
     })({
       token: 'token',
+      cache: WeakLRUCache(),
     } as any);
     expect(playlist.items.length).toBeGreaterThan(100);
     expect(playlist.limit).toEqual(150);
+  });
+  it('should cache playlist items', async () => {
+    const cache = WeakLRUCache();
+    const playlistItems = await getPlaylistItems('37i9dQZF1DX5g856aiKiDS')({
+      token: 'token',
+      cache,
+    } as any);
+    expect(cache.get(`playlists/37i9dQZF1DX5g856aiKiDS/tracks?`)).toBe(
+      playlistItems
+    );
+    const extendedItems = await getPlaylistItems('37i9dQZF1DX5g856aiKiDS', {
+      limit: 150,
+    })({
+      token: 'token',
+      cache,
+    } as any);
+    expect(cache.get('playlists/37i9dQZF1DX5g856aiKiDS/tracks?limit=150')).toBe(
+      extendedItems
+    );
   });
 });
 
