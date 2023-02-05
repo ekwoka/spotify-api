@@ -138,7 +138,7 @@ Batching Limit: 20
 
 > These last 3 all use batching to improve performance, and these 3 all also use a shared cache of in-Library states.
 
-Cachekey: `saved.albums[id]`
+Cachekey: `saved.albums` (shared)
 Batching Limit: 20
 
 - `newReleases` - Retrieves a paginated result of new releases
@@ -699,7 +699,7 @@ The goal is for this behavior to work on just about every endpoint you might wan
 
 ### Cache Busting
 
-As noted, a major benefit of this API wrapper is the intelligent use of caches. However, caches may not always be accurate, or may introduce other issues in certain contexts. As such, there is a special utility for cache busting.
+As noted, a major benefit of this API wrapper is the intelligent use of caches. The current cache implementation is a [Weak LRU Cache](https://github.com/ekwoka/weak-lru-cache), allowing older unused data to gracefully be garbage collected naturally, while still being retrievable if still in use outside of the cache. However, caches may not always be accurate, or may introduce other issues in certain contexts. As such, there is a special utility for cache busting.
 
 ```js
 import { resetCache } from '@ekwoka/spotify-api';
@@ -708,7 +708,7 @@ import { resetCache } from '@ekwoka/spotify-api';
 client(resetCache());
 
 // clears specific cached value
-client(resetCache('user')); // should clear user cache only
+client(resetCache('album.saved')); // should clear saved albums cache only
 ```
 
 Where caches are utilized, the documentation for those endpoints will include information about the cache key(s) used.

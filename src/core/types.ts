@@ -1,18 +1,8 @@
-import { Album } from '../endpoints/albums';
-import { Artist } from '../endpoints/artists';
+import WeakLRUCache from '@ekwoka/weak-lru-cache';
 
 export type PersistentApiProperties = {
   token: string;
-  cache: {
-    albums: Record<string, Album>;
-    artists: Record<string, Artist>;
-    saved: {
-      albums: Record<string, boolean>;
-      playlists: Record<string, boolean>;
-      tracks: Record<string, boolean>;
-    };
-    [key: string]: unknown;
-  };
+  cache: ReturnType<typeof WeakLRUCache<object>>;
 };
 
 export type SpotifyApiClient = <T>(fn: QueryFunction<T>) => T;

@@ -1,6 +1,7 @@
 import { Album } from './';
 import { PaginatedList, QueryFunction } from '../../core';
 import { deepFreeze, spotifyFetch, toURLString } from '../../utils';
+import { AlbumSavedStatus } from '../../core/cacheKeys';
 
 /**
  * Retrieves a paginated list of Albums currently saved in the User's Library.
@@ -18,10 +19,17 @@ export const getSavedAlbums =
   ): QueryFunction<Promise<PaginatedList<SavedAlbum>>> =>
   async ({ token, cache }) => {
     const endpoint = `me/albums?${toURLString(options)}`;
+    const cachedList = cache.get(endpoint);
+    if (cachedList) return cachedList as PaginatedList<SavedAlbum>;
     const data = await spotifyFetch<PaginatedList<SavedAlbum>>(endpoint, token);
-    if (!cache.albums) cache.albums = {};
-    data.items.forEach(
-      ({ album }) => (cache.albums[album.id] = deepFreeze(album))
+    cache.set(endpoint, deepFreeze(data));
+    cache.set(
+      AlbumSavedStatus,
+      data.items.reduce((acc, { album }) => {
+        acc[album.id] = true;
+        cache.set(`album.${album.id}`, album);
+        return acc;
+      }, cache.get(AlbumSavedStatus) ?? {})
     );
     return data;
   };

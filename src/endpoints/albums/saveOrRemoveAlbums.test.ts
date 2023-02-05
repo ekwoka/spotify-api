@@ -1,7 +1,8 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 import { hasToken, makeMock } from '../../../testingTools';
 import { saveAlbums, removeAlbums } from './';
-import { PersistentApiProperties } from '../../core';
+import WeakLRUCache from '@ekwoka/weak-lru-cache';
+import { AlbumSavedStatus } from '../../core/cacheKeys';
 
 describe('saveAlbums', () => {
   beforeAll(() => {
@@ -26,21 +27,23 @@ describe('saveAlbums', () => {
   it('should save albums', async () => {
     const wasSaved = await saveAlbums('seoul')({
       token: 'token',
-      cache: { saved: { albums: {} } } as PersistentApiProperties['cache'],
+      cache: WeakLRUCache(),
     });
     expect(wasSaved).toEqual(true);
   });
   it('should accept an array of albums', async () => {
     const wasSaved = await saveAlbums(['seoul', 'drip'])({
       token: 'token',
-      cache: { saved: { albums: {} } } as PersistentApiProperties['cache'],
+      cache: WeakLRUCache(),
     });
     expect(wasSaved).toEqual([true, true]);
   });
   it('should cache result', async () => {
-    const cache = { saved: { albums: {} } } as PersistentApiProperties['cache'];
+    const cache = WeakLRUCache();
     await saveAlbums('seoul')({ token: 'token', cache });
-    expect(cache.saved.albums).toEqual({ seoul: true });
+    expect(cache.get(AlbumSavedStatus)).toEqual({ seoul: true });
+    await saveAlbums(['seoul', 'drip'])({ token: 'token', cache });
+    expect(cache.get(AlbumSavedStatus)).toEqual({ seoul: true, drip: true });
   });
 });
 
@@ -67,22 +70,22 @@ describe('removeAlbums', () => {
   it('should save albums', async () => {
     const wasRemoved = await removeAlbums('seoul')({
       token: 'token',
-      cache: { saved: { albums: {} } } as PersistentApiProperties['cache'],
+      cache: WeakLRUCache(),
     });
     expect(wasRemoved).toEqual(true);
   });
   it('should accept an array of albums', async () => {
     const wasRemoved = await removeAlbums(['seoul', 'drip'])({
       token: 'token',
-      cache: { saved: { albums: {} } } as PersistentApiProperties['cache'],
+      cache: WeakLRUCache(),
     });
     expect(wasRemoved).toEqual([true, true]);
   });
   it('should cache result', async () => {
-    const cache = {
-      saved: { albums: {} },
-    } as PersistentApiProperties['cache'];
+    const cache = WeakLRUCache();
     await removeAlbums('seoul')({ token: 'token', cache });
-    expect(cache.saved.albums).toEqual({ seoul: false });
+    expect(cache.get(AlbumSavedStatus)).toEqual({ seoul: false });
+    await removeAlbums(['seoul', 'drip'])({ token: 'token', cache });
+    expect(cache.get(AlbumSavedStatus)).toEqual({ seoul: false, drip: false });
   });
 });

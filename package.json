@@ -70,5 +70,8 @@
     "*.{json,md,mdx,html,css,scss,less,graphql,yml,yaml}": [
       "prettier --write"
     ]
+  },
+  "dependencies": {
+    "@ekwoka/weak-lru-cache": "^0.0.3"
   }
 }
