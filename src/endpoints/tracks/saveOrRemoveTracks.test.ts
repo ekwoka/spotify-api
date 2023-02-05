@@ -1,7 +1,8 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 import { hasToken, makeMock } from '../../../testingTools';
 import { saveTracks, removeTracks } from '.';
-import { PersistentApiProperties } from '../../core';
+import WeakLRUCache from '@ekwoka/weak-lru-cache';
+import { TrackSavedStatus } from '../../core/cacheKeys';
 
 describe('saveTracks', () => {
   beforeAll(() => {
@@ -23,21 +24,21 @@ describe('saveTracks', () => {
   it('should save tracks', async () => {
     const wasSaved = await saveTracks('seoul')({
       token: 'token',
-      cache: { saved: { tracks: {} } } as PersistentApiProperties['cache'],
+      cache: WeakLRUCache(),
     });
     expect(wasSaved).toEqual(true);
   });
   it('should accept an array of tracks', async () => {
     const wasSaved = await saveTracks(['seoul', 'drip'])({
       token: 'token',
-      cache: { saved: { tracks: {} } } as PersistentApiProperties['cache'],
+      cache: WeakLRUCache(),
     });
     expect(wasSaved).toEqual([true, true]);
   });
   it('should cache result', async () => {
-    const cache = { saved: { tracks: {} } } as PersistentApiProperties['cache'];
+    const cache = WeakLRUCache();
     await saveTracks('seoul')({ token: 'token', cache });
-    expect(cache.saved.tracks).toEqual({ seoul: true });
+    expect(cache.get(TrackSavedStatus)).toEqual({ seoul: true });
   });
 });
 
@@ -61,22 +62,20 @@ describe('removeTracks', () => {
   it('should remove tracks', async () => {
     const wasRemoved = await removeTracks('seoul')({
       token: 'token',
-      cache: { saved: { tracks: {} } } as PersistentApiProperties['cache'],
+      cache: WeakLRUCache(),
     });
     expect(wasRemoved).toEqual(false);
   });
   it('should accept an array of tracks', async () => {
     const wasRemoved = await removeTracks(['seoul', 'drip'])({
       token: 'token',
-      cache: { saved: { tracks: {} } } as PersistentApiProperties['cache'],
+      cache: WeakLRUCache(),
     });
     expect(wasRemoved).toEqual([false, false]);
   });
   it('should cache result', async () => {
-    const cache = {
-      saved: { tracks: {} },
-    } as PersistentApiProperties['cache'];
+    const cache = WeakLRUCache();
     await removeTracks('seoul')({ token: 'token', cache });
-    expect(cache.saved.tracks).toEqual({ seoul: false });
+    expect(cache.get(TrackSavedStatus)).toEqual({ seoul: false });
   });
 });
