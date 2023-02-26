@@ -1,4 +1,3 @@
-import WeakLRUCache from '@ekwoka/weak-lru-cache';
 import { beforeAll } from 'vitest';
 import { describe, expect, it } from 'vitest';
 import { hasToken } from '../../../testingTools/hasToken';
@@ -40,7 +39,7 @@ describe('getAlbum', () => {
   it('should return an album', async () => {
     const album = await getAlbum('GOOD')({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     });
     expect(album).toEqual(mockedAlbums.albums[0]);
   });
@@ -50,13 +49,13 @@ describe('getAlbum', () => {
       'EN'
     )({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     })) as any;
     expect(market).toEqual('EN');
   });
   it('caches album result', async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const cache = WeakLRUCache();
+    const cache = new Map();
     const album1 = await getAlbum('GOOD')({
       token: 'token',
       cache,

@@ -1,7 +1,6 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@ekwoka/weak-lru-cache': ^0.0.3
   '@types/node': 18.11.18
   '@typescript-eslint/eslint-plugin': 5.49.0
   '@typescript-eslint/parser': 5.49.0
@@ -18,9 +17,6 @@ specifiers:
   undici: 5.16.0
   vite: 4.0.4
   vitest: 0.28.3
-
-dependencies:
-  '@ekwoka/weak-lru-cache': 0.0.3
 
 devDependencies:
   '@types/node': 18.11.18
@@ -47,13 +43,6 @@ packages:
         integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==,
       }
     dev: true
-
-  /@ekwoka/weak-lru-cache/0.0.3:
-    resolution:
-      {
-        integrity: sha512-s9zQw5+7GW6fMZ4bkJxUdaXOJSP4cNiGkceVJD0N8OVmkvxCLZ8uWuCYapZoJe7gPZKr1pkw63Ofd5oZyDU1TQ==,
-      }
-    dev: false
 
   /@esbuild/android-arm/0.16.17:
     resolution:

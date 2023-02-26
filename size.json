@@ -1,10 +1,10 @@
 {
   "minified": {
-    "pretty": "9.4 kB",
-    "raw": 9402
+    "pretty": "8.28 kB",
+    "raw": 8281
   },
   "gzipped": {
-    "pretty": "3.46 kB",
-    "raw": 3455
+    "pretty": "3.03 kB",
+    "raw": 3027
   }
 }

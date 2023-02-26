@@ -1,4 +1,3 @@
-import WeakLRUCache from '@ekwoka/weak-lru-cache';
 import { QueryFunction } from './types';
 
 /**
@@ -11,6 +10,6 @@ import { QueryFunction } from './types';
 export const resetCache =
   (key?: string): QueryFunction =>
   (Client) => {
-    if (!key) Client.cache = WeakLRUCache();
+    if (!key) Client.cache.clear();
     else Client.cache.delete(key);
   };

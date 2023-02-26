@@ -1,4 +1,3 @@
-import WeakLRUCache from '@ekwoka/weak-lru-cache';
 import { describe, expect, it } from 'vitest';
 import { PersistentApiProperties, resetCache } from './';
 
@@ -9,7 +8,7 @@ describe('Reset Cache', () => {
   });
   it('should remove the specified piece of the cache', () => {
     const Client = {
-      cache: WeakLRUCache(),
+      cache: new Map(),
     } as unknown as PersistentApiProperties;
     Client.cache.set('foo', testData);
     expect(Client.cache.get('foo')).toEqual(testData);
@@ -18,7 +17,7 @@ describe('Reset Cache', () => {
   });
   it('should remove all cache if no cacheType is provided', () => {
     const Client = {
-      cache: WeakLRUCache(),
+      cache: new Map(),
     } as unknown as PersistentApiProperties;
     Client.cache.set('albums', testData);
     expect(Client.cache.get('albums')).toEqual(testData);

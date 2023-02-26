@@ -1,8 +1,10 @@
-import WeakLRUCache from '@ekwoka/weak-lru-cache';
-
 export type PersistentApiProperties = {
   token: string;
-  cache: ReturnType<typeof WeakLRUCache<object>>;
+  cache: limitedMap;
+};
+
+export type SpotifyApiClientOptions = {
+  cache?: limitedMap;
 };
 
 export type SpotifyApiClient = <T>(fn: QueryFunction<T>) => T;
@@ -17,6 +19,11 @@ export type PaginatedList<T> = {
   previous: string | null;
   total: number;
 };
+
+export type limitedMap = Pick<
+  Map<string, object>,
+  'get' | 'set' | 'delete' | 'clear'
+>;
 
 export type Copyrights = {
   text: string;

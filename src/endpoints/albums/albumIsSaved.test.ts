@@ -1,4 +1,3 @@
-import WeakLRUCache from '@ekwoka/weak-lru-cache';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { hasToken, makeMock } from '../../../testingTools';
 import { AlbumSavedStatus } from '../../core/cacheKeys';
@@ -33,21 +32,21 @@ describe('albumIsSaved', () => {
   it('should return true is album is saved (string)', async () => {
     const isSaved = await albumIsSaved('seoul')({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     });
     expect(isSaved).toEqual(true);
   });
   it('should return true is album is saved (array)', async () => {
     const isSaved = await albumIsSaved(['seoul'])({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     });
     expect(isSaved).toEqual([true]);
   });
   it('should work with multiple albums', async () => {
     const isSaved = await albumIsSaved(['seoul', 'drip'])({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     });
     expect(isSaved).toEqual([true, false]);
   });
@@ -56,14 +55,14 @@ describe('albumIsSaved', () => {
       ['seoul', 'drip'].map((item) =>
         albumIsSaved(item)({
           token: 'token',
-          cache: WeakLRUCache(),
+          cache: new Map(),
         })
       )
     );
     expect(isSaved).toEqual([true, false]);
   });
   it('should cache requests', async () => {
-    const cache = WeakLRUCache();
+    const cache = new Map();
     const isSaved = await albumIsSaved('seoul')({
       token: 'token',
       cache,

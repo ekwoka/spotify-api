@@ -1,4 +1,3 @@
-import WeakLRUCache from '@ekwoka/weak-lru-cache';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { makeMock } from '../../../testingTools/makeMock';
 import { getCurrentUser } from './';
@@ -10,12 +9,12 @@ describe('Get Current User', () => {
   it('should return Current User', async () => {
     const user = await getCurrentUser()({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     });
     expect(user.email).toBeDefined();
   });
   it('should cache user and return it from cache', async () => {
-    const cache = WeakLRUCache();
+    const cache = new Map();
     expect(await getCurrentUser()({ token: 'token', cache })).toBe(
       cache.get('user')
     );

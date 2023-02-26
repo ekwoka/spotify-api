@@ -1,4 +1,3 @@
-import WeakLRUCache from '@ekwoka/weak-lru-cache';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { makeMock } from '../../../testingTools/makeMock';
 import { getTopItems } from './';
@@ -18,7 +17,7 @@ describe('getTopItems', () => {
   it('should return top tracks', async () => {
     const tracks = await getTopItems('tracks')({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     });
     expect(Array.isArray(tracks.items)).toBe(true);
     expect(tracks.items[0].type).toBe('track');
@@ -26,7 +25,7 @@ describe('getTopItems', () => {
   it('should return top artists', async () => {
     const artists = await getTopItems('artists')({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     });
     expect(Array.isArray(artists.items)).toBe(true);
     expect(artists.items[0].type).toBe('artist');
@@ -34,7 +33,7 @@ describe('getTopItems', () => {
   it('should pass in query params', async () => {
     const tracks = await getTopItems('testquery' as 'artists', { limit: 10 })({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     });
     expect(tracks.limit).toBe('10');
   });

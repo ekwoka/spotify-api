@@ -3,7 +3,6 @@ import { describe, expect, it } from 'vitest';
 import { hasToken } from '../../../testingTools/hasToken';
 import { makeMock } from '../../../testingTools/makeMock';
 import { getArtists } from '.';
-import WeakLRUCache from '@ekwoka/weak-lru-cache';
 
 describe('getArtists', () => {
   beforeAll(() => {
@@ -25,7 +24,7 @@ describe('getArtists', () => {
       '41MozSoPIsD1dJM0CLPjZF',
     ])({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     });
     expect(artists).toEqual(mockedArtists);
   });

@@ -1,4 +1,3 @@
-import WeakLRUCache from '@ekwoka/weak-lru-cache';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { hasToken, makeMock } from '../../../testingTools';
 import { getFollowedArtists } from './';
@@ -45,7 +44,7 @@ describe('getFollowedArtists', () => {
   it('should return followed artists', async () => {
     const results = await getFollowedArtists('artist')({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     } as any);
     expect(results).toEqual(mockedFollowing);
   });
@@ -55,7 +54,7 @@ describe('getFollowedArtists', () => {
       after: 'jessi',
     })({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     } as any);
     expect(results).toEqual({
       artists: {

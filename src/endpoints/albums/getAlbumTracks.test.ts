@@ -1,4 +1,3 @@
-import WeakLRUCache from '@ekwoka/weak-lru-cache';
 import { beforeAll } from 'vitest';
 import { describe, expect, it } from 'vitest';
 import { hasToken } from '../../../testingTools/hasToken';
@@ -43,7 +42,7 @@ describe('getAlbumTracks', () => {
   it('should return a tracklist', async () => {
     const tracks = await getAlbumTracks('TRACKS')({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     });
     expect(tracks).toEqual(mockedAlbums.albums[0].tracks);
   });
@@ -54,7 +53,7 @@ describe('getAlbumTracks', () => {
       'EN'
     )({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     })) as unknown as { market: string };
     expect(market).toEqual('EN');
   });

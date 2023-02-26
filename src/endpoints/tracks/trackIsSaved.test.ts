@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 import { hasToken, makeMock } from '../../../testingTools';
 import { trackIsSaved } from '.';
-import WeakLRUCache from '@ekwoka/weak-lru-cache';
+
 import { TrackSavedStatus } from '../../core/cacheKeys';
 
 describe('trackIsSaved', () => {
@@ -33,21 +33,21 @@ describe('trackIsSaved', () => {
   it('should return true is track is saved (string)', async () => {
     const isSaved = await trackIsSaved('pink+venom')({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     });
     expect(isSaved).toEqual(true);
   });
   it('should return true is track is saved (array)', async () => {
     const isSaved = await trackIsSaved(['pink+venom'])({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     });
     expect(isSaved).toEqual([true]);
   });
   it('should work with multiple tracks', async () => {
     const isSaved = await trackIsSaved(['pink+venom', 'bubble+pop'])({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     });
     expect(isSaved).toEqual([true, false]);
   });
@@ -56,7 +56,7 @@ describe('trackIsSaved', () => {
       ['pink+venom', 'bubble+pop'].map((item) =>
         trackIsSaved(item)({
           token: 'token',
-          cache: WeakLRUCache(),
+          cache: new Map(),
         })
       )
     );
@@ -64,7 +64,7 @@ describe('trackIsSaved', () => {
   });
   it('should cache requests', async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const cache = WeakLRUCache();
+    const cache = new Map();
     const isSaved = await trackIsSaved('pink+venom')({
       token: 'token',
       cache,

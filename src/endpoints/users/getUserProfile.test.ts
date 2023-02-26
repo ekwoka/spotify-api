@@ -1,4 +1,3 @@
-import WeakLRUCache from '@ekwoka/weak-lru-cache';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { makeMock } from '../../../testingTools/makeMock';
 import { getUserProfile } from './';
@@ -10,12 +9,12 @@ describe('getUserProfile', () => {
   it('should return user profile', async () => {
     const user = await getUserProfile('thekwoka')({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     });
     expect(user.display_name).toBe('string');
   });
   it('should cache user and return it from cache', async () => {
-    const cache = WeakLRUCache();
+    const cache = new Map();
     expect(
       await getUserProfile('thekwoka')({
         token: 'token',

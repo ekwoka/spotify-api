@@ -1,4 +1,3 @@
-import WeakLRUCache from '@ekwoka/weak-lru-cache';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { getSavedAlbums, SavedAlbum } from '.';
 import { hasToken, makeMock } from '../../../testingTools';
@@ -42,7 +41,7 @@ describe('getAlbumTracks', () => {
   it('should return an Album List', async () => {
     const savedAlbumsPage = await getSavedAlbums()({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     });
     expect(savedAlbumsPage).toEqual(mockedAlbums);
   });
@@ -53,7 +52,7 @@ describe('getAlbumTracks', () => {
       offset: 5,
     })({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     })) as unknown as PaginatedList<SavedAlbum> & { market: string };
     expect(limit).toBe('1');
     expect(offset).toBe('5');
@@ -62,7 +61,7 @@ describe('getAlbumTracks', () => {
   it('should cache the albums returned', async () => {
     const Client = {
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     } as PersistentApiProperties;
     const savedAlbumsPage = await getSavedAlbums()(Client);
     expect(Client.cache.get(`me/albums?${toURLString({})}`)).toBe(

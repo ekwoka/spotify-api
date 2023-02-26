@@ -1,7 +1,6 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 import { hasToken, makeMock } from '../../../testingTools';
 import { getPlaylist, Playlist } from '.';
-import WeakLRUCache from '@ekwoka/weak-lru-cache';
 
 describe('getPlaylist', () => {
   beforeAll(() => {
@@ -49,7 +48,7 @@ describe('getPlaylist', () => {
   it('should fetch a playlist', async () => {
     const playlist = await getPlaylist('37i9dQZF1DX5g856aiKiDS')({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     } as any);
     expect(playlist).toEqual(mockedPlaylist);
   });
@@ -63,14 +62,14 @@ describe('getPlaylist', () => {
       }
     )({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     } as any)) as any;
     expect(additional_types).toEqual('tracks');
     expect(fields).toEqual('name,images');
     expect(market).toEqual('KR');
   });
   it('should cache the result', async () => {
-    const cache = WeakLRUCache();
+    const cache = new Map();
     const playlist = await getPlaylist('37i9dQZF1DX5g856aiKiDS')({
       token: 'token',
       cache,

@@ -659,6 +659,25 @@ In the background, these two ids will be bunched together (if they come in close
 
 As this data changes infrequently, responses will be cached and reused when the same information is requested again. This works with the above batching, as well. So if you make a bulk request for 10 albums, 3 of which you've already searched for before, those 3 will be returned from cache and the other 7 will be fetched anew, all without any adjustments to how your code behaves.
 
+The default cache strategy is simple strong cache (this takes the least code to implement and is most likely a preferred strategy for most use cases). Values are cached and stored indefinitely, and only cleared when the cache is manually cleared.
+
+However, you can provide your own cache to allow alternative caching strategies (like LRU, TTL, weak, or weak LRU cache). This is done by providing a custom cache object to the `createClient` function.
+
+```js
+const client = SpotifyApi('initial_token', {
+  cache: new Map(),
+});
+```
+
+The only requirement for the cache object is that it implements a limited set of the `Map` interface. Specifically, it must implement the following methods:
+
+- `get(key)`
+- `set(key, value)`
+- `delete(key)`
+- `clear()`
+
+You can consider checking out [`@ekwoka/weak-lru-cache`](https://www.npmjs.com/package/@ekwoka/weak-lru-cache) for a lightweight weak reference based cache.
+
 ### Limit Breaking
 
 Many endpoints offered by Spotify provide limits to how many items can be handled in one request. Retrieving items from a playlist is limited to 100, getting multiple albums in a single request is limited to 20, etc.
@@ -699,7 +718,9 @@ The goal is for this behavior to work on just about every endpoint you might wan
 
 ### Cache Busting
 
-As noted, a major benefit of this API wrapper is the intelligent use of caches. The current cache implementation is a [Weak LRU Cache](https://github.com/ekwoka/weak-lru-cache), allowing older unused data to gracefully be garbage collected naturally, while still being retrievable if still in use outside of the cache. However, caches may not always be accurate, or may introduce other issues in certain contexts. As such, there is a special utility for cache busting.
+There can be times when you want to forcefull clean the cache when data has changed. This can be done by using the `resetCache` utility.
+
+You can also consider using an alternative caching strategy as documented above if you wish to provide more automated caching behaviors.
 
 ```js
 import { resetCache } from '@ekwoka/spotify-api';

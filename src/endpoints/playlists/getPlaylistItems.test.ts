@@ -2,7 +2,6 @@ import { Playlist } from './types';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { hasToken, makeMock } from '../../../testingTools';
 import { getPlaylistItems } from './getPlaylistItems';
-import WeakLRUCache from '@ekwoka/weak-lru-cache';
 
 describe('getPlaylistItems', () => {
   beforeAll(() => {
@@ -75,7 +74,7 @@ describe('getPlaylistItems', () => {
   it('should fetch playlist items', async () => {
     const playlist = await getPlaylistItems('37i9dQZF1DX5g856aiKiDS')({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     } as any);
     expect(playlist).toEqual(mockedPlaylistItems);
   });
@@ -89,7 +88,7 @@ describe('getPlaylistItems', () => {
       }
     )({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     } as any)) as any;
     expect(offset).toEqual('5');
     expect(limit).toEqual('10');
@@ -100,13 +99,13 @@ describe('getPlaylistItems', () => {
       limit: 150,
     })({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     } as any);
     expect(playlist.items.length).toBeGreaterThan(100);
     expect(playlist.limit).toEqual(150);
   });
   it('should cache playlist items', async () => {
-    const cache = WeakLRUCache();
+    const cache = new Map();
     const playlistItems = await getPlaylistItems('37i9dQZF1DX5g856aiKiDS')({
       token: 'token',
       cache,

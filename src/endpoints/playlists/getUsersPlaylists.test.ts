@@ -2,7 +2,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { hasToken, makeMock } from '../../../testingTools';
 import { getUsersPlaylists, PlaylistStub } from '.';
 import { PaginatedList } from '../../core';
-import WeakLRUCache from '@ekwoka/weak-lru-cache';
+
 import { PlaylistSavedStatus } from '../../core/cacheKeys';
 
 describe('getUsersPlaylists', () => {
@@ -43,7 +43,7 @@ describe('getUsersPlaylists', () => {
   it('should return a list of playlists', async () => {
     const playlists = await getUsersPlaylists()({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     } as any);
     expect(playlists).toEqual(mockedPlaylists);
   });
@@ -53,12 +53,12 @@ describe('getUsersPlaylists', () => {
       offset: 20,
     })({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     } as any);
     expect({ limit, offset }).toEqual({ limit: 10, offset: 20 });
   });
   it('should cache results', async () => {
-    const cache = WeakLRUCache();
+    const cache = new Map();
     const playlists = await getUsersPlaylists()({
       token: 'token',
       cache,

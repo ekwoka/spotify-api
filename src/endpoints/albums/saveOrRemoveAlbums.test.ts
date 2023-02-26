@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 import { hasToken, makeMock } from '../../../testingTools';
 import { saveAlbums, removeAlbums } from './';
-import WeakLRUCache from '@ekwoka/weak-lru-cache';
+
 import { AlbumSavedStatus } from '../../core/cacheKeys';
 
 describe('saveAlbums', () => {
@@ -27,19 +27,19 @@ describe('saveAlbums', () => {
   it('should save albums', async () => {
     const wasSaved = await saveAlbums('seoul')({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     });
     expect(wasSaved).toEqual(true);
   });
   it('should accept an array of albums', async () => {
     const wasSaved = await saveAlbums(['seoul', 'drip'])({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     });
     expect(wasSaved).toEqual([true, true]);
   });
   it('should cache result', async () => {
-    const cache = WeakLRUCache();
+    const cache = new Map();
     await saveAlbums('seoul')({ token: 'token', cache });
     expect(cache.get(AlbumSavedStatus)).toEqual({ seoul: true });
     await saveAlbums(['seoul', 'drip'])({ token: 'token', cache });
@@ -70,19 +70,19 @@ describe('removeAlbums', () => {
   it('should save albums', async () => {
     const wasRemoved = await removeAlbums('seoul')({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     });
     expect(wasRemoved).toEqual(true);
   });
   it('should accept an array of albums', async () => {
     const wasRemoved = await removeAlbums(['seoul', 'drip'])({
       token: 'token',
-      cache: WeakLRUCache(),
+      cache: new Map(),
     });
     expect(wasRemoved).toEqual([true, true]);
   });
   it('should cache result', async () => {
-    const cache = WeakLRUCache();
+    const cache = new Map();
     await removeAlbums('seoul')({ token: 'token', cache });
     expect(cache.get(AlbumSavedStatus)).toEqual({ seoul: false });
     await removeAlbums(['seoul', 'drip'])({ token: 'token', cache });
