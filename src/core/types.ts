@@ -1,18 +1,10 @@
-import { Album } from '../endpoints/albums';
-import { Artist } from '../endpoints/artists';
-
 export type PersistentApiProperties = {
   token: string;
-  cache: {
-    albums: Record<string, Album>;
-    artists: Record<string, Artist>;
-    saved: {
-      albums: Record<string, boolean>;
-      playlists: Record<string, boolean>;
-      tracks: Record<string, boolean>;
-    };
-    [key: string]: unknown;
-  };
+  cache: limitedMap;
+};
+
+export type SpotifyApiClientOptions = {
+  cache?: limitedMap;
 };
 
 export type SpotifyApiClient = <T>(fn: QueryFunction<T>) => T;
@@ -27,6 +19,11 @@ export type PaginatedList<T> = {
   previous: string | null;
   total: number;
 };
+
+export type limitedMap = Pick<
+  Map<string, object>,
+  'get' | 'set' | 'delete' | 'clear'
+>;
 
 export type Copyrights = {
   text: string;

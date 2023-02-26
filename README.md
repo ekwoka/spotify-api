@@ -1,10 +1,10 @@
 # ⚡️A tree-shakable, composable, lightweight wrapper for the multiple Spotify APIs🔥
 
-[<img src="https://img.shields.io/npm/v/@ekwoka/spotify-api?style=for-the-badge">](https://www.npmjs.com/package/@ekwoka/spotify-api)
+[<img src="https://img.shields.io/npm/v/@ekwoka/spotify-api?label=%20&style=for-the-badge&logo=pnpm&logoColor=white">](https://www.npmjs.com/package/@ekwoka/spotify-api)
 <img src="https://img.shields.io/npm/types/@ekwoka/spotify-api?label=%20&amp;logo=typescript&amp;logoColor=white&amp;style=for-the-badge">
-<img src="https://img.shields.io/npm/dt/@ekwoka/spotify-api?style=for-the-badge" >
-[<img src="https://img.shields.io/bundlephobia/minzip/@ekwoka/spotify-api?style=for-the-badge">](https://bundlephobia.com/package/@ekwoka/spotify-api)
-<img src="https://img.shields.io/badge/coverage-99%25-success?style=for-the-badge&logo=testCafe&logoColor=white" alt="99% test coverage">
+<img src="https://img.shields.io/npm/dt/@ekwoka/spotify-api?style=for-the-badge&logo=npm&logoColor=white" >
+[<img src="https://img.shields.io/bundlephobia/minzip/@ekwoka/spotify-api?style=for-the-badge&logo=esbuild&logoColor=white">](https://bundlephobia.com/package/@ekwoka/spotify-api)
+<img src="https://img.shields.io/badge/coverage-99%25-success?style=for-the-badge&logo=vitest&logoColor=white" alt="99% test coverage">
 
 Born from my own difficulties using other wrapper libraries for Spotify, this library seeks to be the best possible API wrapper.
 
@@ -138,7 +138,7 @@ Batching Limit: 20
 
 > These last 3 all use batching to improve performance, and these 3 all also use a shared cache of in-Library states.
 
-Cachekey: `saved.albums[id]`
+Cachekey: `saved.albums` (shared)
 Batching Limit: 20
 
 - `newReleases` - Retrieves a paginated result of new releases
@@ -659,6 +659,25 @@ In the background, these two ids will be bunched together (if they come in close
 
 As this data changes infrequently, responses will be cached and reused when the same information is requested again. This works with the above batching, as well. So if you make a bulk request for 10 albums, 3 of which you've already searched for before, those 3 will be returned from cache and the other 7 will be fetched anew, all without any adjustments to how your code behaves.
 
+The default cache strategy is simple strong cache (this takes the least code to implement and is most likely a preferred strategy for most use cases). Values are cached and stored indefinitely, and only cleared when the cache is manually cleared.
+
+However, you can provide your own cache to allow alternative caching strategies (like LRU, TTL, weak, or weak LRU cache). This is done by providing a custom cache object to the `createClient` function.
+
+```js
+const client = SpotifyApi('initial_token', {
+  cache: new Map(),
+});
+```
+
+The only requirement for the cache object is that it implements a limited set of the `Map` interface. Specifically, it must implement the following methods:
+
+- `get(key)`
+- `set(key, value)`
+- `delete(key)`
+- `clear()`
+
+You can consider checking out [`@ekwoka/weak-lru-cache`](https://www.npmjs.com/package/@ekwoka/weak-lru-cache) for a lightweight weak reference based cache.
+
 ### Limit Breaking
 
 Many endpoints offered by Spotify provide limits to how many items can be handled in one request. Retrieving items from a playlist is limited to 100, getting multiple albums in a single request is limited to 20, etc.
@@ -699,7 +718,9 @@ The goal is for this behavior to work on just about every endpoint you might wan
 
 ### Cache Busting
 
-As noted, a major benefit of this API wrapper is the intelligent use of caches. However, caches may not always be accurate, or may introduce other issues in certain contexts. As such, there is a special utility for cache busting.
+There can be times when you want to forcefull clean the cache when data has changed. This can be done by using the `resetCache` utility.
+
+You can also consider using an alternative caching strategy as documented above if you wish to provide more automated caching behaviors.
 
 ```js
 import { resetCache } from '@ekwoka/spotify-api';
@@ -708,7 +729,7 @@ import { resetCache } from '@ekwoka/spotify-api';
 client(resetCache());
 
 // clears specific cached value
-client(resetCache('user')); // should clear user cache only
+client(resetCache('album.saved')); // should clear saved albums cache only
 ```
 
 Where caches are utilized, the documentation for those endpoints will include information about the cache key(s) used.

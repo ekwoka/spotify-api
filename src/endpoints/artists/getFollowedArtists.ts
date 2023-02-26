@@ -1,5 +1,11 @@
 import { QueryFunction } from '../../core';
-import { SpotifyAPIURL, spotifyFetch, toURLString } from '../../utils';
+import { ArtistSavedStatus } from '../../core/cacheKeys';
+import {
+  deepFreeze,
+  SpotifyAPIURL,
+  spotifyFetch,
+  toURLString,
+} from '../../utils';
 import { ArtistStub } from './types';
 
 export const getFollowedArtists =
@@ -10,9 +16,23 @@ export const getFollowedArtists =
       after?: string;
     } = {}
   ): QueryFunction<Promise<FollowedArtists>> =>
-  ({ token }) => {
+  async ({ token, cache }) => {
     const endpoint = `me/following?type=${type}&${toURLString(options)}`;
-    return spotifyFetch(endpoint, token);
+    const cached = cache.get(endpoint);
+    if (cached) return cached as FollowedArtists;
+    const followedArtists = await spotifyFetch<FollowedArtists>(
+      endpoint,
+      token
+    );
+    cache.set(endpoint, deepFreeze(followedArtists));
+    cache.set(
+      ArtistSavedStatus,
+      followedArtists.artists.items.reduce(
+        (acc, { id }) => ((acc[id] = true), acc),
+        cache.get(ArtistSavedStatus) ?? {}
+      )
+    );
+    return followedArtists;
   };
 
 type FollowedArtists = {

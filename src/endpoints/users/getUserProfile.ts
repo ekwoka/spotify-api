@@ -1,5 +1,5 @@
 import { QueryFunction } from '../../core';
-import { Image, spotifyFetch, SpotifyPageURL } from '../../utils';
+import { deepFreeze, Image, spotifyFetch, SpotifyPageURL } from '../../utils';
 
 /**
  * Consumes the 'user/{user_id}' endpoint to return basic information about
@@ -10,9 +10,12 @@ import { Image, spotifyFetch, SpotifyPageURL } from '../../utils';
  */
 export const getUserProfile =
   (user_id: string): QueryFunction<Promise<OtherUser>> =>
-  async ({ token }) => {
+  async ({ token, cache }) => {
+    const cached = cache.get(`user.${user_id}`);
+    if (cached) return cached as OtherUser;
     const endpoint = `users/${user_id}`;
     const data = await spotifyFetch<OtherUser>(endpoint, token);
+    cache.set(`user.${user_id}`, deepFreeze(data));
     return data;
   };
 

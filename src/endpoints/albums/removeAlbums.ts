@@ -1,4 +1,5 @@
 import { PersistentApiProperties, QueryFunction } from '../../core';
+import { AlbumSavedStatus } from '../../core/cacheKeys';
 import { BatchedFunction, batchWrap, spotifyFetch } from '../../utils';
 
 /**
@@ -12,27 +13,25 @@ export const removeAlbums: RemoveAlbums = ((
   ids: string | string[]
 ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> => {
   if (Array.isArray(ids))
-    return (client) =>
-      Promise.all(ids.map((id) => cacheSavedAlbums(client, id)));
-  return (client) => cacheSavedAlbums(client, ids);
+    return ({ token, cache }) =>
+      Promise.all(ids.map((id) => batchRemoveAlbums(token, id, cache)));
+  return ({ token, cache }) => batchRemoveAlbums(token, ids, cache);
 }) as RemoveAlbums;
 
-const cacheSavedAlbums = async (
-  { token, cache }: PersistentApiProperties,
-  album: string
-): Promise<boolean> => {
-  const data = await batchRemoveAlbums(token, album);
-  cache.saved.albums[album] = false;
-  return data;
-};
-
 const batchRemoveAlbums: BatchedFunction<boolean> = batchWrap(
-  async (token, ids) => {
-    const endpoint = `me/albums`;
+  async (token, ids, cache: PersistentApiProperties['cache']) => {
+    const endpoint = 'me/albums';
     const data = await spotifyFetch<boolean[]>(endpoint, token, {
       method: 'DELETE',
       body: JSON.stringify({ ids }),
     });
+    cache.set(
+      AlbumSavedStatus,
+      ids.reduce(
+        (acc, id) => ((acc[id] = false), acc),
+        cache.get(AlbumSavedStatus) ?? {}
+      )
+    );
     return data;
   }
 );

@@ -13,8 +13,9 @@ import { Artist } from './';
 export const getArtist =
   (id: string): QueryFunction<Promise<Artist>> =>
   async ({ token, cache }) => {
-    if (cache.artists[id]) return cache.artists[id];
+    const cached = cache.get(`artist.${id}`);
+    if (cached) return cached as Artist;
     const artist = await batchArtists(token, id);
-    cache.artists[id] = deepFreeze(artist);
+    cache.set(`artist.${id}`, deepFreeze(artist));
     return artist;
   };

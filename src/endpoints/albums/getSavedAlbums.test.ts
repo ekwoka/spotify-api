@@ -2,6 +2,8 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { getSavedAlbums, SavedAlbum } from '.';
 import { hasToken, makeMock } from '../../../testingTools';
 import { PaginatedList, PersistentApiProperties } from '../../core';
+import { AlbumSavedStatus } from '../../core/cacheKeys';
+import { toURLString } from '../../utils';
 
 describe('getAlbumTracks', () => {
   beforeAll(() => {
@@ -39,7 +41,7 @@ describe('getAlbumTracks', () => {
   it('should return an Album List', async () => {
     const savedAlbumsPage = await getSavedAlbums()({
       token: 'token',
-      cache: {},
+      cache: new Map(),
     });
     expect(savedAlbumsPage).toEqual(mockedAlbums);
   });
@@ -50,18 +52,27 @@ describe('getAlbumTracks', () => {
       offset: 5,
     })({
       token: 'token',
-      cache: {},
+      cache: new Map(),
     })) as unknown as PaginatedList<SavedAlbum> & { market: string };
     expect(limit).toBe('1');
     expect(offset).toBe('5');
     expect(market).toBe('EN');
   });
   it('should cache the albums returned', async () => {
-    const Client = { token: 'token', cache: {} } as PersistentApiProperties;
+    const Client = {
+      token: 'token',
+      cache: new Map(),
+    } as PersistentApiProperties;
     const savedAlbumsPage = await getSavedAlbums()(Client);
+    expect(Client.cache.get(`me/albums?${toURLString({})}`)).toBe(
+      savedAlbumsPage
+    );
+    expect(Client.cache.get(`album.${savedAlbumsPage.items[0].album.id}`)).toBe(
+      savedAlbumsPage.items[0].album
+    );
     expect(
-      Client.cache.albums[savedAlbumsPage.items[0].album.id]
-    ).toBeDefined();
+      Client.cache.get(AlbumSavedStatus)[savedAlbumsPage.items[0].album.id]
+    ).toBe(true);
   });
 });
 

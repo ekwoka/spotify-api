@@ -1,5 +1,5 @@
 import { PaginatedList, QueryFunction } from '../../core';
-import { spotifyFetch, toURLString } from '../../utils';
+import { deepFreeze, spotifyFetch, toURLString } from '../../utils';
 import { PlaylistItem } from './types';
 
 export const getPlaylistItems =
@@ -7,10 +7,11 @@ export const getPlaylistItems =
     playlistID: string,
     options: GetPlaylistItemsOptions = {}
   ): QueryFunction<Promise<PaginatedList<PlaylistItem>>> =>
-  async ({ token }) => {
+  async ({ token, cache }) => {
     const makeEndpoint = (options: GetPlaylistItemsOptions) =>
       `playlists/${playlistID}/tracks?${toURLString(options)}`;
-
+    const cached = cache.get(makeEndpoint(options));
+    if (cached) return cached as PaginatedList<PlaylistItem>;
     const endpoint = makeEndpoint({
       ...options,
       ...(options.limit ? { limit: Math.min(Number(options.limit), 100) } : {}),
@@ -20,7 +21,10 @@ export const getPlaylistItems =
       token
     );
     const limit = Number(options.limit) || 100;
-    if (!(limit > 100) || firstPage.items.length < 100) return firstPage;
+    if (!(limit > 100) || firstPage.items.length < 100) {
+      cache.set(makeEndpoint(options), deepFreeze(firstPage));
+      return firstPage;
+    }
 
     const pages = await getRemainingPages(
       limit,
@@ -30,12 +34,14 @@ export const getPlaylistItems =
       token,
       makeEndpoint
     );
-
-    return {
+    const fullResult = deepFreeze({
       ...firstPage,
       items: [...firstPage.items, ...pages.flat()],
       limit,
-    };
+    });
+    cache.set(makeEndpoint(options), fullResult);
+
+    return fullResult;
   };
 
 const getRemainingPages = <T extends Partial<Record<keyof T, T[keyof T]>>>(

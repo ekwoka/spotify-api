@@ -1,4 +1,5 @@
 import { PersistentApiProperties, QueryFunction } from '../../core';
+import { AlbumSavedStatus } from '../../core/cacheKeys';
 import {
   BatchedFunction,
   batchWrap,
@@ -26,11 +27,8 @@ const cacheAlbumIsSaved = async (
   { token, cache }: PersistentApiProperties,
   album: string
 ): Promise<boolean> => {
-  const subCache = cache.saved.albums;
-  if (subCache[album]) return subCache[album];
-  const data = await batchAlbumIsSaved(token, album);
-  subCache[album] = data;
-  return data;
+  const cached = cache.get(AlbumSavedStatus) as Record<string, boolean>;
+  return cached?.[album] ?? (await batchAlbumIsSaved(token, album, cache));
 };
 
 type AlbumIsSaved = {
@@ -39,11 +37,18 @@ type AlbumIsSaved = {
 };
 
 const batchAlbumIsSaved: BatchedFunction<boolean> = batchWrap(
-  async (token, ids) => {
+  async (token, ids, cache: PersistentApiProperties['cache']) => {
     const endpoint = `me/albums/contains?${toURLString({
       ids: ids.join(','),
     })}`;
     const data = await spotifyFetch<boolean[]>(endpoint, token);
+    cache.set(
+      AlbumSavedStatus,
+      ids.reduce(
+        (acc, id, idx) => ((acc[id] = data[idx]), acc),
+        cache.get(AlbumSavedStatus) ?? {}
+      )
+    );
     return data;
   }
 );

@@ -1,5 +1,6 @@
 import { PaginatedList, QueryFunction } from '../../core';
-import { spotifyFetch, toURLString } from '../../utils';
+import { PlaylistSavedStatus } from '../../core/cacheKeys';
+import { deepFreeze, spotifyFetch, toURLString } from '../../utils';
 import { PlaylistStub } from './types';
 
 /**
@@ -13,9 +14,23 @@ export const getUsersPlaylists =
   (
     options?: UserPlaylistOptions
   ): QueryFunction<Promise<PaginatedList<PlaylistStub>>> =>
-  ({ token }) => {
+  async ({ token, cache }) => {
     const endpoint = `me/playlists?${toURLString(options)}`;
-    return spotifyFetch(endpoint, token);
+    const cached = cache.get(endpoint);
+    if (cached) return cached as PaginatedList<PlaylistStub>;
+    const playlists = await spotifyFetch<PaginatedList<PlaylistStub>>(
+      endpoint,
+      token
+    );
+    cache.set(endpoint, deepFreeze(playlists));
+    cache.set(
+      PlaylistSavedStatus,
+      playlists.items.reduce(
+        (acc, { id }) => ((acc[id] = true), acc),
+        cache.get(PlaylistSavedStatus) ?? {}
+      )
+    );
+    return playlists;
   };
 
 type UserPlaylistOptions = {

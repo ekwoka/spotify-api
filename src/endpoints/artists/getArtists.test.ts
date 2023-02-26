@@ -24,7 +24,7 @@ describe('getArtists', () => {
       '41MozSoPIsD1dJM0CLPjZF',
     ])({
       token: 'token',
-      cache: { artists: {} } as any,
+      cache: new Map(),
     });
     expect(artists).toEqual(mockedArtists);
   });

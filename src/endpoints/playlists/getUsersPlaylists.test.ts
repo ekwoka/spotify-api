@@ -3,6 +3,8 @@ import { hasToken, makeMock } from '../../../testingTools';
 import { getUsersPlaylists, PlaylistStub } from '.';
 import { PaginatedList } from '../../core';
 
+import { PlaylistSavedStatus } from '../../core/cacheKeys';
+
 describe('getUsersPlaylists', () => {
   beforeAll(() => {
     makeMock('v1/me/playlists', {
@@ -16,7 +18,7 @@ describe('getUsersPlaylists', () => {
           data: mockedPlaylists,
         };
       },
-    });
+    }).times(2);
     makeMock('/v1/me/playlists?limit=10&offset=20', {
       handler: (req) => {
         if (!hasToken(req.headers as any))
@@ -29,7 +31,7 @@ describe('getUsersPlaylists', () => {
         );
         return {
           statusCode: 200,
-          data: { limit, offset },
+          data: { limit, offset, items: [] },
         };
       },
     });
@@ -41,6 +43,7 @@ describe('getUsersPlaylists', () => {
   it('should return a list of playlists', async () => {
     const playlists = await getUsersPlaylists()({
       token: 'token',
+      cache: new Map(),
     } as any);
     expect(playlists).toEqual(mockedPlaylists);
   });
@@ -50,8 +53,18 @@ describe('getUsersPlaylists', () => {
       offset: 20,
     })({
       token: 'token',
+      cache: new Map(),
     } as any);
     expect({ limit, offset }).toEqual({ limit: 10, offset: 20 });
+  });
+  it('should cache results', async () => {
+    const cache = new Map();
+    const playlists = await getUsersPlaylists()({
+      token: 'token',
+      cache,
+    } as any);
+    expect(cache.get('me/playlists?')).toBe(playlists);
+    expect(cache.get(PlaylistSavedStatus)['37i9dQZF1DX5g856aiKiDS']).toBe(true);
   });
 });
 

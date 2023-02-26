@@ -9,9 +9,29 @@ describe('getUserProfile', () => {
   it('should return user profile', async () => {
     const user = await getUserProfile('thekwoka')({
       token: 'token',
-      cache: {},
+      cache: new Map(),
     });
     expect(user.display_name).toBe('string');
+  });
+  it('should cache user and return it from cache', async () => {
+    const cache = new Map();
+    expect(
+      await getUserProfile('thekwoka')({
+        token: 'token',
+        cache,
+      })
+    ).toBe(cache.get('user.thekwoka'));
+    expect(
+      await getUserProfile('thekwoka')({
+        token: 'token',
+        cache,
+      })
+    ).toBe(
+      await getUserProfile('thekwoka')({
+        token: 'token',
+        cache,
+      })
+    );
   });
 });
 

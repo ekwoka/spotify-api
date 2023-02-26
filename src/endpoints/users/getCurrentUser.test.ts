@@ -1,6 +1,5 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 import { makeMock } from '../../../testingTools/makeMock';
-import { spotifyApiClient } from '../../core/spotifyApiClient';
 import { getCurrentUser } from './';
 
 describe('Get Current User', () => {
@@ -8,14 +7,20 @@ describe('Get Current User', () => {
     makeMock('v1/me', { data: mockedUser }).persist();
   });
   it('should return Current User', async () => {
-    const spotify = spotifyApiClient('token');
-    const user = await spotify(getCurrentUser());
+    const user = await getCurrentUser()({
+      token: 'token',
+      cache: new Map(),
+    });
     expect(user.email).toBeDefined();
   });
   it('should cache user and return it from cache', async () => {
-    const spotify = spotifyApiClient('token');
-    const user = await spotify(getCurrentUser());
-    expect(await spotify(getCurrentUser())).toBe(user);
+    const cache = new Map();
+    expect(await getCurrentUser()({ token: 'token', cache })).toBe(
+      cache.get('user')
+    );
+    expect(await getCurrentUser()({ token: 'token', cache })).toBe(
+      await getCurrentUser()({ token: 'token', cache })
+    );
   });
 });
 

@@ -1,7 +1,8 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 import { hasToken, makeMock } from '../../../testingTools';
 import { savePlaylists, removePlaylists } from '.';
-import { PersistentApiProperties } from '../../core';
+
+import { PlaylistSavedStatus } from '../../core/cacheKeys';
 
 describe('savePlaylists', () => {
   beforeAll(() => {
@@ -32,23 +33,21 @@ describe('savePlaylists', () => {
   it('should save playlists', async () => {
     const wasSaved = await savePlaylists('seoul')({
       token: 'token',
-      cache: { saved: { playlists: {} } } as PersistentApiProperties['cache'],
+      cache: new Map(),
     });
     expect(wasSaved).toEqual(true);
   });
   it('should accept an array of playlists', async () => {
     const wasSaved = await savePlaylists(['seoul', 'drip'])({
       token: 'token',
-      cache: { saved: { playlists: {} } } as PersistentApiProperties['cache'],
+      cache: new Map(),
     });
     expect(wasSaved).toEqual([true, true]);
   });
   it('should cache result', async () => {
-    const cache = {
-      saved: { playlists: {} },
-    } as PersistentApiProperties['cache'];
+    const cache = new Map();
     await savePlaylists('seoul')({ token: 'token', cache });
-    expect(cache.saved.playlists).toEqual({ seoul: true });
+    expect(cache.get(PlaylistSavedStatus)).toEqual({ seoul: true });
   });
 });
 
@@ -81,22 +80,20 @@ describe('removePlaylists', () => {
   it('should remove playlists', async () => {
     const wasRemoved = await removePlaylists('seoul')({
       token: 'token',
-      cache: { saved: { playlists: {} } } as PersistentApiProperties['cache'],
+      cache: new Map(),
     });
     expect(wasRemoved).toEqual(false);
   });
   it('should accept an array of playlists', async () => {
     const wasRemoved = await removePlaylists(['seoul', 'drip'])({
       token: 'token',
-      cache: { saved: { playlists: {} } } as PersistentApiProperties['cache'],
+      cache: new Map(),
     });
     expect(wasRemoved).toEqual([false, false]);
   });
   it('should cache result', async () => {
-    const cache = {
-      saved: { playlists: {} },
-    } as PersistentApiProperties['cache'];
+    const cache = new Map();
     await removePlaylists('seoul')({ token: 'token', cache });
-    expect(cache.saved.playlists).toEqual({ seoul: false });
+    expect(cache.get(PlaylistSavedStatus)).toEqual({ seoul: false });
   });
 });

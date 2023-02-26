@@ -27,6 +27,9 @@ describe('getFollowedArtists', () => {
         return {
           statusCode: 200,
           data: {
+            artists: {
+              items: [],
+            },
             limit,
             after,
             type,
@@ -41,6 +44,7 @@ describe('getFollowedArtists', () => {
   it('should return followed artists', async () => {
     const results = await getFollowedArtists('artist')({
       token: 'token',
+      cache: new Map(),
     } as any);
     expect(results).toEqual(mockedFollowing);
   });
@@ -50,8 +54,12 @@ describe('getFollowedArtists', () => {
       after: 'jessi',
     })({
       token: 'token',
+      cache: new Map(),
     } as any);
     expect(results).toEqual({
+      artists: {
+        items: [],
+      },
       limit: '1',
       after: 'jessi',
       type: 'artist',

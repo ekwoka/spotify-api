@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 import { hasToken, makeMock } from '../../../testingTools';
-import { PersistentApiProperties } from '../../core';
+import { AlbumSavedStatus } from '../../core/cacheKeys';
 import { albumIsSaved } from './';
 
 describe('albumIsSaved', () => {
@@ -32,21 +32,21 @@ describe('albumIsSaved', () => {
   it('should return true is album is saved (string)', async () => {
     const isSaved = await albumIsSaved('seoul')({
       token: 'token',
-      cache: { saved: { albums: {} } } as PersistentApiProperties['cache'],
+      cache: new Map(),
     });
     expect(isSaved).toEqual(true);
   });
   it('should return true is album is saved (array)', async () => {
     const isSaved = await albumIsSaved(['seoul'])({
       token: 'token',
-      cache: { saved: { albums: {} } } as PersistentApiProperties['cache'],
+      cache: new Map(),
     });
     expect(isSaved).toEqual([true]);
   });
   it('should work with multiple albums', async () => {
     const isSaved = await albumIsSaved(['seoul', 'drip'])({
       token: 'token',
-      cache: { saved: { albums: {} } } as PersistentApiProperties['cache'],
+      cache: new Map(),
     });
     expect(isSaved).toEqual([true, false]);
   });
@@ -55,15 +55,14 @@ describe('albumIsSaved', () => {
       ['seoul', 'drip'].map((item) =>
         albumIsSaved(item)({
           token: 'token',
-          cache: { saved: { albums: {} } } as PersistentApiProperties['cache'],
+          cache: new Map(),
         })
       )
     );
     expect(isSaved).toEqual([true, false]);
   });
   it('should cache requests', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const cache = { saved: { albums: {} } } as PersistentApiProperties['cache'];
+    const cache = new Map();
     const isSaved = await albumIsSaved('seoul')({
       token: 'token',
       cache,
@@ -74,6 +73,6 @@ describe('albumIsSaved', () => {
     });
     expect(isSaved).toEqual(true);
     expect(isSaved2).toEqual(true);
-    expect(cache.saved.albums).toEqual({ seoul: true });
+    expect(cache.get(AlbumSavedStatus)).toEqual({ seoul: true });
   });
 });

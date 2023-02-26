@@ -1,5 +1,5 @@
 import { QueryFunction } from '../../core';
-import { spotifyFetch, toURLString } from '../../utils';
+import { deepFreeze, spotifyFetch, toURLString } from '../../utils';
 import { Playlist } from './types';
 
 // TODO: Get Types to work with fields entry
@@ -17,9 +17,13 @@ export const getPlaylist =
     playlistID: string,
     options?: GetPlaylistOptions
   ): QueryFunction<Promise<Playlist>> =>
-  ({ token }) => {
+  async ({ token, cache }) => {
     const endpoint = `playlists/${playlistID}?${toURLString(options)}`;
-    return spotifyFetch(endpoint, token);
+    const cached = cache.get(endpoint);
+    if (cached) return cached as Playlist;
+    const playlist = await spotifyFetch<Playlist>(endpoint, token);
+    cache.set(endpoint, deepFreeze(playlist));
+    return playlist;
   };
 
 type GetPlaylistOptions = {

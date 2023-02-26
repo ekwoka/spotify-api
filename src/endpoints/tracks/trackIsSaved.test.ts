@@ -1,7 +1,8 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 import { hasToken, makeMock } from '../../../testingTools';
-import { PersistentApiProperties } from '../../core';
 import { trackIsSaved } from '.';
+
+import { TrackSavedStatus } from '../../core/cacheKeys';
 
 describe('trackIsSaved', () => {
   beforeAll(() => {
@@ -32,21 +33,21 @@ describe('trackIsSaved', () => {
   it('should return true is track is saved (string)', async () => {
     const isSaved = await trackIsSaved('pink+venom')({
       token: 'token',
-      cache: { saved: { tracks: {} } } as PersistentApiProperties['cache'],
+      cache: new Map(),
     });
     expect(isSaved).toEqual(true);
   });
   it('should return true is track is saved (array)', async () => {
     const isSaved = await trackIsSaved(['pink+venom'])({
       token: 'token',
-      cache: { saved: { tracks: {} } } as PersistentApiProperties['cache'],
+      cache: new Map(),
     });
     expect(isSaved).toEqual([true]);
   });
   it('should work with multiple tracks', async () => {
     const isSaved = await trackIsSaved(['pink+venom', 'bubble+pop'])({
       token: 'token',
-      cache: { saved: { tracks: {} } } as PersistentApiProperties['cache'],
+      cache: new Map(),
     });
     expect(isSaved).toEqual([true, false]);
   });
@@ -55,7 +56,7 @@ describe('trackIsSaved', () => {
       ['pink+venom', 'bubble+pop'].map((item) =>
         trackIsSaved(item)({
           token: 'token',
-          cache: { saved: { tracks: {} } } as PersistentApiProperties['cache'],
+          cache: new Map(),
         })
       )
     );
@@ -63,7 +64,7 @@ describe('trackIsSaved', () => {
   });
   it('should cache requests', async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const cache = { saved: { tracks: {} } } as PersistentApiProperties['cache'];
+    const cache = new Map();
     const isSaved = await trackIsSaved('pink+venom')({
       token: 'token',
       cache,
@@ -74,6 +75,6 @@ describe('trackIsSaved', () => {
     });
     expect(isSaved).toEqual(true);
     expect(isSaved2).toEqual(true);
-    expect(cache.saved.tracks).toEqual({ 'pink+venom': true });
+    expect(cache.get(TrackSavedStatus)).toEqual({ 'pink+venom': true });
   });
 });

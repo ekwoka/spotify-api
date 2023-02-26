@@ -1,10 +1,12 @@
-import { PersistentApiProperties, QueryFunction } from '../../core';
+import { QueryFunction } from '../../core';
+import { TrackSavedStatus } from '../../core/cacheKeys';
 import {
   batchWrap,
   spotifyFetch,
   BatchCallback,
   createMapper,
   mappedArguments,
+  arrayWrap,
 } from '../../utils';
 
 /**
@@ -17,9 +19,7 @@ import {
 export const saveTracks: SaveTracks = ((
   ids: string | string[]
 ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> =>
-  createMapper((id: string, client: PersistentApiProperties) =>
-    cacheNewTrackState(client, id, true)
-  )(ids as mappedArguments<string, boolean>)) as SaveTracks;
+  saveOrRemoveTrack(ids, true)) as SaveTracks;
 
 type SaveTracks = {
   (trackID: string): QueryFunction<Promise<boolean>>;
@@ -36,24 +36,34 @@ type SaveTracks = {
 export const removeTracks: RemoveTracks = ((
   ids: string | string[]
 ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> =>
-  createMapper((id: string, client: PersistentApiProperties) =>
-    cacheNewTrackState(client, id, false)
-  )(ids as mappedArguments<string, boolean>)) as RemoveTracks;
+  saveOrRemoveTrack(ids, false)) as RemoveTracks;
 
 type RemoveTracks = {
   (trackID: string): QueryFunction<Promise<boolean>>;
   (trackIDs: string[]): QueryFunction<Promise<boolean[]>>;
 };
 
-const cacheNewTrackState = async (
-  { token, cache }: PersistentApiProperties,
-  track: string,
-  state: boolean
-): Promise<boolean> => {
-  await (state ? batchSaveTrack : batchRemoveTrack)(token, track);
-  cache.saved.tracks[track] = state;
-  return state;
-};
+const saveOrRemoveTrack =
+  (
+    ids: string | string[],
+    state: boolean
+  ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> =>
+  async (client) => {
+    const results = await createMapper<string, boolean>(
+      async (id: string, client) => (
+        await (state ? batchSaveTrack : batchRemoveTrack)(client.token, id),
+        state
+      )
+    )(ids as mappedArguments<string, boolean>)(client);
+    client.cache.set(
+      TrackSavedStatus,
+      arrayWrap(ids).reduce(
+        (acc, id) => ((acc[id] = state), acc),
+        client.cache.get(TrackSavedStatus) ?? {}
+      )
+    );
+    return results;
+  };
 
 const saveOrRemoveBatchCallback =
   (method: 'PUT' | 'DELETE'): BatchCallback<string, undefined> =>

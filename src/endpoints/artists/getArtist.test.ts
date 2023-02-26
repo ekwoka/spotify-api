@@ -20,18 +20,17 @@ describe('getArtist', () => {
   it('should return an artist', async () => {
     const artist = await getArtist('1VwDG9aBflQupaFNjUru9A')({
       token: 'token',
-      cache: { artists: {} } as any,
+      cache: new Map(),
     });
     expect(artist).toEqual(mockedArtists.artists[0]);
   });
   it('caches artist result', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const cache = { artists: {} } as any;
+    const cache = new Map();
     const artist1 = await getArtist('1VwDG9aBflQupaFNjUru9A')({
       token: 'token',
       cache,
     });
-    expect(cache.artists['1VwDG9aBflQupaFNjUru9A']).toBe(artist1);
+    expect(cache.get('artist.1VwDG9aBflQupaFNjUru9A')).toBe(artist1);
     const artist2 = await getArtist('1VwDG9aBflQupaFNjUru9A')({
       token: 'token',
       cache,

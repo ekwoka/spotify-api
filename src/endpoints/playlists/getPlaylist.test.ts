@@ -15,7 +15,7 @@ describe('getPlaylist', () => {
           data: mockedPlaylist,
         };
       },
-    });
+    }).times(2);
     makeMock(
       '/v1/playlists/37i9dQZF1DX5g856aiKiDS?additional_types=tracks&fields=name%2Cimages&market=KR',
       {
@@ -48,6 +48,7 @@ describe('getPlaylist', () => {
   it('should fetch a playlist', async () => {
     const playlist = await getPlaylist('37i9dQZF1DX5g856aiKiDS')({
       token: 'token',
+      cache: new Map(),
     } as any);
     expect(playlist).toEqual(mockedPlaylist);
   });
@@ -61,10 +62,25 @@ describe('getPlaylist', () => {
       }
     )({
       token: 'token',
+      cache: new Map(),
     } as any)) as any;
     expect(additional_types).toEqual('tracks');
     expect(fields).toEqual('name,images');
     expect(market).toEqual('KR');
+  });
+  it('should cache the result', async () => {
+    const cache = new Map();
+    const playlist = await getPlaylist('37i9dQZF1DX5g856aiKiDS')({
+      token: 'token',
+      cache,
+    } as any);
+    expect(cache.get('playlists/37i9dQZF1DX5g856aiKiDS?')).toBe(playlist);
+    expect(
+      await getPlaylist('37i9dQZF1DX5g856aiKiDS')({
+        token: 'token',
+        cache,
+      } as any)
+    ).toBe(playlist);
   });
 });
 
