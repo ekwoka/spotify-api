@@ -1,4 +1,4 @@
-import { Album } from './';
+import { Album } from './types';
 import { PaginatedList, QueryFunction } from '../../core';
 import { deepFreeze, spotifyFetch, toURLString } from '../../utils';
 import { AlbumSavedStatus } from '../../core/cacheKeys';

@@ -1,5 +1,6 @@
 import { QueryFunction } from '../../core';
-import { getAlbum, TrackList } from './';
+import { getAlbum } from './getAlbum';
+import { TrackList } from './types';
 
 /**
  * Gets single album's TrackList by ID. This endpoint is implemented through

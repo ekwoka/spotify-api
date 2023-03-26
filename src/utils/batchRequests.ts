@@ -1,4 +1,5 @@
-import { chunkArray, debounce } from './';
+import { chunkArray } from './chunkArray';
+import { debounce } from './debounce';
 
 /**
  * This is the core system for batching requests to Spotify's API. This piece

@@ -1,7 +1,7 @@
 import { batchArtists } from '.';
 import { QueryFunction } from '../../core';
 import { deepFreeze } from '../../utils';
-import { Artist } from './';
+import { Artist } from './types';
 
 /**
  * Gets single artist by ID. This endpoint is the center of the main artists

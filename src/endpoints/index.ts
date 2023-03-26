@@ -13,6 +13,8 @@ export { getArtists } from './artists/getArtists';
 export { getFollowedArtists } from './artists/getFollowedArtists';
 export { addToQueue } from './player/addToQueue';
 export { currentlyPlayingTrack } from './player/currentlyPlayingTrack';
+export { pause } from './player/pause';
+export { play, resume } from './player/play';
 export { recentlyPlayedTracks } from './player/recentlyPlayedTracks';
 export { getPlaylist } from './playlists/getPlaylist';
 export { getPlaylistItems } from './playlists/getPlaylistItems';
