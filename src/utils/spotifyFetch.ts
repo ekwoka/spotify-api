@@ -23,8 +23,9 @@ export const spotifyFetch = async <T>(
       headers,
       ...data,
     });
-    if (!response.ok) throw new Error(response.status.toString());
-    if (!hasReturn) return null;
+    if (!response.ok)
+      throw new Error(response.status.toString(), { cause: response });
+    if (!hasReturn || response.status === 204) return null;
     return await response.json();
   } catch (e) {
     /**
@@ -34,12 +35,16 @@ export const spotifyFetch = async <T>(
      * 404: Not Found. Internal Error.
      * 429: Too Many Requests. Should wait and reattempt.
      */
-    if (e.message === '401') throw new Error('Token Expired');
-    if (e.message === '403') throw new Error('Forbidden');
-    if (e.message === '404') throw new Error('Not Found');
-    if (e.message === '429')
+    const { message, cause } = e as { message: string; cause: Response };
+    if (message === '401') throw new Error('Token Expired');
+    if (message === '403') throw new Error('Forbidden');
+    if (message === '404') throw new Error('Not Found');
+    if (message === '429')
       return new Promise((res) =>
-        setTimeout(() => res(spotifyFetch(endpoint, token, data)), 200)
+        setTimeout(
+          () => res(spotifyFetch(endpoint, token, data, hasReturn)),
+          Number(cause.headers.get('Retry-After')) || 200
+        )
       );
     throw e;
   }
