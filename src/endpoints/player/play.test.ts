@@ -1,6 +1,6 @@
 import { hasToken, makeMock } from '../../../testingTools';
 import { beforeAll, describe, expect, it } from 'vitest';
-import { play } from './play';
+import { play, resume } from './play';
 
 describe('play', () => {
   let lastSentData: any;
@@ -70,4 +70,5 @@ describe('play', () => {
     })({ token: '123' } as any);
     expect(lastSentData).toBe('123');
   });
+  it('is aliased as "resume"', () => expect(play).toBe(resume));
 });

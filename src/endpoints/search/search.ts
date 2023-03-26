@@ -1,6 +1,6 @@
 import { QueryFunction } from '../../core';
 import { arrayWrap, spotifyFetch, toURLString } from '../../utils';
-import { QueryType, SearchResults } from './';
+import { QueryType, SearchResults } from './types';
 
 /**
  * Searches Spotifies library for matching resources, from tracks and albums

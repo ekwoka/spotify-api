@@ -4,7 +4,8 @@ import {
   spotifyFetch,
   toURLString,
 } from '../../utils/';
-import { Artist, Artists } from './';
+import { Artist } from './types';
+import { Artists } from './getArtists';
 
 /**
  * Wraps up the function for requesting multiple artists from the Spotify API
