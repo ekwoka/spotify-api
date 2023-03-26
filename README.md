@@ -34,9 +34,9 @@ yarn add @ekwoka/spotify-api
 To get started, you'll need to import the core client from the package, and initialize it.
 
 ```js
-import { SpotifyApi } from '@ekwoka/spotify-api';
+import { spotifyApiClient } from '@ekwoka/spotify-api';
 
-export const client = SpotifyApi('tokenhere'); // client requires an initial token to initialize. Initialize client after recieving token from Spotify.
+export const client = spotifyApiClient('tokenhere'); // client requires an initial token to initialize. Initialize client after recieving token from Spotify.
 ```
 
 This will create the core client structure with which you'll manage and run requests to the Spotify Apis.
@@ -44,9 +44,9 @@ This will create the core client structure with which you'll manage and run requ
 To update the token during ongoing usage simply, import and use the `setToken` composable with your client.
 
 ```js
-import { SpotifyApi, setToken } from '@ekwoka/spotify-api';
+import { spotifyApiClient, setToken } from '@ekwoka/spotify-api';
 
-const client = SpotifyApi('initial_token'); // original token
+const client = spotifyApiClient('initial_token'); // original token
 
 // after some event, update the token
 client(setToken('my_new_token')); // updated token
@@ -664,7 +664,7 @@ The default cache strategy is simple strong cache (this takes the least code to 
 However, you can provide your own cache to allow alternative caching strategies (like LRU, TTL, weak, or weak LRU cache). This is done by providing a custom cache object to the `createClient` function.
 
 ```js
-const client = SpotifyApi('initial_token', {
+const client = spotifyApiClient('initial_token', {
   cache: new Map(),
 });
 ```
