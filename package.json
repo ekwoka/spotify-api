@@ -5,8 +5,14 @@
     "dist"
   ],
   "sideEffects": false,
-  "main": "dist/",
-  "types": "dist/",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "author": {
     "name": "Eric Kwoka",
     "email": "ninjatheory@gmail.com",
@@ -67,7 +73,7 @@
       "eslint --fix",
       "prettier --write"
     ],
-    "*.{json}": [
+    "*.json": [
       "prettier --write"
     ]
   }
