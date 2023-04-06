@@ -1,7 +1,7 @@
 import {
   PersistentApiProperties,
-  SpotifyApiClient,
   QueryFunction,
+  SpotifyApiClient,
   SpotifyApiClientOptions,
 } from './types';
 

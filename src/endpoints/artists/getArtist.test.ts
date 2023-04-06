@@ -1,8 +1,9 @@
 import { beforeAll } from 'vitest';
 import { describe, expect, it } from 'vitest';
+
+import { getArtist } from '.';
 import { hasToken } from '../../../testingTools/hasToken';
 import { makeMock } from '../../../testingTools/makeMock';
-import { getArtist } from '.';
 
 describe('getArtist', () => {
   beforeAll(() => {

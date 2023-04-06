@@ -1,7 +1,8 @@
 import { beforeAll, describe, expect, it } from 'vitest';
+
 import { hasToken, makeMock } from '../../../testingTools';
-import { currentlyPlayingTrack } from './';
 import { PersistentApiProperties } from '../../core';
+import { currentlyPlayingTrack } from './';
 
 describe('currentlyPlayingTrack', () => {
   beforeAll(() => {

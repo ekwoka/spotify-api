@@ -1,6 +1,7 @@
 import { beforeAll, describe, expect, it } from 'vitest';
+
 import { hasToken, makeMock } from '../../../testingTools';
-import { getRecommendations, Recommendations } from './';
+import { Recommendations, getRecommendations } from './';
 
 describe('getRecommendations', () => {
   beforeAll(() => {

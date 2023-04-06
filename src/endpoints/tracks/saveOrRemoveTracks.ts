@@ -1,12 +1,12 @@
 import { QueryFunction } from '../../core';
 import { TrackSavedStatus } from '../../core/cacheKeys';
 import {
-  batchWrap,
-  spotifyFetch,
   BatchCallback,
+  arrayWrap,
+  batchWrap,
   createMapper,
   mappedArguments,
-  arrayWrap,
+  spotifyFetch,
 } from '../../utils';
 
 /**

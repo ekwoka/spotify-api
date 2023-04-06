@@ -1,8 +1,8 @@
 import { beforeAll, describe, expect, it } from 'vitest';
-import { hasToken, makeMock } from '../../../testingTools';
-import { getUsersPlaylists, PlaylistStub } from '.';
-import { PaginatedList } from '../../core';
 
+import { PlaylistStub, getUsersPlaylists } from '.';
+import { hasToken, makeMock } from '../../../testingTools';
+import { PaginatedList } from '../../core';
 import { PlaylistSavedStatus } from '../../core/cacheKeys';
 
 describe('getUsersPlaylists', () => {

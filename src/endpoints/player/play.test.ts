@@ -1,5 +1,6 @@
-import { hasToken, makeMock } from '../../../testingTools';
 import { beforeAll, describe, expect, it } from 'vitest';
+
+import { hasToken, makeMock } from '../../../testingTools';
 import { play, resume } from './play';
 
 describe('play', () => {

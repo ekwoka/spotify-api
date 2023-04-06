@@ -1,5 +1,5 @@
 import { Copyrights } from '../../core/types';
-import { SpotifyAPIURL, SpotifyPageURL, Image } from '../../utils';
+import { Image, SpotifyAPIURL, SpotifyPageURL } from '../../utils';
 import { ArtistStub } from '../artists/';
 import { TrackStub } from '../tracks/types';
 

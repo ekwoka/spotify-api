@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { PersistentApiProperties, resetCache } from './';
 
 describe('Reset Cache', () => {
