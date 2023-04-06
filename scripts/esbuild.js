@@ -1,8 +1,9 @@
 import { build } from 'esbuild';
-import { writeFile, readFile } from 'node:fs/promises';
-import { join } from 'node:path';
-import { gzipSize } from 'gzip-size';
 import prettyBytes from 'pretty-bytes';
+
+import { readFile, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import { brotliCompressSync } from 'node:zlib';
 
 const { outputFiles } = await build({
   entryPoints: ['./src/index.ts'],
@@ -17,11 +18,11 @@ const { outputFiles } = await build({
   minify: true,
   plugins: [],
 });
-const { minified, gzipped } = await getSizes(outputFiles[0].contents);
+const { minified, brotli } = getSizes(outputFiles[0].contents);
 const content = JSON.stringify(
   {
     minified,
-    gzipped,
+    brotli,
   },
   null,
   2
@@ -34,8 +35,8 @@ console.log(
   )}`
 );
 console.log(
-  `Minzipped size: ${old.gzipped.pretty} => ${gzipped.pretty}: ${prettyBytes(
-    gzipped.raw - old.gzipped.raw
+  `Minzipped size: ${old.brotli.pretty} => ${brotli.pretty}: ${prettyBytes(
+    brotli.raw - old.brotli.raw
   )}`
 );
 
@@ -50,9 +51,9 @@ function getBytes(str) {
   return Buffer.byteLength(str, 'utf8');
 }
 
-async function getSizes(code) {
+function getSizes(code) {
   const minifiedSize = getBytes(code);
-  const gzippedSize = await gzipSize(code);
+  const brotliSize = getBytes(brotliCompressSync(code));
 
-  return { minified: sizeInfo(minifiedSize), gzipped: sizeInfo(gzippedSize) };
+  return { minified: sizeInfo(minifiedSize), brotli: sizeInfo(brotliSize) };
 }
