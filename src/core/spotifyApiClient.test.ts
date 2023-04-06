@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { spotifyApiClient } from './spotifyApiClient';
 
 describe('spotifyApiClient Constructor', () => {

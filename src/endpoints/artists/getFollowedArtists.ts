@@ -1,8 +1,8 @@
 import { QueryFunction } from '../../core';
 import { ArtistSavedStatus } from '../../core/cacheKeys';
 import {
-  deepFreeze,
   SpotifyAPIURL,
+  deepFreeze,
   spotifyFetch,
   toURLString,
 } from '../../utils';

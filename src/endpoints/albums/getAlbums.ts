@@ -1,5 +1,6 @@
 import { Album, getAlbum } from '.';
 import { QueryFunction } from '../../core';
+
 /**
  * Gets multiple albums with one request to Spotify. Market limits the search
  * to a specific market. This endpoint is passes the album IDs to getAlbum

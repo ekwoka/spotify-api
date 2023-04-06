@@ -1,4 +1,5 @@
 import { beforeAll, describe, expect, it } from 'vitest';
+
 import { hasToken, makeMock } from '../../../testingTools';
 import { AlbumSavedStatus } from '../../core/cacheKeys';
 import { albumIsSaved } from './';

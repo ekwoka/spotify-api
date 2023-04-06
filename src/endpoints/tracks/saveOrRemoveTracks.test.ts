@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, it } from 'vitest';
-import { hasToken, makeMock } from '../../../testingTools';
-import { saveTracks, removeTracks } from '.';
 
+import { removeTracks, saveTracks } from '.';
+import { hasToken, makeMock } from '../../../testingTools';
 import { TrackSavedStatus } from '../../core/cacheKeys';
 
 describe('saveTracks', () => {

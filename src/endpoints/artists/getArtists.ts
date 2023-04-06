@@ -1,5 +1,6 @@
 import { Artist, getArtist } from '.';
 import { QueryFunction } from '../../core';
+
 /**
  * Gets multiple artists with one request to Spotify. This accepts any
  * number of ids. This endpoint is passes the artist IDs to getArtist

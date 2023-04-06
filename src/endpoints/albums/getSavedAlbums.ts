@@ -1,7 +1,7 @@
-import { Album } from './types';
 import { PaginatedList, QueryFunction } from '../../core';
-import { deepFreeze, spotifyFetch, toURLString } from '../../utils';
 import { AlbumSavedStatus } from '../../core/cacheKeys';
+import { deepFreeze, spotifyFetch, toURLString } from '../../utils';
+import { Album } from './types';
 
 /**
  * Retrieves a paginated list of Albums currently saved in the User's Library.

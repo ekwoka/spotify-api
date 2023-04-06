@@ -3,10 +3,10 @@ import { QueryFunction } from '../../core';
 import {
   ISOTimeString,
   SpotifyAPIURL,
-  spotifyFetch,
-  toURLString,
   UNIXTimeNumber,
   UNIXTimeString,
+  spotifyFetch,
+  toURLString,
 } from '../../utils';
 import { Track } from '../tracks';
 

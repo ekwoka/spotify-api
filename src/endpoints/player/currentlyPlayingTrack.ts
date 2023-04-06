@@ -1,5 +1,5 @@
 import { QueryFunction } from '../../core';
-import { SpotifyAPIURL, spotifyFetch, SpotifyPageURL } from '../../utils';
+import { SpotifyAPIURL, SpotifyPageURL, spotifyFetch } from '../../utils';
 import { Track } from '../tracks';
 
 export const currentlyPlayingTrack =

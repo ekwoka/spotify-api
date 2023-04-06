@@ -1,4 +1,4 @@
-import { QueryFunction, PaginatedList } from '../../core';
+import { PaginatedList, QueryFunction } from '../../core';
 import { spotifyFetch, toURLString } from '../../utils';
 import { Artist } from '../artists/types';
 import { Track } from '../tracks/types';

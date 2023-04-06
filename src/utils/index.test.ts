@@ -1,15 +1,15 @@
 import { describe, expect, it, vi } from 'vitest';
 
 import {
+  arrayWrap,
+  chunkArray,
+  debounce,
   deepFreeze,
   isBrowser,
   isNode,
-  toBase64,
   sleep,
+  toBase64,
   toURLString,
-  debounce,
-  chunkArray,
-  arrayWrap,
 } from '.';
 
 describe('Utils', () => {

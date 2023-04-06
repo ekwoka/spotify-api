@@ -1,5 +1,6 @@
 import { beforeAll, describe, expect, it } from 'vitest';
-import { getSavedAlbums, SavedAlbum } from '.';
+
+import { SavedAlbum, getSavedAlbums } from '.';
 import { hasToken, makeMock } from '../../../testingTools';
 import { PaginatedList, PersistentApiProperties } from '../../core';
 import { AlbumSavedStatus } from '../../core/cacheKeys';

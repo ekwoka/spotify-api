@@ -1,8 +1,8 @@
 import { beforeAll, describe, expect, it } from 'vitest';
-import { hasToken, makeMock } from '../../../testingTools';
-import { saveAlbums, removeAlbums } from './';
 
+import { hasToken, makeMock } from '../../../testingTools';
 import { AlbumSavedStatus } from '../../core/cacheKeys';
+import { removeAlbums, saveAlbums } from './';
 
 describe('saveAlbums', () => {
   beforeAll(() => {

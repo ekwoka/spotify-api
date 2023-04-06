@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { makeMock } from '../../testingTools/makeMock';
 import { spotifyFetch } from './spotifyFetch';
 

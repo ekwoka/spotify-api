@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { PersistentApiProperties, setToken, spotifyApiClient } from './';
 
 describe('Set Token', () => {

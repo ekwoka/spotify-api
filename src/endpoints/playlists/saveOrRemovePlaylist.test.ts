@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, it } from 'vitest';
-import { hasToken, makeMock } from '../../../testingTools';
-import { savePlaylists, removePlaylists } from '.';
 
+import { removePlaylists, savePlaylists } from '.';
+import { hasToken, makeMock } from '../../../testingTools';
 import { PlaylistSavedStatus } from '../../core/cacheKeys';
 
 describe('savePlaylists', () => {

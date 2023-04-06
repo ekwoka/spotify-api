@@ -1,5 +1,5 @@
 import { QueryFunction } from '../../core';
-import { deepFreeze, Image, spotifyFetch, SpotifyPageURL } from '../../utils';
+import { Image, SpotifyPageURL, deepFreeze, spotifyFetch } from '../../utils';
 
 /**
  * Consumes the 'user/{user_id}' endpoint to return basic information about

@@ -1,6 +1,7 @@
 import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
+
 import { makeMock } from '../../testingTools/makeMock';
-import { refreshToken, tokensFromCode, makeAuthURL } from './';
+import { makeAuthURL, refreshToken, tokensFromCode } from './';
 
 describe('AUTH Helpers', () => {
   beforeAll(() => {

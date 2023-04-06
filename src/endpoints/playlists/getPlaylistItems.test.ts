@@ -1,7 +1,8 @@
-import { Playlist } from './types';
 import { beforeAll, describe, expect, it } from 'vitest';
+
 import { hasToken, makeMock } from '../../../testingTools';
 import { getPlaylistItems } from './getPlaylistItems';
+import { Playlist } from './types';
 
 describe('getPlaylistItems', () => {
   beforeAll(() => {
