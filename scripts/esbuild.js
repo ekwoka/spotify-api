@@ -35,7 +35,7 @@ console.log(
   )}`
 );
 console.log(
-  `Minzipped size: ${old.brotli.pretty} => ${brotli.pretty}: ${prettyBytes(
+  `Brotli size: ${old.brotli.pretty} => ${brotli.pretty}: ${prettyBytes(
     brotli.raw - old.brotli.raw
   )}`
 );
