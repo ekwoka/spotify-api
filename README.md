@@ -64,7 +64,7 @@ These helpers are:
 - `getTokenFromCode`: Accepts a code from the Spotify authentication flow and returns a suite of tokens (access and refresh).
 - `refreshToken`: Accepts a refresh token and returns a new access token.
 
-While these functions do allow passing in the valid parameters, you can also depend on evironment variables by setting up and exposing the following on the `process.env` object:
+While these functions do allow passing in the valid parameters, you can also depend on environment variables by setting up and exposing the following on the `process.env` object:
 
 - `SPOTIFY_CLIENT`: Client id from Spotify Developer Dashboard.
 - `SPOTIFY_SECRET`: Client secret.
