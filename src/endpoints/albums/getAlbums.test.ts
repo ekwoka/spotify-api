@@ -27,7 +27,7 @@ describe('getAlbums', () => {
             albums: [
               {
                 market: new URLSearchParams(req.path.split('?')[1]).get(
-                  'market'
+                  'market',
                 ),
               },
             ],
@@ -50,7 +50,7 @@ describe('getAlbums', () => {
       albums: [{ market }],
     } = await getAlbums(
       ['testid'],
-      'EN'
+      'EN',
     )({
       token: 'token',
       cache: new Map(),

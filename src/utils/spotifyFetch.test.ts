@@ -12,19 +12,19 @@ describe('spotifyFetch', () => {
   it('should throw on invalid endpoint', async () => {
     makeMock('v1/me', { statusCode: 404 });
     await expect(() => spotifyFetch('me', 'token')).rejects.toThrow(
-      'Not Found'
+      'Not Found',
     );
   });
   it('should throw on invalid token', async () => {
     makeMock('v1/me', { statusCode: 401 });
     await expect(() => spotifyFetch('me', 'invalid')).rejects.toThrow(
-      'Token Expired'
+      'Token Expired',
     );
   });
   it('should throw when request is forbidden', async () => {
     makeMock('v1/me', { statusCode: 403 });
     await expect(() => spotifyFetch('me', 'token')).rejects.toThrow(
-      'Forbidden'
+      'Forbidden',
     );
   });
   it('should delay and retry when rate limited', async () => {

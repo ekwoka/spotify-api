@@ -28,7 +28,7 @@ describe('getPlaylistItems', () => {
             };
           const params = new URLSearchParams(req.path.split('?')[1]);
           const [limit, offset, market] = ['limit', 'offset', 'market'].map(
-            (param) => params.get(param)
+            (param) => params.get(param),
           );
           return {
             statusCode: 200,
@@ -39,7 +39,7 @@ describe('getPlaylistItems', () => {
             },
           };
         },
-      }
+      },
     );
     makeMock('/v1/playlists/37i9dQZF1DX5g856aiKiDS/tracks?limit=100', {
       handler: (req) => {
@@ -66,7 +66,7 @@ describe('getPlaylistItems', () => {
             data: mockedPlaylistItems,
           };
         },
-      }
+      },
     ).times(2);
   });
   it('should return a function', () => {
@@ -86,7 +86,7 @@ describe('getPlaylistItems', () => {
         offset: 5,
         limit: 10,
         market: 'KR',
-      }
+      },
     )({
       token: 'token',
       cache: new Map(),
@@ -112,7 +112,7 @@ describe('getPlaylistItems', () => {
       cache,
     } as any);
     expect(cache.get(`playlists/37i9dQZF1DX5g856aiKiDS/tracks?`)).toBe(
-      playlistItems
+      playlistItems,
     );
     const extendedItems = await getPlaylistItems('37i9dQZF1DX5g856aiKiDS', {
       limit: 150,
@@ -121,7 +121,7 @@ describe('getPlaylistItems', () => {
       cache,
     } as any);
     expect(cache.get('playlists/37i9dQZF1DX5g856aiKiDS/tracks?limit=150')).toBe(
-      extendedItems
+      extendedItems,
     );
   });
 });

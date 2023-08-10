@@ -57,7 +57,7 @@ describe('newReleases', () => {
       token: 'token',
     } as PersistentApiProperties)) as unknown as { albums: typeof testQuery };
     expect({ country, limit: Number(limit), offset: Number(offset) }).toEqual(
-      testQuery
+      testQuery,
     );
   });
 });

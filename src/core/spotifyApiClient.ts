@@ -7,7 +7,7 @@ import {
 
 export function spotifyApiClient(
   token: string,
-  options: SpotifyApiClientOptions = {}
+  options: SpotifyApiClientOptions = {},
 ): SpotifyApiClient {
   if (!token)
     throw new TypeError('Token is required at Spotify API Initialization');

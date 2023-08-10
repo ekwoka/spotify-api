@@ -27,7 +27,7 @@ describe('getUsersPlaylists', () => {
           };
         const params = new URLSearchParams(req.path.split('?')[1]);
         const [limit, offset] = ['limit', 'offset'].map((param) =>
-          Number(params.get(param))
+          Number(params.get(param)),
         );
         return {
           statusCode: 200,

@@ -9,14 +9,14 @@ export const getTopItems: GetTopItems =
     const endpoint = `me/top/${type}?${toURLString(options)}`;
     const data = await spotifyFetch<PaginatedList<TopItem[typeof type]>>(
       endpoint,
-      token
+      token,
     );
     return data;
   };
 
 type GetTopItems = <T extends keyof TopItem>(
   type: T,
-  options?: TopItemOptions
+  options?: TopItemOptions,
 ) => QueryFunction<Promise<PaginatedList<TopItem[T]>>>;
 
 type TopItem = {

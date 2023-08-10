@@ -15,7 +15,7 @@ describe('searchString Helpers', () => {
       tag: 'hipster',
     });
     expect(search).toBe(
-      'pink venom artist:blackpink album:pink venom year:2022 genre:pop upc:123456789 isrc:123456789 tag:hipster'
+      'pink venom artist:blackpink album:pink venom year:2022 genre:pop upc:123456789 isrc:123456789 tag:hipster',
     );
   });
 });

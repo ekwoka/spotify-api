@@ -17,10 +17,10 @@ describe('Get Current User', () => {
   it('should cache user and return it from cache', async () => {
     const cache = new Map();
     expect(await getCurrentUser()({ token: 'token', cache })).toBe(
-      cache.get('user')
+      cache.get('user'),
     );
     expect(await getCurrentUser()({ token: 'token', cache })).toBe(
-      await getCurrentUser()({ token: 'token', cache })
+      await getCurrentUser()({ token: 'token', cache }),
     );
   });
 });

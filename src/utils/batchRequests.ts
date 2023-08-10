@@ -11,7 +11,7 @@ import { debounce } from './debounce';
  */
 export const batchWrap = <T extends string, S>(
   cb: BatchCallback<T, S>,
-  max = 20
+  max = 20,
 ): BatchedFunction<S> => {
   let batch: BatchQueue<S> = {};
   const addToBatch = (item: T, res: ResolveBatch<S>) => {

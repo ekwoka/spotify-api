@@ -23,7 +23,7 @@ import { Track } from '../tracks';
  */
 export const recentlyPlayedTracks =
   (
-    options?: RecentlyPlayedOptions
+    options?: RecentlyPlayedOptions,
   ): QueryFunction<Promise<RecentlyPlayedTrackList>> =>
   async ({ token }) => {
     const endpoint = `me/player/recently-played?${toURLString(options)}`;

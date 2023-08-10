@@ -15,7 +15,7 @@ import {
  * @returns true | true[]
  */
 export const savePlaylists: SavePlaylists = ((
-  ids: string | string[]
+  ids: string | string[],
 ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> =>
   saveOrRemovePlaylist(ids, true)) as SavePlaylists;
 
@@ -32,7 +32,7 @@ type SavePlaylists = {
  * @returns true | true[]
  */
 export const removePlaylists: RemovePlaylists = ((
-  ids: string | string[]
+  ids: string | string[],
 ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> =>
   saveOrRemovePlaylist(ids, false)) as RemovePlaylists;
 
@@ -44,20 +44,20 @@ type RemovePlaylists = {
 const saveOrRemovePlaylist =
   (
     ids: string | string[],
-    state: boolean
+    state: boolean,
   ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> =>
   async (client) => {
     const results = await createMapper<string, boolean>(
       async (id: string, client) => (
         await (state ? savePlaylist : removePlaylist)(client.token, id), state
-      )
+      ),
     )(ids as mappedArguments<string, boolean>)(client);
     client.cache.set(
       PlaylistSavedStatus,
       arrayWrap(ids).reduce(
         (acc, id) => ((acc[id] = state), acc),
-        client.cache.get(PlaylistSavedStatus) ?? {}
-      )
+        client.cache.get(PlaylistSavedStatus) ?? {},
+      ),
     );
     return results;
   };
@@ -71,7 +71,7 @@ const createFollowPlaylistCallback =
       {
         method,
       },
-      false
+      false,
     );
   };
 

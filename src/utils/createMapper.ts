@@ -1,7 +1,7 @@
 import { PersistentApiProperties } from '../core';
 
 export const createMapper = <T, S>(
-  cb: (val: T, client: PersistentApiProperties) => Promise<S>
+  cb: (val: T, client: PersistentApiProperties) => Promise<S>,
 ): mappedCallback<T, S> =>
   ((vals: T | T[]) =>
     Array.isArray(vals)

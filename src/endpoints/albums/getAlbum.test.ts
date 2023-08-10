@@ -28,7 +28,7 @@ describe('getAlbum', () => {
               {
                 ...mockedAlbums.albums[0],
                 market: new URLSearchParams(req.path.split('?')[1]).get(
-                  'market'
+                  'market',
                 ),
               },
             ],
@@ -47,7 +47,7 @@ describe('getAlbum', () => {
   it('should pass market as query param', async () => {
     const { market } = (await getAlbum(
       'GOOD',
-      'EN'
+      'EN',
     )({
       token: 'token',
       cache: new Map(),

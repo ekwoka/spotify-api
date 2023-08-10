@@ -3,7 +3,7 @@ import { toBase64 } from '../utils';
 export const fetchOptions = (
   data: Record<string, string>,
   client: string,
-  secret: string
+  secret: string,
 ) => ({
   method: 'POST',
   headers: {

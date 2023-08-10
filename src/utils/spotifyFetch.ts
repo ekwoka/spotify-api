@@ -13,7 +13,7 @@ export const spotifyFetch = async <T>(
   endpoint: string,
   token: string,
   data: Record<string, unknown> = {},
-  hasReturn = true
+  hasReturn = true,
 ): Promise<T> => {
   try {
     const headers = {
@@ -43,8 +43,8 @@ export const spotifyFetch = async <T>(
       return new Promise((res) =>
         setTimeout(
           () => res(spotifyFetch(endpoint, token, data, hasReturn)),
-          Number(cause.headers.get('Retry-After')) || 200
-        )
+          Number(cause.headers.get('Retry-After')) || 200,
+        ),
       );
     throw e;
   }

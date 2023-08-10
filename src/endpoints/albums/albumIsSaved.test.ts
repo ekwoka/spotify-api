@@ -57,8 +57,8 @@ describe('albumIsSaved', () => {
         albumIsSaved(item)({
           token: 'token',
           cache: new Map(),
-        })
-      )
+        }),
+      ),
     );
     expect(isSaved).toEqual([true, false]);
   });

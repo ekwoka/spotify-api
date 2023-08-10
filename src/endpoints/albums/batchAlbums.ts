@@ -21,5 +21,5 @@ export const batchAlbums: BatchedFunction<Album> = batchWrap(
     const data = await spotifyFetch<Albums>(endpoint, token);
     return data.albums;
   },
-  20
+  20,
 );

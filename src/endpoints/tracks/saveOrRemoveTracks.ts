@@ -17,7 +17,7 @@ import {
  * @returns true | true[]
  */
 export const saveTracks: SaveTracks = ((
-  ids: string | string[]
+  ids: string | string[],
 ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> =>
   saveOrRemoveTrack(ids, true)) as SaveTracks;
 
@@ -34,7 +34,7 @@ type SaveTracks = {
  * @returns true | true[]
  */
 export const removeTracks: RemoveTracks = ((
-  ids: string | string[]
+  ids: string | string[],
 ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> =>
   saveOrRemoveTrack(ids, false)) as RemoveTracks;
 
@@ -46,21 +46,21 @@ type RemoveTracks = {
 const saveOrRemoveTrack =
   (
     ids: string | string[],
-    state: boolean
+    state: boolean,
   ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> =>
   async (client) => {
     const results = await createMapper<string, boolean>(
       async (id: string, client) => (
         await (state ? batchSaveTrack : batchRemoveTrack)(client.token, id),
         state
-      )
+      ),
     )(ids as mappedArguments<string, boolean>)(client);
     client.cache.set(
       TrackSavedStatus,
       arrayWrap(ids).reduce(
         (acc, id) => ((acc[id] = state), acc),
-        client.cache.get(TrackSavedStatus) ?? {}
-      )
+        client.cache.get(TrackSavedStatus) ?? {},
+      ),
     );
     return results;
   };
@@ -76,7 +76,7 @@ const saveOrRemoveBatchCallback =
         method,
         body: JSON.stringify({ ids }),
       },
-      false
+      false,
     );
   };
 

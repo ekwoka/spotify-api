@@ -22,7 +22,7 @@ describe('recentlyPlayedTracks', () => {
           return { statusCode: 401 };
         const params = new URLSearchParams(req.path.split('?')[1]);
         const [after, before, limit] = ['after', 'before', 'limit'].map((key) =>
-          Number(params.get(key))
+          Number(params.get(key)),
         );
         return {
           statusCode: 200,

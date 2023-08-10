@@ -41,17 +41,17 @@ describe('AUTH Helpers', () => {
         'user-read-private',
       ]);
       expect(authURL).toBe(
-        'https://accounts.spotify.com/authorize?response_type=code&client_id=valid-client&scope=streaming+user-read-email+user-read-private&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F'
+        'https://accounts.spotify.com/authorize?response_type=code&client_id=valid-client&scope=streaming+user-read-email+user-read-private&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F',
       );
     });
     it('should create auth url from passed in variables', () => {
       const authURL = makeAuthURL(
         ['streaming', 'user-read-email', 'user-read-private'],
         'valid-client',
-        'http://localhost:3000/'
+        'http://localhost:3000/',
       );
       expect(authURL).toBe(
-        'https://accounts.spotify.com/authorize?response_type=code&client_id=valid-client&scope=streaming+user-read-email+user-read-private&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F'
+        'https://accounts.spotify.com/authorize?response_type=code&client_id=valid-client&scope=streaming+user-read-email+user-read-private&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F',
       );
     });
   });
@@ -74,7 +74,7 @@ describe('AUTH Helpers', () => {
       process.env.SPOTIFY_CLIENT = 'valid-client';
       process.env.SPOTIFY_SECRET = 'supersecret';
       await expect(() => refreshToken('invalid')).rejects.toThrow(
-        'Error refreshing token'
+        'Error refreshing token',
       );
     });
   });
@@ -91,7 +91,7 @@ describe('AUTH Helpers', () => {
       const codes = await tokensFromCode(
         'valid',
         'valid-client',
-        'supersecret'
+        'supersecret',
       );
       expect(codes).toHaveProperty('access_token');
       expect(codes).toHaveProperty('refresh_token');
@@ -101,7 +101,7 @@ describe('AUTH Helpers', () => {
       process.env.SPOTIFY_CLIENT = 'valid-client';
       process.env.SPOTIFY_SECRET = 'supersecret';
       await expect(() => tokensFromCode('invalid')).rejects.toThrow(
-        'Error fetching token'
+        'Error fetching token',
       );
     });
   });

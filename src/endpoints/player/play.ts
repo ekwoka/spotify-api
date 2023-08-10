@@ -17,7 +17,7 @@ export const play =
           };
       position_ms?: number;
       device_id?: string;
-    } = {}
+    } = {},
   ): QueryFunction<Promise<void>> =>
   ({ token }) => {
     const endpoint = `me/player/play?${
@@ -33,7 +33,7 @@ export const play =
           ...options,
         }),
       },
-      false
+      false,
     );
   };
 

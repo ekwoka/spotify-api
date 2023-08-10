@@ -14,7 +14,7 @@ import { QueryType, SearchResults } from './types';
 export const search = <T extends keyof QueryType>(
   q: string,
   maybeTypeArray: T | T[],
-  options: SearchOptions = {}
+  options: SearchOptions = {},
 ): QueryFunction<Promise<SearchResults<T>>> => {
   const types = arrayWrap(maybeTypeArray).join(',');
   return async ({ token }) => {

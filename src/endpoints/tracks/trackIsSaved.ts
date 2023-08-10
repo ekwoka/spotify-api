@@ -15,7 +15,7 @@ import {
  * @returns boolean | boolean[]
  */
 export const trackIsSaved: TrackIsSaved = ((
-  trackID: string | string[]
+  trackID: string | string[],
 ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> => {
   if (Array.isArray(trackID))
     return (client) =>
@@ -25,7 +25,7 @@ export const trackIsSaved: TrackIsSaved = ((
 
 const cacheTrackIsSaved = async (
   { token, cache }: PersistentApiProperties,
-  track: string
+  track: string,
 ): Promise<boolean> => {
   const cached = cache.get(TrackSavedStatus) ?? {};
   if (cached[track]) return cached[track];
@@ -48,10 +48,10 @@ const batchTrackIsSaved: BatchedFunction<boolean> = batchWrap(
       TrackSavedStatus,
       ids.reduce(
         (acc, id, idx) => ((acc[id] = data[idx]), acc),
-        cache.get(TrackSavedStatus) ?? {}
-      )
+        cache.get(TrackSavedStatus) ?? {},
+      ),
     );
     return data;
   },
-  50
+  50,
 );
