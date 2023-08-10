@@ -15,7 +15,7 @@ import { Playlist } from './types';
 export const getPlaylist =
   (
     playlistID: string,
-    options?: GetPlaylistOptions
+    options?: GetPlaylistOptions,
   ): QueryFunction<Promise<Playlist>> =>
   async ({ token, cache }) => {
     const endpoint = `playlists/${playlistID}?${toURLString(options)}`;

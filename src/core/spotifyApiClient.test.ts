@@ -16,7 +16,7 @@ describe('spotifyApiClient Constructor', () => {
 
   it('should throw when no token is provided', () => {
     expect(spotifyApiClient).toThrow(
-      'Token is required at Spotify API Initialization'
+      'Token is required at Spotify API Initialization',
     );
   });
 });

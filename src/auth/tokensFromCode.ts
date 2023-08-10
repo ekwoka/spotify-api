@@ -11,7 +11,7 @@ import { fetchOptions } from './fetchOptions';
 export const tokensFromCode = async (
   code: string,
   client: string = process.env.SPOTIFY_CLIENT,
-  secret: string = process.env.SPOTIFY_SECRET
+  secret: string = process.env.SPOTIFY_SECRET,
 ): Promise<SpotifyTokens> => {
   const response = await fetch(
     SPOTIFY_AUTH,
@@ -22,8 +22,8 @@ export const tokensFromCode = async (
         grant_type: 'authorization_code',
       },
       client,
-      secret
-    )
+      secret,
+    ),
   );
   if (!response.ok) throw new Error('Error fetching token');
 

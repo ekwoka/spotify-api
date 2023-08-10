@@ -29,7 +29,7 @@ describe('getAlbumTracks', () => {
                 tracks: {
                   ...mockedAlbums.albums[0].tracks,
                   market: new URLSearchParams(req.path.split('?')[1]).get(
-                    'market'
+                    'market',
                   ),
                 },
               },
@@ -51,7 +51,7 @@ describe('getAlbumTracks', () => {
   it('should pass market as query param', async () => {
     const { market } = (await getAlbumTracks(
       'TRACKS',
-      'EN'
+      'EN',
     )({
       token: 'token',
       cache: new Map(),

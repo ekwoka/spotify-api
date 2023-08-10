@@ -11,6 +11,6 @@ export const addToQueue =
       {
         method: 'POST',
       },
-      false
+      false,
     );
   };

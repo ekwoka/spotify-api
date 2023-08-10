@@ -14,7 +14,7 @@ export const getFollowedArtists =
     options: {
       limit?: number;
       after?: string;
-    } = {}
+    } = {},
   ): QueryFunction<Promise<FollowedArtists>> =>
   async ({ token, cache }) => {
     const endpoint = `me/following?type=${type}&${toURLString(options)}`;
@@ -22,15 +22,15 @@ export const getFollowedArtists =
     if (cached) return cached as FollowedArtists;
     const followedArtists = await spotifyFetch<FollowedArtists>(
       endpoint,
-      token
+      token,
     );
     cache.set(endpoint, deepFreeze(followedArtists));
     cache.set(
       ArtistSavedStatus,
       followedArtists.artists.items.reduce(
         (acc, { id }) => ((acc[id] = true), acc),
-        cache.get(ArtistSavedStatus) ?? {}
-      )
+        cache.get(ArtistSavedStatus) ?? {},
+      ),
     );
     return followedArtists;
   };

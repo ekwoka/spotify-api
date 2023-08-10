@@ -11,7 +11,7 @@ import { fetchOptions } from './fetchOptions';
 export const refreshToken = async (
   refreshToken: string,
   client: string = process.env.SPOTIFY_CLIENT,
-  secret: string = process.env.SPOTIFY_SECRET
+  secret: string = process.env.SPOTIFY_SECRET,
 ): Promise<RefreshedToken> => {
   const response = await fetch(
     SPOTIFY_AUTH,
@@ -21,8 +21,8 @@ export const refreshToken = async (
         grant_type: 'refresh_token',
       },
       client,
-      secret
-    )
+      secret,
+    ),
   );
   if (!response.ok) throw new Error('Error refreshing token');
   return (await response.json()) as RefreshedToken;

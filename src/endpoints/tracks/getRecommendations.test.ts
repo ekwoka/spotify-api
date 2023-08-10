@@ -21,7 +21,7 @@ describe('getRecommendations', () => {
           if (!hasToken(req.headers as any)) return { statusCode: 401 };
           const params = new URLSearchParams(req.path.split('?')[1]);
           const [max_key, target_valence] = ['max_key', 'target_valence'].map(
-            (key) => Number(params.get(key))
+            (key) => Number(params.get(key)),
           );
           return {
             statusCode: 200,
@@ -31,7 +31,7 @@ describe('getRecommendations', () => {
             },
           };
         },
-      }
+      },
     );
     makeMock(
       '/v1/recommendations?seed_artists=1VwDG9aBflQupaFNjUru9A%2C4k5fFEYgkWYrYvtOK3zVBl&seed_tracks=3T4s8KFP2SGW7hfmbcICsv%2C2occELokWRfqLIlQJhJLZ6',
@@ -51,14 +51,14 @@ describe('getRecommendations', () => {
             },
           };
         },
-      }
+      },
     );
   });
   it('should return a function', () => {
     expect(
       typeof getRecommendations({
         seed_artists: '1VwDG9aBflQupaFNjUru9A',
-      })
+      }),
     ).toBe('function');
   });
   it('should return a recommendations object', async () => {
@@ -103,7 +103,7 @@ describe('getRecommendations', () => {
         seed_artists: ['1VwDG9aBflQupaFNjUru9A', '4k5fFEYgkWYrYvtOK3zVBl'],
         seed_tracks: ['3T4s8KFP2SGW7hfmbcICsv', '2occELokWRfqLIlQJhJLZ6'],
         seed_genres: ['rock', 'pop'],
-      })
+      }),
     ).toThrowError('Too many seeds provided');
   });
 });

@@ -15,7 +15,7 @@ import { Album } from './types';
  */
 export const getSavedAlbums =
   (
-    options: SavedAlbumOptions = {}
+    options: SavedAlbumOptions = {},
   ): QueryFunction<Promise<PaginatedList<SavedAlbum>>> =>
   async ({ token, cache }) => {
     const endpoint = `me/albums?${toURLString(options)}`;
@@ -25,11 +25,14 @@ export const getSavedAlbums =
     cache.set(endpoint, deepFreeze(data));
     cache.set(
       AlbumSavedStatus,
-      data.items.reduce((acc, { album }) => {
-        acc[album.id] = true;
-        cache.set(`album.${album.id}`, album);
-        return acc;
-      }, cache.get(AlbumSavedStatus) ?? {})
+      data.items.reduce(
+        (acc, { album }) => {
+          acc[album.id] = true;
+          cache.set(`album.${album.id}`, album);
+          return acc;
+        },
+        cache.get(AlbumSavedStatus) ?? {},
+      ),
     );
     return data;
   };

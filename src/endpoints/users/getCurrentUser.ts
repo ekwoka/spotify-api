@@ -40,7 +40,7 @@ type User = {
       url: string;
       height: number;
       width: number;
-    }
+    },
   ];
   product: string;
   type: string;

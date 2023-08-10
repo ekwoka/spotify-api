@@ -23,7 +23,7 @@ describe('getFollowedArtists', () => {
           };
         const params = new URLSearchParams(req.path.split('?')[1]);
         const [limit, after, type] = ['limit', 'after', 'type'].map((param) =>
-          params.get(param)
+          params.get(param),
         );
         return {
           statusCode: 200,

@@ -13,7 +13,7 @@ export const getAlbums =
   (ids: string[], market?: string): QueryFunction<Promise<Albums>> =>
   async (client) => {
     const albums = await Promise.all(
-      ids.map((id) => getAlbum(id, market)(client))
+      ids.map((id) => getAlbum(id, market)(client)),
     );
     return { albums };
   };

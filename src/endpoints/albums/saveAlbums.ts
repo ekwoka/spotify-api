@@ -10,7 +10,7 @@ import { BatchedFunction, batchWrap, spotifyFetch } from '../../utils';
  * @returns true | true[]
  */
 export const saveAlbums: SaveAlbums = ((
-  ids: string | string[]
+  ids: string | string[],
 ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> => {
   if (Array.isArray(ids))
     return ({ token, cache }) =>
@@ -29,11 +29,11 @@ const batchSaveAlbums: BatchedFunction<boolean> = batchWrap(
       AlbumSavedStatus,
       ids.reduce(
         (acc, id) => ((acc[id] = true), acc),
-        cache.get(AlbumSavedStatus) ?? {}
-      )
+        cache.get(AlbumSavedStatus) ?? {},
+      ),
     );
     return data;
-  }
+  },
 );
 
 type SaveAlbums = {

@@ -15,7 +15,7 @@ describe('saveAlbums', () => {
         return {
           statusCode: 200,
           data: (JSON.parse(req.body as string) as { ids: string[] }).ids.map(
-            () => true
+            () => true,
           ),
         };
       },
@@ -58,7 +58,7 @@ describe('removeAlbums', () => {
         return {
           statusCode: 200,
           data: (JSON.parse(req.body as string) as { ids: string[] }).ids.map(
-            () => true
+            () => true,
           ),
         };
       },

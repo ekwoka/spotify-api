@@ -46,7 +46,7 @@ describe('search', () => {
             },
           };
         },
-      }
+      },
     );
   });
   it('should return a function', () => {
@@ -56,7 +56,7 @@ describe('search', () => {
     const searchQuery = 'pink venom';
     const results = await search(
       searchQuery,
-      'track'
+      'track',
     )({
       token: 'token',
     } as PersistentApiProperties);

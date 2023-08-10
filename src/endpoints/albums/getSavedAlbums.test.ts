@@ -66,13 +66,13 @@ describe('getAlbumTracks', () => {
     } as PersistentApiProperties;
     const savedAlbumsPage = await getSavedAlbums()(Client);
     expect(Client.cache.get(`me/albums?${toURLString({})}`)).toBe(
-      savedAlbumsPage
+      savedAlbumsPage,
     );
     expect(Client.cache.get(`album.${savedAlbumsPage.items[0].album.id}`)).toBe(
-      savedAlbumsPage.items[0].album
+      savedAlbumsPage.items[0].album,
     );
     expect(
-      Client.cache.get(AlbumSavedStatus)[savedAlbumsPage.items[0].album.id]
+      Client.cache.get(AlbumSavedStatus)[savedAlbumsPage.items[0].album.id],
     ).toBe(true);
   });
 });

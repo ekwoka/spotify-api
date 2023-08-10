@@ -3,7 +3,7 @@ import { toURLString } from '../utils';
 export const makeAuthURL = (
   scopes: scope[],
   clientId?: string,
-  redirectUri?: string
+  redirectUri?: string,
 ): string =>
   `https://accounts.spotify.com/authorize?${toURLString({
     response_type: 'code',

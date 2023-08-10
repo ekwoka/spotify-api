@@ -40,7 +40,7 @@ describe('getPlaylist', () => {
             },
           };
         },
-      }
+      },
     );
   });
   it('should return a function', () => {
@@ -60,7 +60,7 @@ describe('getPlaylist', () => {
         additional_types: 'tracks',
         fields: 'name,images',
         market: 'KR',
-      }
+      },
     )({
       token: 'token',
       cache: new Map(),
@@ -80,7 +80,7 @@ describe('getPlaylist', () => {
       await getPlaylist('37i9dQZF1DX5g856aiKiDS')({
         token: 'token',
         cache,
-      } as any)
+      } as any),
     ).toBe(playlist);
   });
 });

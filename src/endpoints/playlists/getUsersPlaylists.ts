@@ -12,7 +12,7 @@ import { PlaylistStub } from './types';
  */
 export const getUsersPlaylists =
   (
-    options?: UserPlaylistOptions
+    options?: UserPlaylistOptions,
   ): QueryFunction<Promise<PaginatedList<PlaylistStub>>> =>
   async ({ token, cache }) => {
     const endpoint = `me/playlists?${toURLString(options)}`;
@@ -20,15 +20,15 @@ export const getUsersPlaylists =
     if (cached) return cached as PaginatedList<PlaylistStub>;
     const playlists = await spotifyFetch<PaginatedList<PlaylistStub>>(
       endpoint,
-      token
+      token,
     );
     cache.set(endpoint, deepFreeze(playlists));
     cache.set(
       PlaylistSavedStatus,
       playlists.items.reduce(
         (acc, { id }) => ((acc[id] = true), acc),
-        cache.get(PlaylistSavedStatus) ?? {}
-      )
+        cache.get(PlaylistSavedStatus) ?? {},
+      ),
     );
     return playlists;
   };

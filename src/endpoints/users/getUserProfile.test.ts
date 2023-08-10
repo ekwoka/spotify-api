@@ -20,18 +20,18 @@ describe('getUserProfile', () => {
       await getUserProfile('thekwoka')({
         token: 'token',
         cache,
-      })
+      }),
     ).toBe(cache.get('user.thekwoka'));
     expect(
       await getUserProfile('thekwoka')({
         token: 'token',
         cache,
-      })
+      }),
     ).toBe(
       await getUserProfile('thekwoka')({
         token: 'token',
         cache,
-      })
+      }),
     );
   });
 });

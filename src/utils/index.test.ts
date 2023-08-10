@@ -46,7 +46,7 @@ describe('Utils', () => {
       toURLString({
         foo: 1,
         baz: 'qux',
-      })
+      }),
     ).toBe('foo=1&baz=qux');
   });
   it('debounces', async () => {

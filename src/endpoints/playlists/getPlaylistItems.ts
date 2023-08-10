@@ -5,7 +5,7 @@ import { PlaylistItem } from './types';
 export const getPlaylistItems =
   (
     playlistID: string,
-    options: GetPlaylistItemsOptions = {}
+    options: GetPlaylistItemsOptions = {},
   ): QueryFunction<Promise<PaginatedList<PlaylistItem>>> =>
   async ({ token, cache }) => {
     const makeEndpoint = (options: GetPlaylistItemsOptions) =>
@@ -18,7 +18,7 @@ export const getPlaylistItems =
     });
     const firstPage = await spotifyFetch<PaginatedList<PlaylistItem>>(
       endpoint,
-      token
+      token,
     );
     const limit = Number(options.limit) || 100;
     if (!(limit > 100) || firstPage.items.length < 100) {
@@ -32,7 +32,7 @@ export const getPlaylistItems =
       firstPage.total,
       options,
       token,
-      makeEndpoint
+      makeEndpoint,
     );
     const fullResult = deepFreeze({
       ...firstPage,
@@ -50,7 +50,7 @@ const getRemainingPages = <T extends Partial<Record<keyof T, T[keyof T]>>>(
   totalItems: number,
   options: T,
   token: string,
-  makeEndpoint: (options: T) => string
+  makeEndpoint: (options: T) => string,
 ) => {
   const lastToGet = Math.min(fullLimit + initialOffset, totalItems);
   const pagesToGet = Math.ceil(lastToGet / 100) - 1;
@@ -60,10 +60,10 @@ const getRemainingPages = <T extends Partial<Record<keyof T, T[keyof T]>>>(
       const limit = Math.min(100, lastToGet - offset);
       const page = await spotifyFetch<PaginatedList<PlaylistItem>>(
         makeEndpoint({ ...options, offset, limit }),
-        token
+        token,
       );
       return page.items;
-    })
+    }),
   );
 };
 

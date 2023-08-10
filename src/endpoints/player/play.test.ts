@@ -19,7 +19,7 @@ describe('play', () => {
       handler: (req) => {
         if (!hasToken(req.headers as any)) return { statusCode: 401 };
         lastSentData = new URLSearchParams(req.path.split('?')[1]).get(
-          'device_id'
+          'device_id',
         );
         return {
           statusCode: 204,

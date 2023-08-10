@@ -10,7 +10,7 @@ import { SpotifyAPIURL, spotifyFetch, toURLString } from '../../utils';
  * @returns Recommendations
  */
 export const getRecommendations = (
-  options: RecomendationOptions
+  options: RecomendationOptions,
 ): QueryFunction<Promise<Recommendations>> => {
   const seeds = Object.entries(options).reduce((acc, [key, value]) => {
     if (!key.includes('seed')) return acc;

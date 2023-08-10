@@ -15,7 +15,7 @@ import {
  * @returns boolean | boolean[]
  */
 export const albumIsSaved: AlbumIsSaved = ((
-  album: string | string[]
+  album: string | string[],
 ): QueryFunction<Promise<boolean>> | QueryFunction<Promise<boolean[]>> => {
   if (Array.isArray(album))
     return (client) =>
@@ -25,7 +25,7 @@ export const albumIsSaved: AlbumIsSaved = ((
 
 const cacheAlbumIsSaved = async (
   { token, cache }: PersistentApiProperties,
-  album: string
+  album: string,
 ): Promise<boolean> => {
   const cached = cache.get(AlbumSavedStatus) as Record<string, boolean>;
   return cached?.[album] ?? (await batchAlbumIsSaved(token, album, cache));
@@ -46,9 +46,9 @@ const batchAlbumIsSaved: BatchedFunction<boolean> = batchWrap(
       AlbumSavedStatus,
       ids.reduce(
         (acc, id, idx) => ((acc[id] = data[idx]), acc),
-        cache.get(AlbumSavedStatus) ?? {}
-      )
+        cache.get(AlbumSavedStatus) ?? {},
+      ),
     );
     return data;
-  }
+  },
 );
