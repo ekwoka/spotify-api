@@ -44,7 +44,7 @@ jobs:
           always-auth: true
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.4
+        uses: pnpm/action-setup@v2.4.0
         id: pnpm-install
         with:
           version: latest
