@@ -49,12 +49,12 @@
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "4.2.0",
-    "@types/node": "18.17.12",
-    "@typescript-eslint/eslint-plugin": "6.5.0",
-    "@typescript-eslint/parser": "6.5.0",
+    "@types/node": "18.18.0",
+    "@typescript-eslint/eslint-plugin": "6.7.3",
+    "@typescript-eslint/parser": "6.7.3",
     "@vitest/coverage-c8": "0.33.0",
-    "esbuild": "0.19.2",
-    "eslint": "8.48.0",
+    "esbuild": "0.19.4",
+    "eslint": "8.50.0",
     "gzip-size": "7.0.0",
     "husky": "8.0.3",
     "lint-staged": "13.3.0",
@@ -62,10 +62,10 @@
     "prettier": "3.0.3",
     "pretty-bytes": "6.1.1",
     "typescript": "5.2.2",
-    "undici": "5.23.0",
+    "undici": "5.25.2",
     "vite": "4.4.9",
-    "vite-tsconfig-paths": "4.2.0",
-    "vitest": "0.34.3"
+    "vite-tsconfig-paths": "4.2.1",
+    "vitest": "0.34.5"
   },
   "prettier": {
     "singleQuote": true,
