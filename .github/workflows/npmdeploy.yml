@@ -13,7 +13,7 @@ jobs:
       outdated: ${{ steps.version_check.outputs.outdated }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -35,7 +35,7 @@ jobs:
         run: echo ${{needs.Check-Versions.outputs.outdated}}
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v3
