@@ -54,7 +54,7 @@
     "@typescript-eslint/parser": "7.4.0",
     "@vitest/coverage-c8": "0.33.0",
     "esbuild": "0.20.2",
-    "eslint": "8.57.0",
+    "eslint": "9.2.0",
     "gzip-size": "7.0.0",
     "husky": "9.0.11",
     "lint-staged": "15.2.2",
